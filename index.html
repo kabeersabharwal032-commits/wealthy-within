@@ -430,7 +430,9 @@ async function callAI(prompt){
   const res=await fetch('/.netlify/functions/gemini',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({prompt})
+    body: JSON.stringify({
+  prompt: prompt
+})
   });
   if(!res.ok) throw new Error('Server error: '+res.status);
   const data=await res.json();
