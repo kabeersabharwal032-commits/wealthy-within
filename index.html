@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="theme-color" content="#09080d"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+<meta name="apple-mobile-web-app-title" content="Wealthy Within"/>
+<meta name="description" content="Wealthy Within — 21-Day Inner Wealth Journey by Kabeer Sabharwal"/>
+<title>Wealthy Within</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg:      #09080d;
+  --bg2:     #13101c;
+  --bg3:     #1c1826;
+  --gold:    #d4a843;
+  --gold2:   #f0cb6a;
+  --gold3:   #8b6914;
+  --text:    #f0e8d5;
+  --muted:   #6b5f4a;
+  --muted2:  #9a8870;
+  --border:  rgba(212,168,67,0.14);
+  --border2: rgba(212,168,67,0.28);
+  --fd: 'Cormorant', serif;
+  --fb: 'Jost', sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+html, body { height: 100%; overflow: hidden; background: var(--bg); }
+body { font-family: var(--fb); color: var(--text); display: flex; flex-direction: column; height: 100dvh; }
+ 
+.screen { display: none; flex-direction: column; height: 100%; overflow: hidden; }
+.screen.active { display: flex; }
+.scroll { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; }
+.scroll::-webkit-scrollbar { display: none; }
+ 
+nav {
+  display: flex; border-top: 1px solid var(--border);
+  background: rgba(9,8,13,0.98); backdrop-filter: blur(20px);
+  flex-shrink: 0; z-index: 10;
+  padding-bottom: env(safe-area-inset-bottom);
+}
+nav button {
+  flex: 1; background: none; border: none; color: var(--muted);
+  padding: 11px 4px 9px; font-size: 8.5px; letter-spacing: 1.5px;
+  text-transform: uppercase; cursor: pointer; font-family: var(--fb);
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  transition: color 0.2s; font-weight: 500;
+}
+nav button svg { width: 18px; height: 18px; stroke-width: 1.5; }
+nav button.active { color: var(--gold2); }
+ 
+.home-top {
+  padding: 52px 24px 20px; text-align: center; flex-shrink: 0; position: relative;
+}
+.home-top::after {
+  content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+  width: 280px; height: 180px; pointer-events: none;
+  background: radial-gradient(ellipse at 50% 0%, rgba(212,168,67,0.12) 0%, transparent 70%);
+}
+.logo-ring {
+  width: 56px; height: 56px; border-radius: 50%;
+  border: 1px solid var(--gold3); margin: 0 auto 18px;
+  display: flex; align-items: center; justify-content: center;
+  background: rgba(212,168,67,0.06); position: relative; z-index: 1;
+}
+.logo-ring svg { width: 24px; height: 24px; stroke: var(--gold); fill: none; stroke-width: 1.2; }
+.home-top h1 {
+  font-family: var(--fd); font-size: clamp(32px, 9vw, 48px);
+  font-weight: 700; line-height: 1.0; color: var(--text);
+  letter-spacing: 0.5px; position: relative; z-index: 1;
+}
+.home-top h1 em { color: var(--gold2); font-style: italic; font-weight: 400; }
+.home-top .tagline { font-size: 10px; color: var(--muted); letter-spacing: 3px; text-transform: uppercase; margin-top: 10px; font-weight: 400; }
+.home-top .by { font-size: 11px; color: var(--gold3); margin-top: 5px; letter-spacing: 1px; font-family: var(--fd); font-style: italic; }
+ 
+.prog-wrap { padding: 0 24px 18px; flex-shrink: 0; }
+.prog-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 7px; }
+.prog-row span { font-size: 11px; color: var(--muted); font-weight: 400; letter-spacing: 0.5px; }
+.prog-row strong { font-family: var(--fd); font-size: 22px; color: var(--gold2); font-weight: 600; }
+.prog-track { height: 2px; background: rgba(255,255,255,0.06); border-radius: 1px; overflow: hidden; margin-bottom: 14px; }
+.prog-fill { height: 100%; background: linear-gradient(90deg, var(--gold3), var(--gold), var(--gold2)); border-radius: 1px; transition: width 0.8s cubic-bezier(.4,0,.2,1); }
+.week-row { display: flex; gap: 18px; justify-content: center; }
+.wl { font-size: 9px; color: var(--muted); display: flex; align-items: center; gap: 5px; letter-spacing: 1px; text-transform: uppercase; }
+.wl-dot { width: 5px; height: 5px; border-radius: 50%; }
+ 
+.install-bar { margin: 0 16px 12px; padding: 11px 16px; background: rgba(212,168,67,0.05); border: 1px solid var(--border); border-radius: 10px; display: flex; align-items: center; gap: 12px; }
+.install-bar p { font-size: 12px; color: var(--muted2); flex: 1; line-height: 1.4; font-weight: 300; }
+.install-bar button { background: rgba(212,168,67,0.12); border: 1px solid var(--border2); border-radius: 6px; color: var(--gold); padding: 7px 14px; font-size: 10px; cursor: pointer; font-family: var(--fb); font-weight: 600; letter-spacing: 1px; white-space: nowrap; }
+ 
+.days-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 7px; padding: 0 14px 24px; }
+.day-card {
+  border-radius: 11px; padding: 12px 11px 11px; cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.05); background: var(--bg2);
+  position: relative; min-height: 80px; display: flex; flex-direction: column;
+  justify-content: space-between; transition: border-color 0.18s, background 0.18s;
+  animation: rise 0.35s ease both;
+}
+.day-card.done { border-color: rgba(212,168,67,0.35); background: rgba(212,168,67,0.06); }
+.day-num { font-size: 8.5px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+.day-card.done .day-num { color: var(--gold); }
+.day-title { font-family: var(--fd); font-size: 14px; font-weight: 600; color: var(--text); margin-top: 6px; line-height: 1.2; }
+.day-mark { position: absolute; top: 10px; right: 10px; }
+.day-mark svg { width: 13px; height: 13px; stroke: var(--gold); fill: none; stroke-width: 2; opacity: 0; transition: opacity 0.2s; }
+.day-card.done .day-mark svg { opacity: 1; }
+ 
+.modal-overlay { position: fixed; inset: 0; z-index: 100; background: rgba(4,3,6,0.95); display: flex; align-items: flex-end; opacity: 0; pointer-events: none; transition: opacity 0.22s; }
+.modal-overlay.open { opacity: 1; pointer-events: all; }
+.modal-sheet { width: 100%; max-height: 90vh; background: var(--bg2); border-radius: 22px 22px 0 0; border-top: 1px solid var(--border); overflow-y: auto; transform: translateY(50px); transition: transform 0.3s cubic-bezier(.4,0,.2,1); }
+.modal-overlay.open .modal-sheet { transform: translateY(0); }
+.modal-handle { width: 32px; height: 3px; background: rgba(255,255,255,0.1); border-radius: 2px; margin: 14px auto 0; }
+.modal-inner { padding: 22px 22px 40px; }
+.m-meta { font-size: 9px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold3); margin-bottom: 5px; }
+.m-title { font-family: var(--fd); font-size: 30px; font-weight: 700; color: var(--text); margin-bottom: 22px; line-height: 1.0; }
+.section-block { margin-bottom: 14px; }
+.section-label { font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+.practice-box { background: var(--bg3); border-radius: 12px; padding: 16px; border: 1px solid rgba(255,255,255,0.05); font-size: 15px; line-height: 1.8; color: var(--text); font-weight: 300; }
+.affirmation-box { background: rgba(212,168,67,0.06); border-radius: 12px; padding: 16px; border: 1px solid var(--border); font-family: var(--fd); font-size: 17px; line-height: 1.7; color: var(--gold2); font-style: italic; }
+.ai-box { background: var(--bg3); border: 1px solid rgba(255,255,255,0.05); border-radius: 12px; padding: 16px; font-size: 14px; line-height: 1.8; color: var(--muted2); font-weight: 300; min-height: 60px; }
+.ai-btn { margin-top: 8px; width: 100%; padding: 11px; border-radius: 9px; border: 1px solid var(--border2); background: rgba(212,168,67,0.07); color: var(--gold); font-size: 10px; cursor: pointer; font-family: var(--fb); font-weight: 600; letter-spacing: 2px; text-transform: uppercase; transition: all 0.2s; }
+.ai-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+.complete-btn { width: 100%; padding: 16px; border-radius: 13px; border: none; cursor: pointer; font-family: var(--fb); font-size: 10px; letter-spacing: 2.5px; text-transform: uppercase; font-weight: 700; transition: all 0.2s; margin-top: 14px; }
+ 
+.screen-hd { padding: 52px 24px 14px; flex-shrink: 0; }
+.screen-hd h2 { font-family: var(--fd); font-size: 26px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+.screen-hd p { font-size: 12px; color: var(--muted); font-weight: 300; letter-spacing: 0.3px; }
+.chat-area { padding: 10px 16px 6px; display: flex; flex-direction: column; gap: 10px; }
+.msg { max-width: 88%; padding: 13px 15px; border-radius: 16px; font-size: 14px; line-height: 1.75; font-weight: 300; }
+.msg.user { background: rgba(212,168,67,0.08); border: 1px solid var(--border); align-self: flex-end; color: var(--text); }
+.msg.ai { background: var(--bg3); border: 1px solid rgba(255,255,255,0.05); align-self: flex-start; color: var(--text); }
+.msg.loading { color: var(--muted); font-style: italic; opacity: 0.6; }
+.chat-bar { padding: 10px 14px; display: flex; gap: 8px; align-items: flex-end; border-top: 1px solid var(--border); background: rgba(9,8,13,0.98); flex-shrink: 0; }
+.chat-bar textarea { flex: 1; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 10px 13px; color: var(--text); font-family: var(--fb); font-size: 14px; resize: none; outline: none; max-height: 96px; line-height: 1.5; font-weight: 300; }
+.chat-bar textarea::placeholder { color: var(--muted); }
+.send-btn { width: 42px; height: 42px; border-radius: 10px; border: none; background: var(--gold); color: var(--bg); cursor: pointer; flex-shrink: 0; display: flex; align-items: center; justify-content: center; transition: opacity 0.2s; }
+.send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.send-btn svg { width: 15px; height: 15px; stroke: var(--bg); fill: none; stroke-width: 2.5; }
+.quick-row { padding: 0 14px 10px; display: flex; gap: 6px; flex-wrap: wrap; flex-shrink: 0; }
+.qb { background: var(--bg3); border: 1px solid var(--border); border-radius: 20px; padding: 6px 13px; font-size: 11px; color: var(--muted2); cursor: pointer; font-family: var(--fb); font-weight: 400; white-space: nowrap; transition: all 0.15s; }
+.qb:active { border-color: var(--gold); color: var(--gold); }
+ 
+.j-wrap { padding: 0 16px 16px; }
+.j-select { width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 11px 14px; color: var(--text); font-family: var(--fb); font-size: 14px; outline: none; margin-bottom: 10px; appearance: none; font-weight: 300; }
+.j-select option { background: var(--bg2); }
+.j-textarea { width: 100%; background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 14px; color: var(--text); font-family: var(--fb); font-size: 15px; line-height: 1.8; resize: none; outline: none; min-height: 150px; font-weight: 300; }
+.j-textarea::placeholder { color: var(--muted); }
+.j-save { margin-top: 10px; width: 100%; padding: 13px; border-radius: 10px; border: 1px solid var(--border2); background: rgba(212,168,67,0.08); color: var(--gold); font-family: var(--fb); font-size: 10px; letter-spacing: 2px; font-weight: 600; text-transform: uppercase; cursor: pointer; }
+.past-wrap { padding: 0 16px 80px; }
+.sec-label { font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+.j-card { background: var(--bg3); border: 1px solid var(--border); border-radius: 10px; padding: 13px 15px; margin-bottom: 7px; }
+.j-card-day { font-size: 9px; font-weight: 600; letter-spacing: 1.5px; color: var(--gold3); text-transform: uppercase; margin-bottom: 5px; }
+.j-card-txt { font-size: 13px; color: var(--muted2); line-height: 1.6; font-weight: 300; }
+ 
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; padding: 0 16px 14px; }
+.stat-c { background: var(--bg3); border: 1px solid var(--border); border-radius: 13px; padding: 18px 16px; text-align: center; }
+.stat-n { font-family: var(--fd); font-size: 34px; font-weight: 700; color: var(--gold2); line-height: 1; }
+.stat-l { font-size: 10px; color: var(--muted); margin-top: 5px; font-weight: 400; letter-spacing: 0.5px; }
+.heat-wrap { padding: 0 16px 20px; }
+.heat-grid { display: flex; flex-wrap: wrap; gap: 5px; }
+.heat-cell { width: 31px; height: 31px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 600; letter-spacing: 0.5px; border: 1px solid; cursor: pointer; transition: transform 0.1s; }
+.heat-cell:active { transform: scale(0.9); }
+.heat-cell.done { border-color: rgba(212,168,67,0.5); background: rgba(212,168,67,0.1); color: var(--gold); }
+.heat-cell:not(.done) { border-color: rgba(255,255,255,0.07); background: var(--bg3); color: var(--muted); }
+ 
+.toast { position: fixed; bottom: 78px; left: 50%; transform: translateX(-50%) translateY(14px); background: rgba(212,168,67,0.1); border: 1px solid var(--border2); color: var(--gold2); padding: 10px 22px; border-radius: 22px; font-size: 12px; opacity: 0; pointer-events: none; transition: all 0.28s; z-index: 300; white-space: nowrap; font-weight: 500; letter-spacing: 0.5px; }
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+.gold-line { height: 1px; background: linear-gradient(90deg, transparent, var(--gold3), transparent); margin: 0 24px 16px; opacity: 0.4; }
+@keyframes rise { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:translateY(0); } }
+</style>
+</head>
+<body>
+ 
+<!-- HOME -->
+<div class="screen active" id="screen-home">
+  <div class="home-top">
+    <div class="logo-ring">
+      <svg viewBox="0 0 24 24"><path d="M12 2L9 9H2l5.5 4-2 7L12 16l6.5 4-2-7L22 9h-7z"/></svg>
+    </div>
+    <h1>Wealthy <em>Within</em></h1>
+    <div class="tagline">21-Day Inner Wealth Journey</div>
+    <div class="by">by Kabeer Sabharwal</div>
+  </div>
+  <div id="install-bar" class="install-bar" style="display:none">
+    <p>Install on your home screen for instant access</p>
+    <button id="install-btn">Install</button>
+  </div>
+  <div class="prog-wrap">
+    <div class="prog-row">
+      <span id="prog-label">0 of 21 days</span>
+      <strong id="prog-pct">0%</strong>
+    </div>
+    <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+    <div class="week-row">
+      <div class="wl"><div class="wl-dot" style="background:#d4a843"></div>Awareness</div>
+      <div class="wl"><div class="wl-dot" style="background:#a07828"></div>Belief</div>
+      <div class="wl"><div class="wl-dot" style="background:#8b6914"></div>Alignment</div>
+    </div>
+  </div>
+  <div class="scroll">
+    <div class="gold-line"></div>
+    <div class="days-grid" id="days-grid"></div>
+  </div>
+</div>
+ 
+<!-- AI COACH -->
+<div class="screen" id="screen-ai">
+  <div class="screen-hd">
+    <h2>Wealth Coach</h2>
+    <p>Your personal guide through inner transformation</p>
+  </div>
+  <div class="quick-row">
+    <div class="qb" onclick="qp(`Give me today's affirmation`)">Today's affirmation</div>
+    <div class="qb" onclick="qp('How is my progress?')">My progress</div>
+    <div class="qb" onclick="qp('I need motivation')">Motivation</div>
+    <div class="qb" onclick="qp('How do I overcome scarcity mindset?')">Scarcity mindset</div>
+  </div>
+  <div class="scroll">
+    <div class="chat-area" id="chat-area">
+      <div class="msg ai">Welcome to Wealthy Within. I am your personal guide through this 21-day inner wealth journey. Ask me anything — about today's practice, your mindset, affirmations, or simply when you need a moment of clarity.</div>
+    </div>
+  </div>
+  <div class="chat-bar">
+    <textarea id="chat-input" rows="1" placeholder="Ask anything..."></textarea>
+    <button class="send-btn" id="send-btn" onclick="sendChat()">
+      <svg viewBox="0 0 24 24"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+    </button>
+  </div>
+</div>
+ 
+<!-- JOURNAL -->
+<div class="screen" id="screen-journal">
+  <div class="screen-hd">
+    <h2>Journal</h2>
+    <p>Write your transformation into being</p>
+  </div>
+  <div class="scroll">
+    <div class="j-wrap">
+      <select class="j-select" id="j-select" onchange="loadEntry()"></select>
+      <textarea class="j-textarea" id="j-text" placeholder="What shifted in you today? What did you feel, notice, or release?"></textarea>
+      <button class="j-save" onclick="saveEntry()">Save Entry</button>
+    </div>
+    <div class="past-wrap">
+      <div class="sec-label">Past Entries</div>
+      <div id="entries-list"></div>
+    </div>
+  </div>
+</div>
+ 
+<!-- STATS -->
+<div class="screen" id="screen-stats">
+  <div class="screen-hd">
+    <h2>Your Journey</h2>
+    <p>Every day is a step closer to yourself</p>
+  </div>
+  <div class="scroll">
+    <div class="stat-grid" id="stat-grid"></div>
+    <div class="heat-wrap">
+      <div class="sec-label" style="margin-bottom:10px">21-Day Map</div>
+      <div class="heat-grid" id="heat-grid"></div>
+    </div>
+    <div style="height:80px"></div>
+  </div>
+</div>
+ 
+<!-- NAV -->
+<nav>
+  <button class="active" id="nav-home" onclick="go('home')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    Home
+  </button>
+  <button id="nav-ai" onclick="go('ai')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+    Coach
+  </button>
+  <button id="nav-journal" onclick="go('journal')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+    Journal
+  </button>
+  <button id="nav-stats" onclick="go('stats')">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+    Progress
+  </button>
+</nav>
+ 
+<!-- MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModal(event)">
+  <div class="modal-sheet">
+    <div class="modal-handle"></div>
+    <div class="modal-inner">
+      <div class="m-meta" id="m-meta"></div>
+      <div class="m-title" id="m-title"></div>
+      <div class="section-block">
+        <div class="section-label">Today's Practice</div>
+        <div class="practice-box" id="m-practice"></div>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Affirmation</div>
+        <div class="affirmation-box" id="m-aff"></div>
+      </div>
+      <div class="section-block">
+        <div class="section-label">Personal Insight</div>
+        <div class="ai-box" id="m-ai-out">Tap below to receive your personal insight for today.</div>
+        <button class="ai-btn" id="m-ai-btn" onclick="getInsight()">Receive Insight</button>
+      </div>
+      <button class="complete-btn" id="m-btn" onclick="toggleDone()"></button>
+    </div>
+  </div>
+</div>
+ 
+<div class="toast" id="toast"></div>
+ 
+<script>
+const DAYS = [
+  {day:1,title:"Awareness",practice:"Observe your thoughts about money today without judgment — just notice. Write down 3 money thoughts in a notebook, exactly as they appear.",affirmation:"I am beginning to understand my inner world. Awareness is the seed of all change."},
+  {day:2,title:"Gratitude",practice:"Make a list of 5 things you are genuinely grateful for right now — a warm meal, a roof, someone who cares. Feel each one fully.",affirmation:"What I appreciate, appreciates. Gratitude opens every door to abundance."},
+  {day:3,title:"Desires",practice:"Write 10 things you truly want — without censoring yourself. Big, small, material, emotional. Let yourself want freely and without guilt.",affirmation:"My desires are not selfish — they are sacred. I am worthy of receiving everything I wish for."},
+  {day:4,title:"Beliefs",practice:"Identify one belief that may be blocking wealth from reaching you. Write it clearly. Then say aloud: 'This belief no longer serves me. I release it now.'",affirmation:"Old beliefs dissolve easily. I am open to new, expansive truths about money and abundance."},
+  {day:5,title:"Visualize",practice:"Sit quietly for 5 minutes. Close your eyes. See yourself living a financially free life — where are you, what are you doing, how do you feel? Stay in that feeling.",affirmation:"My vision of abundance is real and it is already making its way to me."},
+  {day:6,title:"Ask",practice:"Write with clarity: What do I want? How much? What life does it create? Be precise — the universe responds to clarity.",affirmation:"I ask with confidence. My request has been received and is already in motion."},
+  {day:7,title:"Week 1 Review",practice:"Pause and reflect on the past 7 days. What shifted? What surprised you? What became clearer? Write a full reflection in your journal.",affirmation:"Every single day I am growing. I trust this process completely."},
+  {day:8,title:"Money Flow",practice:"Each time you spend money today, say silently: 'Money flows out and flows back to me, always.' Feel gratitude instead of guilt.",affirmation:"Money is energy. It flows freely through me and always returns multiplied."},
+  {day:9,title:"Language",practice:"Every time you feel the urge to say 'I can't afford it' — pause. Replace it with: 'I'm choosing not to spend on that right now.' Notice the difference.",affirmation:"My words shape my reality. I choose the language of abundance and possibility."},
+  {day:10,title:"Receive",practice:"Practice receiving fully today. When someone gives you a compliment or gift — simply say 'Thank you' and let it land. No deflecting.",affirmation:"I am open to receiving in all forms. I am worthy of love, abundance, and generosity."},
+  {day:11,title:"Generosity",practice:"Give something freely today — your time, a kind word, a small amount of money. Give without keeping score.",affirmation:"The more freely I give, the more freely life gives back to me."},
+  {day:12,title:"Feel Rich",practice:"Before wealth arrives, embody it. Wear your favourite clothes, drink your tea slowly, walk with ease — act as if you are already free.",affirmation:"Feeling rich IS being rich. My inner state creates my outer reality."},
+  {day:13,title:"Role Models",practice:"Research one person who built wealth from very little. Read about their mindset — not just their strategy. Absorb how they thought about money.",affirmation:"What others have achieved is proof of what is possible for me too."},
+  {day:14,title:"Midpoint",practice:"You are halfway. Notice what has quietly shifted — in your thoughts, your conversations, your feelings about money. Celebrate this.",affirmation:"I am in the middle of a real transformation. I honour how far I have come."},
+  {day:15,title:"Fear Release",practice:"Write your deepest fear about money. Then destroy it — tear it, burn it safely. Symbolically release it from your life.",affirmation:"I am free from financial fear. Abundance is not something I earn — it is who I am."},
+  {day:16,title:"Money Story",practice:"What did you learn about money as a child? Write your old story — then write a new one, one that truly serves you.",affirmation:"My new money story begins now: wealth comes to me easily, joyfully, and consistently."},
+  {day:17,title:"Action",practice:"Inspired action is the bridge between thought and reality. Take one small concrete step today — one email, one idea, one conversation.",affirmation:"I act from inspiration, not desperation. Every step I take is supported by the universe."},
+  {day:18,title:"Signs",practice:"Look for signs of abundance all around you today — a coin found, a free coffee, a stranger's kindness. Count them. They are messages.",affirmation:"Abundance surrounds me constantly. I am awake to its presence."},
+  {day:19,title:"Future Self",practice:"Write a letter from your future, financially free self to your present self. What do they want you to know? What do they want you to trust?",affirmation:"My future self is already whole. I am walking toward that version of me with every breath."},
+  {day:20,title:"Alignment",practice:"Do one thing today purely for joy — dance, create, walk in nature, sing. Joy is not a luxury. It is the frequency of abundance.",affirmation:"When I live in joy, I am in perfect alignment with everything I desire."},
+  {day:21,title:"Integration",practice:"21 days complete. Write the full arc of your journey — where you began, what cracked open, what you now know. Commit to carrying this forward.",affirmation:"I have changed from the inside. Wealth — in all its forms — is now my natural state."},
+];
+ 
+let S = JSON.parse(localStorage.getItem('ww_og_v2')||'{"done":{},"journal":{}}');
+let activeDay=null, chatHist=[], deferredPrompt=null;
+const save=()=>localStorage.setItem('ww_og_v2',JSON.stringify(S));
+ 
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault(); deferredPrompt=e;
+  document.getElementById('install-bar').style.display='flex';
+});
+document.getElementById('install-btn').onclick=async()=>{
+  if(!deferredPrompt)return;
+  deferredPrompt.prompt();
+  const{outcome}=await deferredPrompt.userChoice;
+  if(outcome==='accepted')document.getElementById('install-bar').style.display='none';
+  deferredPrompt=null;
+};
+ 
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2400);
+}
+ 
+function go(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('screen-'+name).classList.add('active');
+  document.getElementById('nav-'+name).classList.add('active');
+  if(name==='stats')renderStats();
+  if(name==='journal')renderJournal();
+  if(name==='home')renderHome();
+}
+ 
+function renderHome(){
+  const done=Object.keys(S.done).length;
+  const pct=Math.round((done/21)*100);
+  document.getElementById('prog-label').textContent=`${done} of 21 days`;
+  document.getElementById('prog-pct').textContent=pct+'%';
+  document.getElementById('prog-fill').style.width=pct+'%';
+  const grid=document.getElementById('days-grid');
+  grid.innerHTML='';
+  DAYS.forEach(({day,title})=>{
+    const isDone=!!S.done[day];
+    const card=document.createElement('div');
+    card.className=`day-card${isDone?' done':''}`;
+    card.style.animationDelay=((day-1)*0.025)+'s';
+    card.innerHTML=`<div><div class="day-num">Day ${day}</div><div class="day-title">${title}</div></div><div class="day-mark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>`;
+    card.onclick=()=>openModal(day);
+    grid.appendChild(card);
+  });
+}
+ 
+function openModal(day){
+  const d=DAYS[day-1]; activeDay=day;
+  const w=day<=7?1:day<=14?2:3;
+  const isDone=!!S.done[day];
+  document.getElementById('m-meta').textContent=`Day ${day}  ·  Week ${w}`;
+  document.getElementById('m-title').textContent=d.title;
+  document.getElementById('m-practice').textContent=d.practice;
+  document.getElementById('m-aff').textContent=`"${d.affirmation}"`;
+  document.getElementById('m-ai-out').textContent='Tap below to receive your personal insight for today.';
+  document.getElementById('m-ai-btn').disabled=false;
+  document.getElementById('m-ai-btn').textContent='Receive Insight';
+  const btn=document.getElementById('m-btn');
+  btn.textContent=isDone?'Mark as Incomplete':'Complete Today\'s Practice';
+  btn.style.background=isDone?'rgba(255,255,255,0.04)':'var(--gold)';
+  btn.style.color=isDone?'var(--muted)':'var(--bg)';
+  btn.style.border=isDone?'1px solid rgba(255,255,255,0.08)':'none';
+  document.getElementById('modal').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(e){
+  if(e&&e.target!==document.getElementById('modal'))return;
+  document.getElementById('modal').classList.remove('open');
+  document.body.style.overflow='';
+  activeDay=null;
+}
+function toggleDone(){
+  if(!activeDay)return;
+  if(S.done[activeDay])delete S.done[activeDay];
+  else S.done[activeDay]=new Date().toISOString();
+  save(); renderHome();
+  const isDone=!!S.done[activeDay];
+  const btn=document.getElementById('m-btn');
+  btn.textContent=isDone?'Mark as Incomplete':'Complete Today\'s Practice';
+  btn.style.background=isDone?'rgba(255,255,255,0.04)':'var(--gold)';
+  btn.style.color=isDone?'var(--muted)':'var(--bg)';
+  btn.style.border=isDone?'1px solid rgba(255,255,255,0.08)':'none';
+  toast(isDone?`Day ${activeDay} complete`:`Day ${activeDay} unmarked`);
+}
+ 
+async function callAI(messages, system){
+  const res=await fetch('/.netlify/functions/gemini',{
+    method:'POST',
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({messages, system})
+  });
+  const data=await res.json();
+  return data.text||'No response received.';
+}
+ 
+async function getInsight(){
+  if(!activeDay)return;
+  const d=DAYS[activeDay-1];
+  const done=Object.keys(S.done).length;
+  const btn=document.getElementById('m-ai-btn');
+  const out=document.getElementById('m-ai-out');
+  btn.disabled=true; btn.textContent='Receiving...'; out.textContent='...';
+  try{
+    const text=await callAI(
+      [{role:'user',content:`Day ${activeDay} — "${d.title}". Practice: ${d.practice}. User has completed ${done}/21 days. Give a personal, deepening insight for today in 3-4 sentences.`}],
+      `You are the inner wealth guide for "Wealthy Within" — a 21-day mindset and abundance journey by Kabeer Sabharwal. Speak with warmth, depth, and quiet authority. Be grounding, specific, and genuine. Avoid clichés.`
+    );
+    out.textContent=text;
+  }catch(e){out.textContent='Connection error. Please try again.';}
+  btn.disabled=false; btn.textContent='Receive Insight';
+}
+ 
+function qp(text){document.getElementById('chat-input').value=text;sendChat();}
+async function sendChat(){
+  const inp=document.getElementById('chat-input');
+  const msg=inp.value.trim(); if(!msg)return;
+  const btn=document.getElementById('send-btn');
+  btn.disabled=true; inp.value=''; inp.style.height='auto';
+  const area=document.getElementById('chat-area');
+  const uDiv=document.createElement('div'); uDiv.className='msg user'; uDiv.textContent=msg;
+  area.appendChild(uDiv);
+  const lDiv=document.createElement('div'); lDiv.className='msg ai loading'; lDiv.textContent='...';
+  area.appendChild(lDiv); area.scrollTop=area.scrollHeight;
+  const done=Object.keys(S.done).length;
+  chatHist.push({role:'user',content:msg});
+  try{
+    const reply=await callAI(
+      chatHist,
+      `You are the AI Wealth Coach inside "Wealthy Within" — a 21-day inner wealth journey by Kabeer Sabharwal. Warm, wise, grounded in abundance mindset and conscious living. User has completed ${done}/21 days. Be conversational, genuine, concise. No bullet points.`
+    );
+    lDiv.className='msg ai'; lDiv.textContent=reply;
+    chatHist.push({role:'assistant',content:reply});
+    if(chatHist.length>20)chatHist=chatHist.slice(-16);
+  }catch(e){lDiv.className='msg ai';lDiv.textContent='Connection error. Please try again.';}
+  btn.disabled=false; area.scrollTop=area.scrollHeight;
+}
+document.getElementById('chat-input').addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}
+});
+document.getElementById('chat-input').addEventListener('input',function(){
+  this.style.height='auto'; this.style.height=Math.min(this.scrollHeight,96)+'px';
+});
+ 
+function renderJournal(){
+  const sel=document.getElementById('j-select');
+  sel.innerHTML=DAYS.map(d=>`<option value="${d.day}">Day ${d.day} — ${d.title}</option>`).join('');
+  sel.value=Math.min(Object.keys(S.done).length+1,21)||1;
+  loadEntry(); renderPast();
+}
+function loadEntry(){
+  const day=document.getElementById('j-select').value;
+  document.getElementById('j-text').value=S.journal[day]||'';
+}
+function saveEntry(){
+  const day=document.getElementById('j-select').value;
+  const text=document.getElementById('j-text').value.trim();
+  if(!text)return;
+  S.journal[day]=text; save(); toast('Entry saved'); renderPast();
+}
+function renderPast(){
+  const list=document.getElementById('entries-list');
+  const entries=Object.entries(S.journal).filter(([,v])=>v).sort(([a],[b])=>Number(a)-Number(b));
+  list.innerHTML=entries.length
+    ?entries.map(([day,text])=>`<div class="j-card"><div class="j-card-day">Day ${day} — ${DAYS[day-1]?.title}</div><div class="j-card-txt">${text.slice(0,110)}${text.length>110?'…':''}</div></div>`).join('')
+    :`<div style="color:var(--muted);font-size:13px;font-weight:300;font-style:italic">No entries yet. Begin writing your story.</div>`;
+}
+ 
+function renderStats(){
+  const done=Object.keys(S.done).length;
+  const jDone=Object.values(S.journal).filter(v=>v).length;
+  let streak=0; for(let i=1;i<=21;i++){if(S.done[i])streak++;else break;}
+  document.getElementById('stat-grid').innerHTML=`
+    <div class="stat-c"><div class="stat-n">${done}</div><div class="stat-l">Days Complete</div></div>
+    <div class="stat-c"><div class="stat-n">${Math.round((done/21)*100)}%</div><div class="stat-l">Progress</div></div>
+    <div class="stat-c"><div class="stat-n">${streak}</div><div class="stat-l">Day Streak</div></div>
+    <div class="stat-c"><div class="stat-n">${jDone}</div><div class="stat-l">Journal Entries</div></div>`;
+  document.getElementById('heat-grid').innerHTML=DAYS.map(({day})=>{
+    const isDone=!!S.done[day];
+    return `<div class="heat-cell${isDone?' done':''}" onclick="openModal(${day})">${day}</div>`;
+  }).join('');
+}
+ 
+renderHome();
+</script>
+</body>
+</html>
