@@ -426,14 +426,16 @@ function toggleDone(){
   toast(isDone?`Day ${activeDay} complete`:`Day ${activeDay} unmarked`);
 }
  
-async function callAI(messages, system){
+async function callAI(prompt){
   const res=await fetch('/.netlify/functions/gemini',{
     method:'POST',
     headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({messages, system})
+    body:JSON.stringify({prompt})
   });
+  if(!res.ok) throw new Error('Server error: '+res.status);
   const data=await res.json();
-  return data.text||'No response received.';
+  if(data.error) throw new Error(data.error);
+  return data.reply||'No response received.';
 }
  
 async function getInsight(){
@@ -442,15 +444,21 @@ async function getInsight(){
   const done=Object.keys(S.done).length;
   const btn=document.getElementById('m-ai-btn');
   const out=document.getElementById('m-ai-out');
-  btn.disabled=true; btn.textContent='Receiving...'; out.textContent='...';
+  btn.disabled=true;
+  btn.textContent='Receiving...';
+  out.style.color='var(--muted)';
+  out.textContent='Generating your personal insight\u2026';
   try{
-    const text=await callAI(
-      [{role:'user',content:`Day ${activeDay} — "${d.title}". Practice: ${d.practice}. User has completed ${done}/21 days. Give a personal, deepening insight for today in 3-4 sentences.`}],
-      `You are the inner wealth guide for "Wealthy Within" — a 21-day mindset and abundance journey by Kabeer Sabharwal. Speak with warmth, depth, and quiet authority. Be grounding, specific, and genuine. Avoid clichés.`
-    );
+    const prompt=`You are the inner wealth guide for "Wealthy Within" — a 21-day mindset and abundance journey by Kabeer Sabharwal. Speak with warmth, depth, and quiet authority. Be grounding, specific, and genuine. Avoid clichés.\n\nDay ${activeDay} — "${d.title}". Practice: ${d.practice}. Affirmation: "${d.affirmation}". The user has completed ${done} of 21 days. Give a personal, deepening insight for today in 3-4 sentences.`;
+    const text=await callAI(prompt);
+    out.style.color='var(--text)';
     out.textContent=text;
-  }catch(e){out.textContent='Connection error. Please try again.';}
-  btn.disabled=false; btn.textContent='Receive Insight';
+  }catch(e){
+    out.style.color='var(--muted)';
+    out.textContent='Could not connect. Please check your network and try again.';
+  }
+  btn.disabled=false;
+  btn.textContent='Receive Insight';
 }
  
 function qp(text){document.getElementById('chat-input').value=text;sendChat();}
@@ -462,15 +470,14 @@ async function sendChat(){
   const area=document.getElementById('chat-area');
   const uDiv=document.createElement('div'); uDiv.className='msg user'; uDiv.textContent=msg;
   area.appendChild(uDiv);
-  const lDiv=document.createElement('div'); lDiv.className='msg ai loading'; lDiv.textContent='...';
+  const lDiv=document.createElement('div'); lDiv.className='msg ai loading'; lDiv.textContent='\u2026';
   area.appendChild(lDiv); area.scrollTop=area.scrollHeight;
   const done=Object.keys(S.done).length;
   chatHist.push({role:'user',content:msg});
   try{
-    const reply=await callAI(
-      chatHist,
-      `You are the AI Wealth Coach inside "Wealthy Within" — a 21-day inner wealth journey by Kabeer Sabharwal. Warm, wise, grounded in abundance mindset and conscious living. User has completed ${done}/21 days. Be conversational, genuine, concise. No bullet points.`
-    );
+    const history=chatHist.slice(-10).map(m=>`${m.role==='user'?'User':'Coach'}: ${m.content}`).join('\n');
+    const prompt=`You are the AI Wealth Coach inside "Wealthy Within" — a 21-day inner wealth journey by Kabeer Sabharwal. Warm, wise, grounded in abundance mindset and conscious living. The user has completed ${done} of 21 days. Be conversational, genuine, and concise. No bullet points.\n\nConversation:\n${history}\n\nCoach:`;
+    const reply=await callAI(prompt);
     lDiv.className='msg ai'; lDiv.textContent=reply;
     chatHist.push({role:'assistant',content:reply});
     if(chatHist.length>20)chatHist=chatHist.slice(-16);
