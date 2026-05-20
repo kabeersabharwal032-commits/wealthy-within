@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0"/>
-<meta name="theme-color" content="#0a0812"/>
+<meta name="theme-color" content="#07050f"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="Wealthy Within"/>
@@ -11,386 +11,599 @@
 <title>Wealthy Within</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=DM+Sans:wght@300;400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet"/>
 <style>
 :root {
-  --bg:#0a0812;--bg2:#12101a;--bg3:#1a1724;--bg4:#221e2e;
-  --gold:#d4a843;--gold2:#f5d374;--gold3:#a37e2c;--gold4:#7a5e1f;
-  --text:#f2ead8;--text2:#ddd3c0;--muted:#7a6e5c;--muted2:#a8997e;
-  --border:rgba(212,168,67,0.12);--border2:rgba(212,168,67,0.25);
-  --shadow-gold:0 4px 20px rgba(212,168,67,0.15);
-  --radius:16px;--radius2:12px;
-  --fd:'Playfair Display',serif;--fb:'Inter',sans-serif;
+  --bg:#07050f;
+  --bg2:#0e0b1a;
+  --bg3:#161224;
+  --bg4:#1e1830;
+  --bg5:#251f3a;
+
+  --gold:#c9913d;
+  --gold2:#e8b86d;
+  --gold3:#f5d08a;
+  --gold4:#7a5520;
+  --gold5:#3d2a0e;
+
+  --rose:#c4687a;
+  --rose2:#e8899a;
+  --violet:#7c5cbf;
+  --violet2:#a07ed6;
+  --teal:#3da89c;
+  --teal2:#5ecdc0;
+
+  --text:#f0e8d5;
+  --text2:#d6ccb8;
+  --muted:#6e6356;
+  --muted2:#9e9080;
+
+  --border:rgba(201,145,61,0.1);
+  --border2:rgba(201,145,61,0.22);
+  --border3:rgba(201,145,61,0.4);
+
+  --grad-main: linear-gradient(135deg, #07050f 0%, #0e0918 30%, #120a1e 60%, #0a0e18 100%);
+  --grad-gold: linear-gradient(135deg, var(--gold4), var(--gold), var(--gold3));
+  --grad-card: linear-gradient(145deg, rgba(30,24,48,0.9) 0%, rgba(14,11,26,0.95) 100%);
+  --grad-aurora: linear-gradient(135deg, rgba(124,92,191,0.06) 0%, rgba(61,168,156,0.04) 50%, rgba(196,104,122,0.06) 100%);
+
+  --shadow-deep: 0 20px 60px rgba(0,0,0,0.6), 0 4px 16px rgba(0,0,0,0.4);
+  --shadow-gold: 0 8px 32px rgba(201,145,61,0.2), 0 2px 8px rgba(201,145,61,0.1);
+
+  --radius:18px;
+  --radius2:13px;
+  --fd:'Cormorant Garamond',serif;
+  --fs:'Pinyon Script',cursive;
+  --fb:'DM Sans',sans-serif;
   --ease:cubic-bezier(0.4,0,0.2,1);
+  --ease-out:cubic-bezier(0,0,0.2,1);
   --ease-bounce:cubic-bezier(0.34,1.56,0.64,1);
 }
- 
-* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-html, body { height: 100%; overflow: hidden; background: var(--bg); }
-body { font-family: var(--fb); color: var(--text); display: flex; flex-direction: column; height: 100dvh; }
- 
-.screen { display: none; flex-direction: column; height: 100%; overflow: hidden; }
-.screen.active { display: flex; animation: fadeUp 0.4s var(--ease) both; }
-.scroll { flex: 1; overflow-y: auto; -webkit-overflow-scrolling: touch; scroll-behavior: smooth; }
-.scroll::-webkit-scrollbar { width: 3px; }
-.scroll::-webkit-scrollbar-thumb { background: var(--gold4); border-radius: 3px; }
-.scroll::-webkit-scrollbar-track { background: transparent; }
- 
-nav {
-  display: flex; border-top: 1px solid var(--border);
-  background: rgba(10,8,18,0.95); backdrop-filter: blur(24px) saturate(180%);
-  -webkit-backdrop-filter: blur(24px) saturate(180%);
-  flex-shrink: 0; z-index: 10; padding: 0 8px; padding-bottom: env(safe-area-inset-bottom);
+
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;background:var(--bg);}
+body{font-family:var(--fb);color:var(--text);display:flex;flex-direction:column;height:100dvh;position:relative;}
+
+/* ── AMBIENT BACKGROUND ── */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;
+  background:var(--grad-main);
 }
-nav button {
-  flex: 1; background: none; border: none; color: var(--muted);
-  padding: 12px 4px 10px; font-size: 9px; letter-spacing: 1.2px;
-  text-transform: uppercase; cursor: pointer; font-family: var(--fb);
-  display: flex; flex-direction: column; align-items: center; gap: 5px;
-  transition: color 0.3s var(--ease), transform 0.2s var(--ease); font-weight: 500;
-  position: relative;
+body::after{
+  content:'';position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(ellipse 80% 50% at 20% 10%, rgba(124,92,191,0.12) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 40% at 85% 80%, rgba(196,104,122,0.1) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 60% at 50% 50%, rgba(61,168,156,0.05) 0%, transparent 70%);
+  animation: auroraShift 18s ease-in-out infinite alternate;
 }
-nav button svg { width: 20px; height: 20px; stroke-width: 1.5; transition: transform 0.3s var(--ease-bounce); }
-nav button.active { color: var(--gold2); }
-nav button.active svg { transform: scale(1.1); }
-nav button.active::before {
-  content: ''; position: absolute; top: -1px; left: 50%; transform: translateX(-50%);
-  width: 24px; height: 2px; background: var(--gold2); border-radius: 0 0 2px 2px;
+
+@keyframes auroraShift{
+  0%{background:radial-gradient(ellipse 80% 50% at 20% 10%, rgba(124,92,191,0.12) 0%, transparent 60%),radial-gradient(ellipse 60% 40% at 85% 80%, rgba(196,104,122,0.1) 0%, transparent 60%),radial-gradient(ellipse 50% 60% at 50% 50%, rgba(61,168,156,0.05) 0%, transparent 70%);}
+  33%{background:radial-gradient(ellipse 70% 60% at 70% 20%, rgba(124,92,191,0.1) 0%, transparent 60%),radial-gradient(ellipse 80% 40% at 10% 70%, rgba(196,104,122,0.08) 0%, transparent 60%),radial-gradient(ellipse 60% 50% at 60% 60%, rgba(61,168,156,0.07) 0%, transparent 70%);}
+  66%{background:radial-gradient(ellipse 90% 40% at 50% 5%, rgba(201,145,61,0.06) 0%, transparent 60%),radial-gradient(ellipse 50% 70% at 20% 90%, rgba(124,92,191,0.1) 0%, transparent 60%),radial-gradient(ellipse 70% 40% at 80% 40%, rgba(196,104,122,0.08) 0%, transparent 70%);}
+  100%{background:radial-gradient(ellipse 60% 80% at 30% 30%, rgba(61,168,156,0.08) 0%, transparent 60%),radial-gradient(ellipse 70% 50% at 80% 10%, rgba(201,145,61,0.06) 0%, transparent 60%),radial-gradient(ellipse 80% 60% at 40% 80%, rgba(124,92,191,0.1) 0%, transparent 70%);}
 }
- 
-.home-top {
-  padding: 56px 28px 24px; text-align: center; flex-shrink: 0; position: relative; overflow: hidden;
+
+/* ── CANVAS ── */
+#particle-canvas{position:fixed;inset:0;z-index:1;pointer-events:none;opacity:0.7;}
+
+/* ── SCREENS ── */
+.screen{display:none;flex-direction:column;height:100%;overflow:hidden;position:relative;z-index:2;}
+.screen.active{display:flex;animation:fadeUp 0.5s var(--ease) both;}
+.scroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;scroll-behavior:smooth;}
+.scroll::-webkit-scrollbar{width:2px;}
+.scroll::-webkit-scrollbar-thumb{background:var(--gold4);border-radius:2px;}
+.scroll::-webkit-scrollbar-track{background:transparent;}
+
+/* ── NAV ── */
+nav{
+  display:flex;
+  background:rgba(7,5,15,0.92);
+  backdrop-filter:blur(40px) saturate(180%);
+  -webkit-backdrop-filter:blur(40px) saturate(180%);
+  flex-shrink:0;z-index:10;padding:0 6px;
+  padding-bottom:env(safe-area-inset-bottom);
+  position:relative;border-top:none;
 }
-.home-top::before {
-  content: ''; position: absolute; top: -60px; left: 50%; transform: translateX(-50%);
-  width: 400px; height: 300px; pointer-events: none;
-  background: radial-gradient(ellipse at 50% 30%, rgba(212,168,67,0.08) 0%, rgba(212,168,67,0.03) 40%, transparent 70%);
-  animation: pulse 6s ease-in-out infinite;
+nav::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg, transparent 0%, rgba(201,145,61,0.15) 20%, rgba(232,184,109,0.5) 50%, rgba(201,145,61,0.15) 80%, transparent 100%);
 }
-.logo-ring {
-  width: 64px; height: 64px; border-radius: 50%;
-  border: 1.5px solid var(--gold3); margin: 0 auto 20px;
-  display: flex; align-items: center; justify-content: center;
-  background: radial-gradient(circle, rgba(212,168,67,0.08) 0%, rgba(212,168,67,0.02) 70%);
-  position: relative; z-index: 1;
-  box-shadow: 0 0 30px rgba(212,168,67,0.1), inset 0 0 20px rgba(212,168,67,0.05);
-  animation: logoGlow 4s ease-in-out infinite;
+nav button{
+  flex:1;background:none;border:none;color:var(--muted);
+  padding:11px 4px 9px;font-size:9px;letter-spacing:1.5px;
+  text-transform:uppercase;cursor:pointer;font-family:var(--fb);
+  display:flex;flex-direction:column;align-items:center;gap:5px;
+  transition:color 0.35s var(--ease),transform 0.2s var(--ease-bounce);
+  font-weight:500;position:relative;
 }
-.logo-ring svg { width: 26px; height: 26px; stroke: var(--gold); fill: none; stroke-width: 1.2; }
-.home-top h1 {
-  font-family: var(--fd); font-size: clamp(36px, 10vw, 52px);
-  font-weight: 700; line-height: 1.05; color: var(--text);
-  letter-spacing: -0.5px; position: relative; z-index: 1;
+nav button svg{width:19px;height:19px;stroke-width:1.5;transition:transform 0.35s var(--ease-bounce),filter 0.35s;}
+nav button.active{color:var(--gold3);}
+nav button.active svg{transform:scale(1.18);filter:drop-shadow(0 0 5px rgba(245,208,138,0.6));}
+nav button.active::before{
+  content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
+  width:32px;height:1.5px;
+  background:linear-gradient(90deg, transparent, var(--gold3), transparent);
+  box-shadow:0 0 12px var(--gold3);
 }
-.home-top h1 em {
-  color: var(--gold2); font-style: italic; font-weight: 400;
-  background: linear-gradient(135deg, var(--gold), var(--gold2));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  background-clip: text;
+
+/* ── HOME TOP ── */
+.home-top{
+  padding:48px 28px 18px;text-align:center;flex-shrink:0;
+  position:relative;overflow:visible;
 }
-.home-top .tagline {
-  font-size: 11px; color: var(--muted2); letter-spacing: 3.5px;
-  text-transform: uppercase; margin-top: 12px; font-weight: 400;
+
+/* Orb behind logo */
+.orb-wrap{position:relative;width:96px;height:96px;margin:0 auto 20px;perspective:400px;}
+.orb-halo{
+  position:absolute;inset:-18px;border-radius:50%;
+  background:conic-gradient(from 0deg, transparent 0%, rgba(201,145,61,0.15) 25%, rgba(124,92,191,0.1) 50%, rgba(196,104,122,0.12) 75%, transparent 100%);
+  animation:orbSpin 12s linear infinite;
+  filter:blur(6px);
 }
-.home-top .by {
-  font-size: 12px; color: var(--gold4); margin-top: 6px;
-  letter-spacing: 0.5px; font-family: var(--fd); font-style: italic;
+.orb-halo2{
+  position:absolute;inset:-8px;border-radius:50%;
+  border:1px dashed rgba(201,145,61,0.2);
+  animation:orbSpin 20s linear infinite reverse;
 }
- 
-.prog-wrap { padding: 0 28px 20px; flex-shrink: 0; }
-.prog-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
-.prog-row span { font-size: 12px; color: var(--muted2); font-weight: 400; letter-spacing: 0.3px; }
-.prog-row strong { font-family: var(--fd); font-size: 24px; color: var(--gold2); font-weight: 600; }
-.prog-track { height: 3px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden; margin-bottom: 16px; position: relative; }
-.prog-fill {
-  height: 100%; border-radius: 2px; transition: width 1s var(--ease);
-  background: linear-gradient(90deg, var(--gold4), var(--gold), var(--gold2));
-  box-shadow: 0 0 8px rgba(212,168,67,0.4);
-  position: relative;
+.logo-ring{
+  width:96px;height:96px;border-radius:50%;
+  border:1px solid rgba(201,145,61,0.35);
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(circle at 38% 38%, rgba(201,145,61,0.18) 0%, rgba(124,92,191,0.1) 50%, rgba(7,5,15,0.9) 100%);
+  position:relative;z-index:1;
+  box-shadow:0 0 50px rgba(201,145,61,0.2), 0 0 100px rgba(124,92,191,0.1), inset 0 0 40px rgba(201,145,61,0.08);
+  animation:logoFloat 6s ease-in-out infinite;
 }
-.prog-fill::after {
-  content: ''; position: absolute; right: 0; top: -1px; bottom: -1px;
-  width: 6px; border-radius: 50%; background: var(--gold2);
-  box-shadow: 0 0 6px var(--gold2);
+.logo-ring svg{width:34px;height:34px;stroke:var(--gold2);fill:none;stroke-width:1.1;filter:drop-shadow(0 0 8px rgba(201,145,61,0.5));}
+
+@keyframes orbSpin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+@keyframes logoFloat{0%,100%{transform:translateY(0) rotateX(0deg);}50%{transform:translateY(-7px) rotateX(4deg);}}
+
+.home-top h1{
+  font-family:var(--fd);
+  font-size:clamp(40px,11vw,58px);
+  font-weight:600;line-height:1.0;color:var(--text);
+  letter-spacing:-0.5px;
+  text-shadow:0 4px 30px rgba(0,0,0,0.6);
 }
-.week-row { display: flex; gap: 20px; justify-content: center; }
-.wl { font-size: 10px; color: var(--muted2); display: flex; align-items: center; gap: 6px; letter-spacing: 0.8px; text-transform: uppercase; font-weight: 500; }
-.wl-dot { width: 6px; height: 6px; border-radius: 50%; box-shadow: 0 0 4px currentColor; }
- 
-.install-bar {
-  margin: 0 20px 14px; padding: 14px 18px;
-  background: linear-gradient(135deg, rgba(212,168,67,0.06), rgba(212,168,67,0.02));
-  border: 1px solid var(--border); border-radius: var(--radius2);
-  display: flex; align-items: center; gap: 14px;
-  backdrop-filter: blur(10px);
+.home-top h1 em{
+  font-style:italic;font-weight:300;
+  background:linear-gradient(135deg, var(--gold2) 0%, var(--gold3) 40%, var(--rose2) 70%, var(--violet2) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;background-size:200% 100%;
+  animation:gradShift 5s ease-in-out infinite alternate;
+  display:inline-block;
 }
-.install-bar p { font-size: 13px; color: var(--muted2); flex: 1; line-height: 1.4; font-weight: 300; }
-.install-bar button {
-  background: linear-gradient(135deg, var(--gold3), var(--gold));
-  border: none; border-radius: 8px; color: var(--bg); padding: 8px 16px;
-  font-size: 11px; cursor: pointer; font-family: var(--fb); font-weight: 600;
-  letter-spacing: 0.8px; white-space: nowrap; transition: transform 0.2s var(--ease), box-shadow 0.2s;
+@keyframes gradShift{
+  0%{background-position:0% 0%;}
+  100%{background-position:100% 0%;}
 }
-.install-bar button:hover { transform: translateY(-1px); box-shadow: var(--shadow-gold); }
- 
-.days-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 18px 28px; }
-@media (min-width: 480px) { .days-grid { grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 0 24px 28px; } }
-@media (min-width: 768px) { .days-grid { grid-template-columns: repeat(7, 1fr); gap: 12px; max-width: 700px; margin: 0 auto; padding: 0 24px 28px; } }
-.day-card {
-  border-radius: var(--radius2); padding: 14px 12px 12px; cursor: pointer;
-  border: 1px solid rgba(255,255,255,0.05);
-  background: var(--bg2); position: relative;
-  min-height: 88px; display: flex; flex-direction: column;
-  justify-content: space-between;
-  transition: all 0.3s var(--ease); overflow: hidden;
-  animation: cardRise 0.5s var(--ease) both;
+
+.home-top .tagline{
+  font-size:10px;color:var(--muted2);letter-spacing:4px;
+  text-transform:uppercase;margin-top:10px;font-weight:400;
 }
-.day-card::before {
-  content: ''; position: absolute; inset: 0; opacity: 0;
-  background: linear-gradient(135deg, rgba(212,168,67,0.08), transparent);
-  transition: opacity 0.3s;
+
+/* KABEER SABHARWAL — signature script highlight */
+.by-wrap{margin-top:12px;display:inline-flex;flex-direction:column;align-items:center;gap:0;}
+.by-line{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold4),transparent);margin:4px auto;}
+.by{
+  font-family:var(--fs);
+  font-size:26px;
+  font-weight:400;
+  letter-spacing:1px;
+  background:linear-gradient(135deg, var(--gold) 0%, var(--gold3) 50%, var(--rose2) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  filter:drop-shadow(0 2px 8px rgba(201,145,61,0.3));
+  animation:nameGlow 4s ease-in-out infinite alternate;
 }
-.day-card:hover { border-color: var(--border2); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
-.day-card:hover::before { opacity: 1; }
-.day-card:active { transform: scale(0.97); }
-.day-card.done { border-color: rgba(212,168,67,0.4); background: linear-gradient(135deg, rgba(212,168,67,0.08), rgba(212,168,67,0.03)); }
-.day-card.done::after {
-  content: ''; position: absolute; top: -20px; right: -20px;
-  width: 50px; height: 50px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(212,168,67,0.15), transparent);
+@keyframes nameGlow{
+  0%{filter:drop-shadow(0 2px 8px rgba(201,145,61,0.2));}
+  100%{filter:drop-shadow(0 2px 16px rgba(201,145,61,0.5)) drop-shadow(0 0 30px rgba(196,104,122,0.2));}
 }
-.day-num { font-size: 9px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); position: relative; z-index: 1; }
-.day-card.done .day-num { color: var(--gold); }
-.day-title { font-family: var(--fd); font-size: 15px; font-weight: 600; color: var(--text); margin-top: 6px; line-height: 1.2; position: relative; z-index: 1; }
-.day-mark { position: absolute; top: 10px; right: 10px; z-index: 1; }
-.day-mark svg { width: 14px; height: 14px; stroke: var(--gold2); fill: none; stroke-width: 2.5; opacity: 0; transition: opacity 0.3s, transform 0.3s var(--ease-bounce); }
-.day-card.done .day-mark svg { opacity: 1; transform: scale(1); }
- 
-.modal-overlay {
-  position: fixed; inset: 0; z-index: 100;
-  background: rgba(4,3,8,0.92); backdrop-filter: blur(8px);
-  display: flex; align-items: flex-end; justify-content: center;
-  opacity: 0; pointer-events: none; transition: opacity 0.3s var(--ease);
+
+/* PROGRESS */
+.prog-wrap{padding:0 26px 18px;flex-shrink:0;}
+.prog-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;}
+.prog-row span{font-size:12px;color:var(--muted2);font-weight:400;letter-spacing:0.3px;}
+.prog-row strong{
+  font-family:var(--fd);font-size:26px;color:var(--gold3);font-weight:600;
+  text-shadow:0 0 20px rgba(245,208,138,0.4);
 }
-.modal-overlay.open { opacity: 1; pointer-events: all; }
-.modal-sheet {
-  width: 100%; max-width: 560px; max-height: 92vh;
-  background: var(--bg2); border-radius: 24px 24px 0 0;
-  border-top: 1px solid var(--border2); overflow-y: auto;
-  transform: translateY(100%); transition: transform 0.4s var(--ease);
-  box-shadow: 0 -10px 60px rgba(0,0,0,0.5);
+.prog-track{
+  height:2px;
+  background:rgba(255,255,255,0.05);
+  border-radius:2px;overflow:visible;margin-bottom:14px;position:relative;
 }
-.modal-overlay.open .modal-sheet { transform: translateY(0); }
-.modal-handle { width: 36px; height: 4px; background: rgba(255,255,255,0.12); border-radius: 2px; margin: 16px auto 0; }
-.modal-inner { padding: 24px 24px 44px; }
-@media (min-width: 768px) { .modal-inner { padding: 32px 32px 48px; } }
-.m-meta { font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--gold3); margin-bottom: 6px; }
-.m-title { font-family: var(--fd); font-size: clamp(28px, 6vw, 36px); font-weight: 700; color: var(--text); margin-bottom: 24px; line-height: 1.05; }
-.section-block { margin-bottom: 18px; }
-.section-label { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
-.practice-box {
-  background: var(--bg3); border-radius: var(--radius2); padding: 18px;
-  border: 1px solid rgba(255,255,255,0.06); font-size: 15px; line-height: 1.85;
-  color: var(--text2); font-weight: 300;
+.prog-fill{
+  height:100%;border-radius:2px;transition:width 1.4s var(--ease-out);
+  background:linear-gradient(90deg, var(--gold5), var(--gold4), var(--gold), var(--gold3));
+  box-shadow:0 0 16px rgba(201,145,61,0.6),0 0 4px rgba(245,208,138,0.8);
+  position:relative;
 }
-.affirmation-box {
-  background: linear-gradient(135deg, rgba(212,168,67,0.07), rgba(212,168,67,0.03));
-  border-radius: var(--radius2); padding: 18px; border: 1px solid var(--border);
-  font-family: var(--fd); font-size: 18px; line-height: 1.7;
-  color: var(--gold2); font-style: italic;
+.prog-fill::after{
+  content:'';position:absolute;right:-4px;top:-4px;
+  width:10px;height:10px;border-radius:50%;
+  background:var(--gold3);
+  box-shadow:0 0 12px var(--gold3),0 0 24px rgba(245,208,138,0.5);
 }
-.ai-box {
-  background: var(--bg3); border: 1px solid rgba(255,255,255,0.06);
-  border-radius: var(--radius2); padding: 18px;
-  font-size: 14px; line-height: 1.85; color: var(--muted2); font-weight: 300; min-height: 64px;
+.week-row{display:flex;gap:18px;justify-content:center;}
+.wl{font-size:10px;color:var(--muted2);display:flex;align-items:center;gap:6px;letter-spacing:0.8px;text-transform:uppercase;font-weight:500;}
+.wl-dot{width:5px;height:5px;border-radius:50%;box-shadow:0 0 6px currentColor;}
+
+/* INSTALL */
+.install-bar{
+  margin:0 18px 14px;padding:13px 17px;
+  background:linear-gradient(135deg,rgba(201,145,61,0.07),rgba(124,92,191,0.04));
+  border:1px solid var(--border);border-radius:var(--radius2);
+  display:flex;align-items:center;gap:14px;backdrop-filter:blur(10px);
 }
-.ai-btn {
-  margin-top: 10px; width: 100%; padding: 13px; border-radius: 10px;
-  border: 1px solid var(--border2); background: rgba(212,168,67,0.06);
-  color: var(--gold); font-size: 10px; cursor: pointer; font-family: var(--fb);
-  font-weight: 600; letter-spacing: 2px; text-transform: uppercase;
-  transition: all 0.3s var(--ease);
+.install-bar p{font-size:12px;color:var(--muted2);flex:1;line-height:1.5;font-weight:300;}
+.install-bar button{
+  background:var(--grad-gold);border:none;border-radius:8px;
+  color:var(--bg);padding:8px 16px;font-size:11px;cursor:pointer;
+  font-family:var(--fb);font-weight:600;letter-spacing:0.8px;white-space:nowrap;
+  transition:transform 0.2s,box-shadow 0.2s;
 }
-.ai-btn:hover:not(:disabled) { background: rgba(212,168,67,0.12); border-color: var(--gold); transform: translateY(-1px); }
-.ai-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-.complete-btn {
-  width: 100%; padding: 18px; border-radius: var(--radius2); border: none;
-  cursor: pointer; font-family: var(--fb); font-size: 11px;
-  letter-spacing: 2.5px; text-transform: uppercase; font-weight: 700;
-  transition: all 0.3s var(--ease); margin-top: 16px;
+.install-bar button:hover{transform:translateY(-1px);box-shadow:var(--shadow-gold);}
+
+/* DAY CARDS */
+.days-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;padding:0 16px 28px;}
+@media(min-width:480px){.days-grid{grid-template-columns:repeat(4,1fr);gap:11px;padding:0 20px 28px;}}
+@media(min-width:768px){.days-grid{grid-template-columns:repeat(7,1fr);gap:11px;max-width:720px;margin:0 auto;padding:0 22px 28px;}}
+
+.day-card{
+  border-radius:var(--radius2);padding:14px 11px 12px;cursor:pointer;
+  border:1px solid rgba(255,255,255,0.05);
+  background:var(--grad-card);
+  position:relative;min-height:88px;
+  display:flex;flex-direction:column;justify-content:space-between;
+  transition:all 0.35s var(--ease);overflow:hidden;
+  animation:cardRise 0.6s var(--ease) both;
+  transform-style:preserve-3d;perspective:500px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.04);
 }
-.complete-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-gold); }
- 
-.screen-hd { padding: 56px 28px 16px; flex-shrink: 0; }
-.screen-hd h2 { font-family: var(--fd); font-size: clamp(28px, 7vw, 34px); font-weight: 700; color: var(--text); margin-bottom: 5px; }
-.screen-hd p { font-size: 13px; color: var(--muted2); font-weight: 300; letter-spacing: 0.2px; }
-.chat-area { padding: 12px 18px 8px; display: flex; flex-direction: column; gap: 12px; }
-.msg {
-  max-width: 85%; padding: 14px 17px; border-radius: 18px; font-size: 14.5px;
-  line-height: 1.8; font-weight: 300; animation: msgIn 0.3s var(--ease) both;
+.day-card::before{
+  content:'';position:absolute;inset:0;opacity:0;
+  background:linear-gradient(135deg,rgba(201,145,61,0.1) 0%,rgba(124,92,191,0.06) 100%);
+  transition:opacity 0.35s;
 }
-.msg.user {
-  background: linear-gradient(135deg, rgba(212,168,67,0.1), rgba(212,168,67,0.05));
-  border: 1px solid var(--border2); align-self: flex-end; color: var(--text);
-  border-bottom-right-radius: 4px;
+.day-card:hover{
+  border-color:var(--border2);
+  transform:translateY(-5px) rotateX(5deg) rotateY(-2deg);
+  box-shadow:0 20px 50px rgba(0,0,0,0.5),0 0 0 1px rgba(201,145,61,0.12),inset 0 1px 0 rgba(255,255,255,0.07);
 }
-.msg.ai {
-  background: var(--bg3); border: 1px solid rgba(255,255,255,0.06);
-  align-self: flex-start; color: var(--text2); border-bottom-left-radius: 4px;
+.day-card:hover::before{opacity:1;}
+.day-card:active{transform:scale(0.96);transition-duration:0.1s;}
+.day-card.done{
+  border-color:rgba(201,145,61,0.3);
+  background:linear-gradient(145deg,rgba(40,30,16,0.9) 0%,rgba(20,14,8,0.95) 100%);
+  box-shadow:0 4px 24px rgba(201,145,61,0.1),inset 0 1px 0 rgba(201,145,61,0.12);
 }
-.msg.loading { color: var(--muted); font-style: italic; opacity: 0.6; }
-.chat-bar {
-  padding: 12px 16px; display: flex; gap: 10px; align-items: flex-end;
-  border-top: 1px solid var(--border); background: rgba(10,8,18,0.95);
-  backdrop-filter: blur(20px); flex-shrink: 0;
+.day-card.done::before{
+  background:linear-gradient(135deg,rgba(201,145,61,0.12) 0%,rgba(61,168,156,0.05) 100%);
+  opacity:1;
 }
-.chat-bar textarea {
-  flex: 1; background: var(--bg3); border: 1px solid var(--border);
-  border-radius: var(--radius2); padding: 12px 15px; color: var(--text);
-  font-family: var(--fb); font-size: 14.5px; resize: none; outline: none;
-  max-height: 100px; line-height: 1.5; font-weight: 300;
-  transition: border-color 0.3s;
+.day-num{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);position:relative;z-index:1;}
+.day-card.done .day-num{color:var(--gold);}
+.day-title{font-family:var(--fd);font-size:15px;font-weight:600;color:var(--text);margin-top:5px;line-height:1.2;position:relative;z-index:1;}
+.day-card.done .day-title{color:var(--gold2);}
+.day-mark{position:absolute;top:10px;right:10px;z-index:1;}
+.day-mark svg{width:13px;height:13px;stroke:var(--gold3);fill:none;stroke-width:2.5;opacity:0;transition:opacity 0.4s,transform 0.5s var(--ease-bounce);transform:scale(0.3) rotate(-30deg);filter:drop-shadow(0 0 4px var(--gold3));}
+.day-card.done .day-mark svg{opacity:1;transform:scale(1) rotate(0deg);}
+
+/* shimmer sweep on done cards */
+.day-card.done::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(105deg,transparent 30%,rgba(245,208,138,0.07) 50%,transparent 70%);
+  animation:cardShimmer 4s ease-in-out infinite;
 }
-.chat-bar textarea:focus { border-color: var(--border2); }
-.chat-bar textarea::placeholder { color: var(--muted); }
-.send-btn {
-  width: 44px; height: 44px; border-radius: var(--radius2); border: none;
-  background: linear-gradient(135deg, var(--gold3), var(--gold));
-  color: var(--bg); cursor: pointer; flex-shrink: 0;
-  display: flex; align-items: center; justify-content: center;
-  transition: all 0.3s var(--ease); box-shadow: 0 2px 12px rgba(212,168,67,0.2);
+@keyframes cardShimmer{0%,100%{transform:translateX(-100%);}50%{transform:translateX(200%);}}
+
+/* MODAL */
+.modal-overlay{
+  position:fixed;inset:0;z-index:100;
+  background:rgba(3,2,8,0.95);backdrop-filter:blur(16px);
+  display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity 0.35s var(--ease);
 }
-.send-btn:hover:not(:disabled) { transform: translateY(-1px); box-shadow: var(--shadow-gold); }
-.send-btn:disabled { opacity: 0.3; cursor: not-allowed; }
-.send-btn svg { width: 16px; height: 16px; stroke: var(--bg); fill: none; stroke-width: 2.5; }
-.quick-row { padding: 0 16px 12px; display: flex; gap: 8px; flex-wrap: wrap; flex-shrink: 0; }
-.qb {
-  background: var(--bg3); border: 1px solid var(--border); border-radius: 20px;
-  padding: 8px 15px; font-size: 12px; color: var(--muted2); cursor: pointer;
-  font-family: var(--fb); font-weight: 400; white-space: nowrap;
-  transition: all 0.2s var(--ease);
+.modal-overlay.open{opacity:1;pointer-events:all;}
+.modal-sheet{
+  width:100%;max-width:560px;max-height:92vh;
+  background:linear-gradient(180deg,var(--bg3) 0%,var(--bg2) 100%);
+  border-radius:28px 28px 0 0;
+  border-top:1px solid var(--border2);
+  border-left:1px solid rgba(201,145,61,0.07);
+  border-right:1px solid rgba(201,145,61,0.07);
+  overflow-y:auto;
+  transform:translateY(100%);
+  transition:transform 0.48s cubic-bezier(0.32,0.72,0,1);
+  box-shadow:0 -24px 100px rgba(0,0,0,0.7),0 -1px 0 rgba(201,145,61,0.15);
 }
-.qb:hover { border-color: var(--border2); color: var(--gold); background: rgba(212,168,67,0.05); }
-.qb:active { transform: scale(0.95); }
- 
-.j-wrap { padding: 0 18px 18px; }
-.j-select {
-  width: 100%; background: var(--bg3); border: 1px solid var(--border);
-  border-radius: var(--radius2); padding: 13px 16px; color: var(--text);
-  font-family: var(--fb); font-size: 14px; outline: none; margin-bottom: 12px;
-  appearance: none; font-weight: 400; cursor: pointer;
-  transition: border-color 0.3s;
+.modal-overlay.open .modal-sheet{transform:translateY(0);}
+.modal-handle{
+  width:44px;height:4px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);
+  border-radius:2px;margin:18px auto 0;
 }
-.j-select:focus { border-color: var(--border2); }
-.j-select option { background: var(--bg2); }
-.j-textarea {
-  width: 100%; background: var(--bg3); border: 1px solid var(--border);
-  border-radius: var(--radius2); padding: 16px; color: var(--text);
-  font-family: var(--fb); font-size: 15px; line-height: 1.8; resize: none;
-  outline: none; min-height: 160px; font-weight: 300; transition: border-color 0.3s;
+.modal-inner{padding:24px 24px 48px;}
+@media(min-width:768px){.modal-inner{padding:32px 32px 54px;}}
+.m-meta{font-size:10px;font-weight:600;letter-spacing:2.5px;text-transform:uppercase;color:var(--gold4);margin-bottom:8px;}
+.m-title{font-family:var(--fd);font-size:clamp(30px,6vw,40px);font-weight:600;color:var(--text);margin-bottom:28px;line-height:1.05;animation:titleReveal 0.5s var(--ease) both 0.1s;}
+@keyframes titleReveal{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+.section-block{margin-bottom:20px;animation:blockReveal 0.5s var(--ease) both;}
+.section-block:nth-child(3){animation-delay:0.12s;}
+.section-block:nth-child(4){animation-delay:0.22s;}
+.section-block:nth-child(5){animation-delay:0.32s;}
+@keyframes blockReveal{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+.section-label{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+.practice-box{
+  background:rgba(14,11,26,0.8);border-radius:var(--radius2);padding:18px 20px;
+  border:1px solid rgba(255,255,255,0.06);font-size:15px;line-height:1.9;
+  color:var(--text2);font-weight:300;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,0.04),0 4px 20px rgba(0,0,0,0.3);
 }
-.j-textarea:focus { border-color: var(--border2); }
-.j-textarea::placeholder { color: var(--muted); }
-.j-save {
-  margin-top: 12px; width: 100%; padding: 15px; border-radius: var(--radius2);
-  border: 1px solid var(--border2); background: rgba(212,168,67,0.06);
-  color: var(--gold); font-family: var(--fb); font-size: 11px; letter-spacing: 2px;
-  font-weight: 600; text-transform: uppercase; cursor: pointer;
-  transition: all 0.3s var(--ease);
+.affirmation-box{
+  background:linear-gradient(135deg,rgba(61,42,14,0.6),rgba(30,14,20,0.6));
+  border-radius:var(--radius2);padding:22px;
+  border:1px solid rgba(201,145,61,0.18);
+  font-family:var(--fd);font-size:19px;line-height:1.75;
+  color:var(--gold2);font-style:italic;
+  box-shadow:0 4px 30px rgba(201,145,61,0.07),inset 0 1px 0 rgba(201,145,61,0.1);
+  position:relative;overflow:hidden;
 }
-.j-save:hover { background: rgba(212,168,67,0.12); transform: translateY(-1px); }
-.past-wrap { padding: 0 18px 80px; }
-.sec-label { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin-bottom: 12px; }
-.j-card {
-  background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius2);
-  padding: 15px 17px; margin-bottom: 8px; transition: all 0.2s var(--ease);
+.affirmation-box::before{
+  content:'\201C';position:absolute;top:-14px;left:14px;
+  font-size:90px;color:rgba(201,145,61,0.07);font-family:var(--fd);
+  line-height:1;pointer-events:none;
 }
-.j-card:hover { border-color: var(--border2); transform: translateX(2px); }
-.j-card-day { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; color: var(--gold3); text-transform: uppercase; margin-bottom: 6px; }
-.j-card-txt { font-size: 13.5px; color: var(--muted2); line-height: 1.6; font-weight: 300; }
- 
-.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 0 18px 16px; }
-@media (min-width: 768px) { .stat-grid { max-width: 500px; margin: 0 auto; } }
-.stat-c {
-  background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius);
-  padding: 22px 18px; text-align: center; transition: all 0.3s var(--ease);
-  position: relative; overflow: hidden;
+.affirmation-box::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,transparent 60%,rgba(196,104,122,0.05) 100%);
+  pointer-events:none;
 }
-.stat-c::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, transparent, var(--gold3), transparent); opacity: 0;
-  transition: opacity 0.3s;
+.ai-box{
+  background:rgba(14,11,26,0.8);border:1px solid rgba(255,255,255,0.06);
+  border-radius:var(--radius2);padding:18px 20px;
+  font-size:14px;line-height:1.9;color:var(--muted2);font-weight:300;
+  min-height:64px;box-shadow:inset 0 1px 0 rgba(255,255,255,0.03);
 }
-.stat-c:hover { border-color: var(--border2); transform: translateY(-2px); }
-.stat-c:hover::before { opacity: 1; }
-.stat-n { font-family: var(--fd); font-size: 38px; font-weight: 700; color: var(--gold2); line-height: 1; }
-.stat-l { font-size: 11px; color: var(--muted2); margin-top: 6px; font-weight: 400; letter-spacing: 0.3px; }
-.heat-wrap { padding: 0 18px 24px; }
-@media (min-width: 768px) { .heat-wrap { max-width: 500px; margin: 0 auto; } }
-.heat-grid { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
-.heat-cell {
-  width: 36px; height: 36px; border-radius: 9px; display: flex; align-items: center;
-  justify-content: center; font-size: 10px; font-weight: 600; letter-spacing: 0.3px;
-  border: 1px solid; cursor: pointer; transition: all 0.2s var(--ease);
+.ai-btn{
+  margin-top:10px;width:100%;padding:14px;border-radius:11px;
+  border:1px solid var(--border2);
+  background:linear-gradient(135deg,rgba(201,145,61,0.08),rgba(124,92,191,0.05));
+  color:var(--gold2);font-size:10px;cursor:pointer;font-family:var(--fb);
+  font-weight:600;letter-spacing:2px;text-transform:uppercase;
+  transition:all 0.3s var(--ease);position:relative;overflow:hidden;
 }
-.heat-cell:hover { transform: scale(1.08); }
-.heat-cell:active { transform: scale(0.92); }
-.heat-cell.done { border-color: rgba(212,168,67,0.5); background: rgba(212,168,67,0.12); color: var(--gold2); box-shadow: 0 2px 8px rgba(212,168,67,0.1); }
-.heat-cell:not(.done) { border-color: rgba(255,255,255,0.07); background: var(--bg3); color: var(--muted); }
- 
-.toast {
-  position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%) translateY(16px);
-  background: rgba(10,8,18,0.95); border: 1px solid var(--border2);
-  backdrop-filter: blur(20px); color: var(--gold2);
-  padding: 12px 24px; border-radius: 24px; font-size: 13px;
-  opacity: 0; pointer-events: none; transition: all 0.35s var(--ease-bounce);
-  z-index: 300; white-space: nowrap; font-weight: 500; letter-spacing: 0.3px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+.ai-btn::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(201,145,61,0.1),transparent);
+  transform:translateX(-100%);transition:transform 0.6s;
 }
-.toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
- 
-.gold-line { height: 1px; background: linear-gradient(90deg, transparent, var(--gold4), transparent); margin: 0 28px 18px; opacity: 0.5; }
- 
-@keyframes fadeUp { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes cardRise { from { opacity: 0; transform: translateY(16px) scale(0.96); } to { opacity: 1; transform: translateY(0) scale(1); } }
-@keyframes msgIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes pulse { 0%, 100% { opacity: 0.6; transform: translateX(-50%) scale(1); } 50% { opacity: 1; transform: translateX(-50%) scale(1.05); } }
-@keyframes logoGlow { 0%, 100% { box-shadow: 0 0 30px rgba(212,168,67,0.1), inset 0 0 20px rgba(212,168,67,0.05); } 50% { box-shadow: 0 0 40px rgba(212,168,67,0.2), inset 0 0 25px rgba(212,168,67,0.08); } }
-@keyframes shimmer { 0% { background-position: -200% 0; } 100% { background-position: 200% 0; } }
- 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+.ai-btn:hover:not(:disabled)::before{transform:translateX(100%);}
+.ai-btn:hover:not(:disabled){background:linear-gradient(135deg,rgba(201,145,61,0.15),rgba(124,92,191,0.1));border-color:var(--border3);transform:translateY(-1px);box-shadow:0 4px 20px rgba(201,145,61,0.15);}
+.ai-btn:disabled{opacity:0.35;cursor:not-allowed;}
+.complete-btn{
+  width:100%;padding:18px;border-radius:var(--radius2);border:none;
+  cursor:pointer;font-family:var(--fb);font-size:11px;
+  letter-spacing:2.5px;text-transform:uppercase;font-weight:700;
+  transition:all 0.35s var(--ease);margin-top:16px;position:relative;overflow:hidden;
 }
- 
-@media (min-width: 768px) {
-  .home-top h1 { font-size: 52px; }
-  .days-grid { max-width: 700px; margin: 0 auto; }
-  .msg { max-width: 70%; }
-  .modal-sheet { border-radius: 24px; margin-bottom: 20px; max-height: 85vh; }
+.complete-btn::after{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);
+  transform:translateX(-100%);transition:transform 0.7s;
 }
-@media (min-width: 1024px) {
-  .days-grid { max-width: 900px; grid-template-columns: repeat(7, 1fr); }
-  .chat-area { max-width: 700px; margin: 0 auto; width: 100%; }
+.complete-btn:hover::after{transform:translateX(100%);}
+.complete-btn:hover{transform:translateY(-2px);box-shadow:var(--shadow-gold),0 10px 40px rgba(0,0,0,0.4);}
+
+/* SCREEN HEADERS */
+.screen-hd{padding:52px 26px 14px;flex-shrink:0;}
+.screen-hd h2{font-family:var(--fd);font-size:clamp(28px,7vw,36px);font-weight:600;color:var(--text);margin-bottom:5px;}
+.screen-hd p{font-size:13px;color:var(--muted2);font-weight:300;letter-spacing:0.2px;}
+
+/* CHAT */
+.chat-area{padding:12px 18px 8px;display:flex;flex-direction:column;gap:12px;}
+.msg{
+  max-width:85%;padding:14px 17px;border-radius:18px;font-size:14.5px;
+  line-height:1.85;font-weight:300;animation:msgIn 0.4s var(--ease-bounce) both;
+}
+.msg.user{
+  background:linear-gradient(135deg,rgba(201,145,61,0.14),rgba(201,145,61,0.06));
+  border:1px solid var(--border2);align-self:flex-end;color:var(--text);
+  border-bottom-right-radius:4px;
+  box-shadow:0 4px 20px rgba(201,145,61,0.1);
+}
+.msg.ai{
+  background:rgba(14,11,26,0.8);border:1px solid rgba(255,255,255,0.07);
+  align-self:flex-start;color:var(--text2);border-bottom-left-radius:4px;
+  box-shadow:0 4px 20px rgba(0,0,0,0.3);
+}
+.msg.loading{color:var(--muted);font-style:italic;opacity:0.6;}
+.chat-bar{
+  padding:12px 15px;display:flex;gap:10px;align-items:flex-end;
+  border-top:1px solid var(--border);
+  background:rgba(7,5,15,0.97);backdrop-filter:blur(32px);flex-shrink:0;
+}
+.chat-bar textarea{
+  flex:1;background:rgba(14,11,26,0.9);border:1px solid var(--border);
+  border-radius:var(--radius2);padding:12px 15px;color:var(--text);
+  font-family:var(--fb);font-size:14.5px;resize:none;outline:none;
+  max-height:100px;line-height:1.5;font-weight:300;
+  transition:border-color 0.3s,box-shadow 0.3s;
+}
+.chat-bar textarea:focus{border-color:var(--border2);box-shadow:0 0 0 3px rgba(201,145,61,0.07);}
+.chat-bar textarea::placeholder{color:var(--muted);}
+.send-btn{
+  width:44px;height:44px;border-radius:var(--radius2);border:none;
+  background:var(--grad-gold);color:var(--bg);cursor:pointer;flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.3s var(--ease));
+  box-shadow:0 2px 16px rgba(201,145,61,0.3),inset 0 1px 0 rgba(255,255,255,0.15);
+}
+.send-btn:hover:not(:disabled){transform:translateY(-2px) scale(1.05);box-shadow:var(--shadow-gold),0 8px 30px rgba(201,145,61,0.25);}
+.send-btn:active:not(:disabled){transform:scale(0.95);}
+.send-btn:disabled{opacity:0.3;cursor:not-allowed;}
+.send-btn svg{width:16px;height:16px;stroke:var(--bg);fill:none;stroke-width:2.5;}
+.quick-row{padding:0 15px 12px;display:flex;gap:7px;flex-wrap:wrap;flex-shrink:0;}
+.qb{
+  background:rgba(14,11,26,0.8);border:1px solid var(--border);border-radius:20px;
+  padding:8px 14px;font-size:12px;color:var(--muted2);cursor:pointer;
+  font-family:var(--fb);font-weight:400;white-space:nowrap;
+  transition:all 0.25s var(--ease));
+}
+.qb:hover{border-color:var(--border2);color:var(--gold2);background:rgba(201,145,61,0.07);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,0.3);}
+.qb:active{transform:scale(0.95);}
+
+/* JOURNAL */
+.j-wrap{padding:0 18px 18px;}
+.j-select{
+  width:100%;background:rgba(14,11,26,0.9);border:1px solid var(--border);
+  border-radius:var(--radius2);padding:13px 16px;color:var(--text);
+  font-family:var(--fb);font-size:14px;outline:none;margin-bottom:12px;
+  appearance:none;font-weight:400;cursor:pointer;
+  transition:border-color 0.3s,box-shadow 0.3s;
+}
+.j-select:focus{border-color:var(--border2);box-shadow:0 0 0 3px rgba(201,145,61,0.07);}
+.j-select option{background:var(--bg2);}
+.j-textarea{
+  width:100%;background:rgba(14,11,26,0.9);border:1px solid var(--border);
+  border-radius:var(--radius2);padding:16px;color:var(--text);
+  font-family:var(--fb);font-size:15px;line-height:1.8;resize:none;
+  outline:none;min-height:160px;font-weight:300;
+  transition:border-color 0.3s,box-shadow 0.3s;
+}
+.j-textarea:focus{border-color:var(--border2);box-shadow:0 0 0 3px rgba(201,145,61,0.07);}
+.j-textarea::placeholder{color:var(--muted);}
+.j-save{
+  margin-top:12px;width:100%;padding:15px;border-radius:var(--radius2);
+  border:1px solid var(--border2);
+  background:linear-gradient(135deg,rgba(201,145,61,0.08),rgba(124,92,191,0.05));
+  color:var(--gold2);font-family:var(--fb);font-size:11px;letter-spacing:2px;
+  font-weight:600;text-transform:uppercase;cursor:pointer;
+  transition:all 0.3s var(--ease));
+}
+.j-save:hover{background:linear-gradient(135deg,rgba(201,145,61,0.15),rgba(124,92,191,0.08));transform:translateY(-1px);box-shadow:0 4px 20px rgba(201,145,61,0.12);}
+.past-wrap{padding:0 18px 80px;}
+.sec-label{font-size:10px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:12px;}
+.j-card{
+  background:rgba(14,11,26,0.8);border:1px solid var(--border);border-radius:var(--radius2);
+  padding:15px 17px;margin-bottom:8px;transition:all 0.25s var(--ease));
+}
+.j-card:hover{border-color:var(--border2);transform:translateX(3px);box-shadow:0 4px 20px rgba(0,0,0,0.3);}
+.j-card-day{font-size:10px;font-weight:600;letter-spacing:1.5px;color:var(--gold4);text-transform:uppercase;margin-bottom:6px;}
+.j-card-txt{font-size:13.5px;color:var(--muted2);line-height:1.6;font-weight:300;}
+
+/* STATS */
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 18px 16px;}
+@media(min-width:768px){.stat-grid{max-width:500px;margin:0 auto;}}
+.stat-c{
+  background:var(--grad-card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:24px 18px;text-align:center;transition:all 0.35s var(--ease));
+  position:relative;overflow:hidden;
+  box-shadow:0 4px 20px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.04);
+  animation:statPop 0.5s var(--ease-bounce) both;
+}
+.stat-c:nth-child(1){animation-delay:0s;}
+.stat-c:nth-child(2){animation-delay:0.08s;}
+.stat-c:nth-child(3){animation-delay:0.16s;}
+.stat-c:nth-child(4){animation-delay:0.24s;}
+@keyframes statPop{from{opacity:0;transform:scale(0.88) translateY(10px);}to{opacity:1;transform:scale(1) translateY(0);}}
+.stat-c::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold3),var(--rose2),transparent);
+  opacity:0;transition:opacity 0.3s;
+}
+.stat-c:hover{border-color:var(--border2);transform:translateY(-3px);box-shadow:0 16px 40px rgba(0,0,0,0.4),0 0 0 1px rgba(201,145,61,0.1);}
+.stat-c:hover::before{opacity:1;}
+.stat-n{font-family:var(--fd);font-size:42px;font-weight:600;color:var(--gold3);line-height:1;text-shadow:0 0 30px rgba(245,208,138,0.3);}
+.stat-l{font-size:11px;color:var(--muted2);margin-top:8px;font-weight:400;letter-spacing:0.3px;}
+.heat-wrap{padding:0 18px 24px;}
+@media(min-width:768px){.heat-wrap{max-width:500px;margin:0 auto;}}
+.heat-grid{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;}
+.heat-cell{
+  width:36px;height:36px;border-radius:10px;display:flex;align-items:center;
+  justify-content:center;font-size:10px;font-weight:600;letter-spacing:0.3px;
+  border:1px solid;cursor:pointer;transition:all 0.25s var(--ease));
+}
+.heat-cell:hover{transform:scale(1.14) translateY(-2px);}
+.heat-cell:active{transform:scale(0.9);}
+.heat-cell.done{
+  border-color:rgba(201,145,61,0.45);
+  background:linear-gradient(135deg,rgba(201,145,61,0.15),rgba(61,168,156,0.07));
+  color:var(--gold3);
+  box-shadow:0 2px 12px rgba(201,145,61,0.15),inset 0 1px 0 rgba(201,145,61,0.15);
+}
+.heat-cell:not(.done){border-color:rgba(255,255,255,0.06);background:rgba(14,11,26,0.7);color:var(--muted);}
+
+/* TOAST */
+.toast{
+  position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(16px);
+  background:rgba(7,5,15,0.97);border:1px solid var(--border2);
+  backdrop-filter:blur(32px);color:var(--gold3);
+  padding:12px 28px;border-radius:28px;font-size:13px;
+  opacity:0;pointer-events:none;transition:all 0.4s var(--ease-bounce));
+  z-index:300;white-space:nowrap;font-weight:500;letter-spacing:0.3px;
+  box-shadow:0 8px 50px rgba(0,0,0,0.6),0 0 0 1px rgba(201,145,61,0.1);
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+.gold-line{
+  height:1px;margin:0 26px 16px;opacity:0.4;
+  background:linear-gradient(90deg,transparent,var(--gold4),var(--gold),var(--rose),transparent);
+}
+
+/* KEYFRAMES */
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+@keyframes cardRise{from{opacity:0;transform:translateY(22px) scale(0.93) rotateX(10deg);}to{opacity:1;transform:translateY(0) scale(1) rotateX(0deg);}}
+@keyframes msgIn{from{opacity:0;transform:translateY(10px) scale(0.96);}to{opacity:1;transform:translateY(0) scale(1);}}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important;}
+}
+@media(min-width:768px){
+  .home-top h1{font-size:56px;}
+  .msg{max-width:70%;}
+  .modal-sheet{border-radius:24px;margin-bottom:20px;max-height:85vh;}
+}
+@media(min-width:1024px){
+  .days-grid{max-width:920px;grid-template-columns:repeat(7,1fr);}
+  .chat-area{max-width:700px;margin:0 auto;width:100%;}
 }
 </style>
 </head>
 <body>
+
+<canvas id="particle-canvas"></canvas>
+
 <!-- HOME -->
 <div class="screen active" id="screen-home">
   <div class="home-top">
-    <div class="logo-ring">
-      <svg viewBox="0 0 24 24"><path d="M12 2L9 9H2l5.5 4-2 7L12 16l6.5 4-2-7L22 9h-7z"/></svg>
+    <div class="orb-wrap">
+      <div class="orb-halo"></div>
+      <div class="orb-halo2"></div>
+      <div class="logo-ring">
+        <svg viewBox="0 0 24 24"><path d="M12 2L9 9H2l5.5 4-2 7L12 16l6.5 4-2-7L22 9h-7z"/></svg>
+      </div>
     </div>
     <h1>Wealthy <em>Within</em></h1>
     <div class="tagline">21-Day Inner Wealth Journey</div>
-    <div class="by">by Kabeer Sabharwal</div>
+    <div class="by-wrap">
+      <div class="by-line"></div>
+      <div class="by">Kabeer Sabharwal</div>
+      <div class="by-line"></div>
+    </div>
   </div>
- 
+
   <div id="install-bar" class="install-bar" style="display:none">
     <p>Install on your home screen for instant access</p>
     <button id="install-btn">Install</button>
   </div>
- 
+
   <div class="prog-wrap">
     <div class="prog-row">
       <span id="prog-label">0 of 21 days</span>
@@ -398,18 +611,18 @@ nav button.active::before {
     </div>
     <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
     <div class="week-row">
-      <div class="wl"><div class="wl-dot" style="background:#f5d374"></div>Awareness</div>
-      <div class="wl"><div class="wl-dot" style="background:#d4a843"></div>Belief</div>
-      <div class="wl"><div class="wl-dot" style="background:#a37e2c"></div>Alignment</div>
+      <div class="wl"><div class="wl-dot" style="background:#f5d08a;color:#f5d08a"></div>Awareness</div>
+      <div class="wl"><div class="wl-dot" style="background:#c9913d;color:#c9913d"></div>Belief</div>
+      <div class="wl"><div class="wl-dot" style="background:#7c5cbf;color:#7c5cbf"></div>Alignment</div>
     </div>
   </div>
- 
+
   <div class="scroll">
     <div class="gold-line"></div>
     <div class="days-grid" id="days-grid"></div>
   </div>
 </div>
- 
+
 <!-- AI COACH -->
 <div class="screen" id="screen-ai">
   <div class="screen-hd">
@@ -424,7 +637,7 @@ nav button.active::before {
   </div>
   <div class="scroll">
     <div class="chat-area" id="chat-area">
-      <div class="msg ai">Welcome to Wealthy Within. I am your personal guide through this 21-day inner wealth journey. Ask me anything \u2014 about today's practice, your mindset, affirmations, or simply when you need a moment of clarity.</div>
+      <div class="msg ai">Welcome to Wealthy Within. I am your personal guide through this 21-day inner wealth journey. Ask me anything — about today's practice, your mindset, affirmations, or simply when you need a moment of clarity.</div>
     </div>
   </div>
   <div class="chat-bar">
@@ -434,7 +647,7 @@ nav button.active::before {
     </button>
   </div>
 </div>
- 
+
 <!-- JOURNAL -->
 <div class="screen" id="screen-journal">
   <div class="screen-hd">
@@ -453,7 +666,7 @@ nav button.active::before {
     </div>
   </div>
 </div>
- 
+
 <!-- STATS -->
 <div class="screen" id="screen-stats">
   <div class="screen-hd">
@@ -469,7 +682,7 @@ nav button.active::before {
     <div style="height:80px"></div>
   </div>
 </div>
- 
+
 <!-- NAV -->
 <nav>
   <button class="active" id="nav-home" onclick="go('home')">
@@ -489,7 +702,7 @@ nav button.active::before {
     Progress
   </button>
 </nav>
- 
+
 <!-- MODAL -->
 <div class="modal-overlay" id="modal" onclick="closeModal(event)">
   <div class="modal-sheet">
@@ -514,240 +727,276 @@ nav button.active::before {
     </div>
   </div>
 </div>
- 
+
 <div class="toast" id="toast"></div>
+
 <script>
-const DAYS = [
-  {day:1,title:"Awareness",practice:"Observe your thoughts about money today without judgment \u2014 just notice. Write down 3 money thoughts in a notebook, exactly as they appear.",affirmation:"I am beginning to understand my inner world. Awareness is the seed of all change."},
-  {day:2,title:"Gratitude",practice:"Make a list of 5 things you are genuinely grateful for right now \u2014 a warm meal, a roof, someone who cares. Feel each one fully.",affirmation:"What I appreciate, appreciates. Gratitude opens every door to abundance."},
-  {day:3,title:"Desires",practice:"Write 10 things you truly want \u2014 without censoring yourself. Big, small, material, emotional. Let yourself want freely and without guilt.",affirmation:"My desires are not selfish \u2014 they are sacred. I am worthy of receiving everything I wish for."},
+/* ── PARTICLES ── */
+(function(){
+  const c=document.getElementById('particle-canvas');
+  const ctx=c.getContext('2d');
+  let W,H,pts=[];
+  function resize(){W=c.width=innerWidth;H=c.height=innerHeight;}
+  resize();window.addEventListener('resize',resize);
+
+  const colors=[
+    'rgba(201,145,61,',
+    'rgba(124,92,191,',
+    'rgba(196,104,122,',
+    'rgba(61,168,156,',
+    'rgba(245,208,138,'
+  ];
+
+  function mkPt(){
+    return{
+      x:Math.random()*W, y:Math.random()*H,
+      vx:(Math.random()-.5)*.18, vy:(Math.random()-.5)*.18-.08,
+      r:Math.random()*1.8+.3,
+      col:colors[Math.floor(Math.random()*colors.length)],
+      o:Math.random()*.35+.05,
+      life:Math.random()*250+120, age:0
+    };
+  }
+  for(let i=0;i<70;i++){const p=mkPt();p.age=Math.random()*p.life;pts.push(p);}
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    pts.forEach((p,i)=>{
+      p.x+=p.vx;p.y+=p.vy;p.age++;
+      if(p.age>p.life||p.y<-10){pts[i]=mkPt();pts[i].y=H+10;return;}
+      const fade=Math.min(p.age/40,1)*Math.min((p.life-p.age)/40,1);
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=p.col+(p.o*fade)+')';
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+/* ── DATA ── */
+const DAYS=[
+  {day:1,title:"Awareness",practice:"Observe your thoughts about money today without judgment — just notice. Write down 3 money thoughts in a notebook, exactly as they appear.",affirmation:"I am beginning to understand my inner world. Awareness is the seed of all change."},
+  {day:2,title:"Gratitude",practice:"Make a list of 5 things you are genuinely grateful for right now — a warm meal, a roof, someone who cares. Feel each one fully.",affirmation:"What I appreciate, appreciates. Gratitude opens every door to abundance."},
+  {day:3,title:"Desires",practice:"Write 10 things you truly want — without censoring yourself. Big, small, material, emotional. Let yourself want freely and without guilt.",affirmation:"My desires are not selfish — they are sacred. I am worthy of receiving everything I wish for."},
   {day:4,title:"Beliefs",practice:"Identify one belief that may be blocking wealth from reaching you. Write it clearly. Then say aloud three times: 'This belief no longer serves me. I release it now.'",affirmation:"Old beliefs dissolve easily. I am open to new, expansive truths about money and abundance."},
-  {day:5,title:"Visualize",practice:"Sit quietly for 5 minutes. Close your eyes. See yourself living a financially free life \u2014 where are you, what are you doing, how do you feel? Stay in that feeling.",affirmation:"My vision of abundance is real and it is already making its way to me."},
-  {day:6,title:"Ask",practice:"Write with clarity and specificity: What do I want? How much? What life does it create? Be precise \u2014 the universe responds to clarity.",affirmation:"I ask with confidence. My request has been received and is already in motion."},
+  {day:5,title:"Visualize",practice:"Sit quietly for 5 minutes. Close your eyes. See yourself living a financially free life — where are you, what are you doing, how do you feel? Stay in that feeling.",affirmation:"My vision of abundance is real and it is already making its way to me."},
+  {day:6,title:"Ask",practice:"Write with clarity and specificity: What do I want? How much? What life does it create? Be precise — the universe responds to clarity.",affirmation:"I ask with confidence. My request has been received and is already in motion."},
   {day:7,title:"Week 1 Review",practice:"Pause and reflect on the past 7 days. What shifted? What surprised you? What became clearer? Write a full reflection in your journal.",affirmation:"Every single day I am growing. I trust this process completely."},
   {day:8,title:"Money Flow",practice:"Each time you spend money today, pause and say silently: 'Money flows out and flows back to me, always.' Feel gratitude instead of guilt.",affirmation:"Money is energy. It flows freely through me and always returns multiplied."},
-  {day:9,title:"Language",practice:"Today, every time you feel the urge to say 'I can't afford it' \u2014 pause. Replace it with: 'I'm choosing not to spend on that right now.' Notice the difference.",affirmation:"My words shape my reality. I choose the language of abundance and possibility."},
-  {day:10,title:"Receive",practice:"Practice receiving fully today. When someone gives you a compliment, a gift, or an act of kindness \u2014 simply say 'Thank you' and let it land. No deflecting.",affirmation:"I am open to receiving in all forms. I am worthy of love, abundance, and generosity."},
-  {day:11,title:"Generosity",practice:"Give something freely today \u2014 your time, a kind word, a small amount of money, a smile. Give without keeping score.",affirmation:"The more freely I give, the more freely life gives back to me."},
-  {day:12,title:"Feel Rich",practice:"Before wealth arrives, embody it. Wear your favourite clothes, drink your tea slowly, walk with ease \u2014 act as if you are already free. Do this all day.",affirmation:"Feeling rich IS being rich. My inner state creates my outer reality."},
-  {day:13,title:"Role Models",practice:"Research one person who built wealth from very little. Read about their mindset \u2014 not just their strategy. Absorb how they thought about money.",affirmation:"What others have achieved is proof of what is possible for me too."},
-  {day:14,title:"Midpoint",practice:"You are halfway. Sit with that. Notice what has quietly shifted \u2014 in your thoughts, your conversations, your feelings about money. Celebrate this.",affirmation:"I am in the middle of a real transformation. I honour how far I have come."},
-  {day:15,title:"Fear Release",practice:"Write your deepest fear about money on a piece of paper. Then destroy it \u2014 tear it, burn it safely, bury it. Symbolically release it from your life.",affirmation:"I am free from financial fear. Abundance is not something I earn \u2014 it is who I am."},
-  {day:16,title:"Money Story",practice:"What did you learn about money as a child? What was said in your home? Write your old story \u2014 then write a new one, one that serves you.",affirmation:"My new money story begins now: wealth comes to me easily, joyfully, and consistently."},
-  {day:17,title:"Action",practice:"Inspired action is the bridge between thought and reality. Take one small, concrete step today toward your financial goal \u2014 one email, one idea, one conversation.",affirmation:"I act from inspiration, not desperation. Every step I take is supported by the universe."},
-  {day:18,title:"Signs",practice:"Look for signs of abundance all around you today \u2014 a coin found, a free coffee, an unexpected discount, a stranger's kindness. Count them. They are messages.",affirmation:"Abundance surrounds me constantly. I am awake to its presence."},
+  {day:9,title:"Language",practice:"Today, every time you feel the urge to say 'I can't afford it' — pause. Replace it with: 'I'm choosing not to spend on that right now.' Notice the difference.",affirmation:"My words shape my reality. I choose the language of abundance and possibility."},
+  {day:10,title:"Receive",practice:"Practice receiving fully today. When someone gives you a compliment, a gift, or an act of kindness — simply say 'Thank you' and let it land. No deflecting.",affirmation:"I am open to receiving in all forms. I am worthy of love, abundance, and generosity."},
+  {day:11,title:"Generosity",practice:"Give something freely today — your time, a kind word, a small amount of money, a smile. Give without keeping score.",affirmation:"The more freely I give, the more freely life gives back to me."},
+  {day:12,title:"Feel Rich",practice:"Before wealth arrives, embody it. Wear your favourite clothes, drink your tea slowly, walk with ease — act as if you are already free. Do this all day.",affirmation:"Feeling rich IS being rich. My inner state creates my outer reality."},
+  {day:13,title:"Role Models",practice:"Research one person who built wealth from very little. Read about their mindset — not just their strategy. Absorb how they thought about money.",affirmation:"What others have achieved is proof of what is possible for me too."},
+  {day:14,title:"Midpoint",practice:"You are halfway. Sit with that. Notice what has quietly shifted — in your thoughts, your conversations, your feelings about money. Celebrate this.",affirmation:"I am in the middle of a real transformation. I honour how far I have come."},
+  {day:15,title:"Fear Release",practice:"Write your deepest fear about money on a piece of paper. Then destroy it — tear it, burn it safely, bury it. Symbolically release it from your life.",affirmation:"I am free from financial fear. Abundance is not something I earn — it is who I am."},
+  {day:16,title:"Money Story",practice:"What did you learn about money as a child? What was said in your home? Write your old story — then write a new one, one that serves you.",affirmation:"My new money story begins now: wealth comes to me easily, joyfully, and consistently."},
+  {day:17,title:"Action",practice:"Inspired action is the bridge between thought and reality. Take one small, concrete step today toward your financial goal — one email, one idea, one conversation.",affirmation:"I act from inspiration, not desperation. Every step I take is supported by the universe."},
+  {day:18,title:"Signs",practice:"Look for signs of abundance all around you today — a coin found, a free coffee, an unexpected discount, a stranger's kindness. Count them. They are messages.",affirmation:"Abundance surrounds me constantly. I am awake to its presence."},
   {day:19,title:"Future Self",practice:"Write a letter from your future, financially free self to your present self. What do they want you to know? What do they want you to trust?",affirmation:"My future self is already whole. I am walking toward that version of me with every breath."},
-  {day:20,title:"Alignment",practice:"Do one thing today purely for joy \u2014 dance, create, walk in nature, sing. Joy is not a luxury. It is the frequency of abundance.",affirmation:"When I live in joy, I am in perfect alignment with everything I desire."},
-  {day:21,title:"Integration",practice:"21 days complete. Write the full arc of your journey \u2014 where you began, what cracked open, what you now know. Then commit to carrying this forward.",affirmation:"I have changed from the inside. Wealth \u2014 in all its forms \u2014 is now my natural state."},
+  {day:20,title:"Alignment",practice:"Do one thing today purely for joy — dance, create, walk in nature, sing. Joy is not a luxury. It is the frequency of abundance.",affirmation:"When I live in joy, I am in perfect alignment with everything I desire."},
+  {day:21,title:"Integration",practice:"21 days complete. Write the full arc of your journey — where you began, what cracked open, what you now know. Then commit to carrying this forward.",affirmation:"I have changed from the inside. Wealth — in all its forms — is now my natural state."},
 ];
- 
-let S = JSON.parse(localStorage.getItem('ww_og_v1')||'{"done":{},"journal":{}}');
-let activeDay = null, chatHist = [], deferredPrompt = null;
-const save = () => localStorage.setItem('ww_og_v1', JSON.stringify(S));
- 
-window.addEventListener('beforeinstallprompt', e => {
-  e.preventDefault(); deferredPrompt = e;
-  document.getElementById('install-bar').style.display = 'flex';
+
+let S=JSON.parse(localStorage.getItem('ww_og_v1')||'{"done":{},"journal":{}}');
+let activeDay=null,chatHist=[],deferredPrompt=null;
+const save=()=>localStorage.setItem('ww_og_v1',JSON.stringify(S));
+
+window.addEventListener('beforeinstallprompt',e=>{
+  e.preventDefault();deferredPrompt=e;
+  document.getElementById('install-bar').style.display='flex';
 });
-document.getElementById('install-btn').onclick = async () => {
-  if (!deferredPrompt) return;
+document.getElementById('install-btn').onclick=async()=>{
+  if(!deferredPrompt)return;
   deferredPrompt.prompt();
-  const {outcome} = await deferredPrompt.userChoice;
-  if (outcome === 'accepted') document.getElementById('install-bar').style.display = 'none';
-  deferredPrompt = null;
+  const{outcome}=await deferredPrompt.userChoice;
+  if(outcome==='accepted')document.getElementById('install-bar').style.display='none';
+  deferredPrompt=null;
 };
- 
-function toast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'), 2800);
+
+function toast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),2800);
 }
- 
-function go(name) {
-  document.querySelectorAll('.screen').forEach(s => { s.classList.remove('active'); });
-  document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
-  const screen = document.getElementById('screen-'+name);
-  screen.classList.add('active');
+
+function go(name){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+  document.getElementById('screen-'+name).classList.add('active');
   document.getElementById('nav-'+name).classList.add('active');
-  if(name==='stats') renderStats();
-  if(name==='journal') renderJournal();
-  if(name==='home') renderHome();
+  if(name==='stats')renderStats();
+  if(name==='journal')renderJournal();
+  if(name==='home')renderHome();
 }
- 
-function renderHome() {
-  const done = Object.keys(S.done).length;
-  const pct = Math.round((done/21)*100);
-  document.getElementById('prog-label').textContent = done + ' of 21 days';
-  document.getElementById('prog-pct').textContent = pct+'%';
-  document.getElementById('prog-fill').style.width = pct+'%';
- 
-  const grid = document.getElementById('days-grid');
-  grid.innerHTML = '';
-  DAYS.forEach(({day,title}) => {
-    const isDone = !!S.done[day];
-    const card = document.createElement('div');
-    card.className = 'day-card' + (isDone?' done':'');
-    card.style.animationDelay = ((day-1)*0.04)+'s';
-    card.innerHTML =
-      '<div>' +
-        '<div class="day-num">Day ' + day + '</div>' +
-        '<div class="day-title">' + title + '</div>' +
-      '</div>' +
-      '<div class="day-mark">' +
-        '<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>' +
+
+function renderHome(){
+  const done=Object.keys(S.done).length;
+  const pct=Math.round((done/21)*100);
+  document.getElementById('prog-label').textContent=done+' of 21 days';
+  document.getElementById('prog-pct').textContent=pct+'%';
+  document.getElementById('prog-fill').style.width=pct+'%';
+  const grid=document.getElementById('days-grid');
+  grid.innerHTML='';
+  DAYS.forEach(({day,title})=>{
+    const isDone=!!S.done[day];
+    const card=document.createElement('div');
+    card.className='day-card'+(isDone?' done':'');
+    card.style.animationDelay=((day-1)*0.04)+'s';
+    card.innerHTML=
+      '<div>'+
+        '<div class="day-num">Day '+day+'</div>'+
+        '<div class="day-title">'+title+'</div>'+
+      '</div>'+
+      '<div class="day-mark">'+
+        '<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>'+
       '</div>';
-    card.onclick = () => openModal(day);
+    card.onclick=()=>openModal(day);
     grid.appendChild(card);
   });
 }
- 
-function openModal(day) {
-  const d = DAYS[day-1]; activeDay = day;
-  const w = day<=7?1:day<=14?2:3;
-  const isDone = !!S.done[day];
- 
-  document.getElementById('m-meta').textContent = 'Day ' + day + '  \u00b7  Week ' + w;
-  document.getElementById('m-title').textContent = d.title;
-  document.getElementById('m-practice').textContent = d.practice;
-  document.getElementById('m-aff').textContent = '\u201c' + d.affirmation + '\u201d';
-  document.getElementById('m-ai-out').textContent = 'Tap below to receive your personal insight for today.';
-  document.getElementById('m-ai-btn').disabled = false;
-  document.getElementById('m-ai-btn').textContent = 'Receive Insight';
- 
-  const btn = document.getElementById('m-btn');
-  btn.textContent = isDone ? 'Mark as Incomplete' : "Complete Today's Practice";
-  btn.style.background = isDone ? 'rgba(255,255,255,0.04)' : 'linear-gradient(135deg, var(--gold3), var(--gold))';
-  btn.style.color = isDone ? 'var(--muted)' : 'var(--bg)';
-  btn.style.border = isDone ? '1px solid rgba(255,255,255,0.08)' : 'none';
- 
+
+function openModal(day){
+  const d=DAYS[day-1];activeDay=day;
+  const w=day<=7?1:day<=14?2:3;
+  const isDone=!!S.done[day];
+  document.getElementById('m-meta').textContent='Day '+day+'  ·  Week '+w;
+  document.getElementById('m-title').textContent=d.title;
+  document.getElementById('m-practice').textContent=d.practice;
+  document.getElementById('m-aff').textContent='\u201c'+d.affirmation+'\u201d';
+  document.getElementById('m-ai-out').textContent='Tap below to receive your personal insight for today.';
+  document.getElementById('m-ai-btn').disabled=false;
+  document.getElementById('m-ai-btn').textContent='Receive Insight';
+  const btn=document.getElementById('m-btn');
+  btn.textContent=isDone?'Mark as Incomplete':"Complete Today's Practice";
+  btn.style.background=isDone?'rgba(255,255,255,0.04)':'linear-gradient(135deg,var(--gold4),var(--gold),var(--gold3))';
+  btn.style.color=isDone?'var(--muted)':'var(--bg)';
+  btn.style.border=isDone?'1px solid rgba(255,255,255,0.08)':'none';
   document.getElementById('modal').classList.add('open');
-  document.body.style.overflow = 'hidden';
+  document.body.style.overflow='hidden';
 }
- 
-function closeModal(e) {
-  if (e && e.target !== document.getElementById('modal')) return;
+
+function closeModal(e){
+  if(e&&e.target!==document.getElementById('modal'))return;
   document.getElementById('modal').classList.remove('open');
-  document.body.style.overflow = '';
-  activeDay = null;
+  document.body.style.overflow='';
+  activeDay=null;
 }
- 
-function toggleDone() {
-  if (!activeDay) return;
-  if (S.done[activeDay]) delete S.done[activeDay];
-  else S.done[activeDay] = new Date().toISOString();
-  save(); renderHome();
-  const isDone = !!S.done[activeDay];
-  const btn = document.getElementById('m-btn');
-  btn.textContent = isDone ? 'Mark as Incomplete' : "Complete Today's Practice";
-  btn.style.background = isDone ? 'rgba(255,255,255,0.04)' : 'linear-gradient(135deg, var(--gold3), var(--gold))';
-  btn.style.color = isDone ? 'var(--muted)' : 'var(--bg)';
-  btn.style.border = isDone ? '1px solid rgba(255,255,255,0.08)' : 'none';
-  toast(isDone ? 'Day ' + activeDay + ' complete \u2728' : 'Day ' + activeDay + ' unmarked');
+
+function toggleDone(){
+  if(!activeDay)return;
+  if(S.done[activeDay])delete S.done[activeDay];
+  else S.done[activeDay]=new Date().toISOString();
+  save();renderHome();
+  const isDone=!!S.done[activeDay];
+  const btn=document.getElementById('m-btn');
+  btn.textContent=isDone?'Mark as Incomplete':"Complete Today's Practice";
+  btn.style.background=isDone?'rgba(255,255,255,0.04)':'linear-gradient(135deg,var(--gold4),var(--gold),var(--gold3))';
+  btn.style.color=isDone?'var(--muted)':'var(--bg)';
+  btn.style.border=isDone?'1px solid rgba(255,255,255,0.08)':'none';
+  toast(isDone?'Day '+activeDay+' complete ✨':'Day '+activeDay+' unmarked');
 }
- 
-async function getInsight() {
-  if (!activeDay) return;
-  const d = DAYS[activeDay-1];
-  const done = Object.keys(S.done).length;
-  const btn = document.getElementById('m-ai-btn');
-  const out = document.getElementById('m-ai-out');
-  btn.disabled = true; btn.textContent = 'Receiving...';
-  out.textContent = '\u2728 Connecting to your inner wisdom...';
-  try {
-    const res = await fetch('/.netlify/functions/gemini', {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        system:'You are the inner wealth guide for "Wealthy Within" \u2014 a 21-day mindset and abundance journey created by Kabeer Sabharwal. Speak with warmth, depth, and quiet authority. Give a 3-4 sentence personal insight that deepens today\'s specific practice. Be grounding, specific, and genuine. Avoid clich\u00e9s.',
-        messages:[{role:'user', content:'Day '+activeDay+' \u2014 "'+d.title+'". Practice: '+d.practice+'. The user has completed '+done+'/21 days. Give them a personal, deepening insight for today.'}]
+
+async function getInsight(){
+  if(!activeDay)return;
+  const d=DAYS[activeDay-1];
+  const done=Object.keys(S.done).length;
+  const btn=document.getElementById('m-ai-btn');
+  const out=document.getElementById('m-ai-out');
+  btn.disabled=true;btn.textContent='Receiving...';
+  out.textContent='✨ Connecting to your inner wisdom...';
+  try{
+    const res=await fetch('/.netlify/functions/gemini',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        system:'You are the inner wealth guide for "Wealthy Within" — a 21-day mindset and abundance journey created by Kabeer Sabharwal. Speak with warmth, depth, and quiet authority. Give a 3-4 sentence personal insight that deepens today\'s specific practice. Be grounding, specific, and genuine. Avoid clichés.',
+        messages:[{role:'user',content:'Day '+activeDay+' — "'+d.title+'". Practice: '+d.practice+'. The user has completed '+done+'/21 days. Give them a personal, deepening insight for today.'}]
       })
     });
-    const data = await res.json();
-    out.textContent = data.text || 'No response. Please try again.';
-  } catch(e) { out.textContent = 'Connection error. Please try again.'; }
-  btn.disabled = false; btn.textContent = 'Receive Insight';
+    const data=await res.json();
+    out.textContent=data.text||'No response. Please try again.';
+  }catch(e){out.textContent='Connection error. Please try again.';}
+  btn.disabled=false;btn.textContent='Receive Insight';
 }
- 
-function qp(text) { document.getElementById('chat-input').value = text; sendChat(); }
-async function sendChat() {
-  const inp = document.getElementById('chat-input');
-  const msg = inp.value.trim(); if (!msg) return;
-  const btn = document.getElementById('send-btn');
-  btn.disabled = true; inp.value = ''; inp.style.height = 'auto';
- 
-  const area = document.getElementById('chat-area');
-  const uDiv = document.createElement('div'); uDiv.className='msg user'; uDiv.textContent=msg;
+
+function qp(text){document.getElementById('chat-input').value=text;sendChat();}
+async function sendChat(){
+  const inp=document.getElementById('chat-input');
+  const msg=inp.value.trim();if(!msg)return;
+  const btn=document.getElementById('send-btn');
+  btn.disabled=true;inp.value='';inp.style.height='auto';
+  const area=document.getElementById('chat-area');
+  const uDiv=document.createElement('div');uDiv.className='msg user';uDiv.textContent=msg;
   area.appendChild(uDiv);
-  const lDiv = document.createElement('div'); lDiv.className='msg ai loading'; lDiv.textContent='Reflecting...';
-  area.appendChild(lDiv); area.scrollTop=area.scrollHeight;
- 
-  const done = Object.keys(S.done).length;
+  const lDiv=document.createElement('div');lDiv.className='msg ai loading';lDiv.textContent='Reflecting...';
+  area.appendChild(lDiv);area.scrollTop=area.scrollHeight;
+  const done=Object.keys(S.done).length;
   chatHist.push({role:'user',content:msg});
- 
-  try {
-    const res = await fetch('/.netlify/functions/gemini', {
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body: JSON.stringify({
-        system:'You are the AI Wealth Coach inside "Wealthy Within" \u2014 a 21-day inner wealth journey created by Kabeer Sabharwal. Speak with warmth, quiet wisdom, and depth. Rooted in abundance mindset, Law of Attraction, and conscious living principles. The user has completed '+done+'/21 days. Be conversational, genuine, and concise. No bullet points.',
-        messages: chatHist
+  try{
+    const res=await fetch('/.netlify/functions/gemini',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({
+        system:'You are the AI Wealth Coach inside "Wealthy Within" — a 21-day inner wealth journey created by Kabeer Sabharwal. Speak with warmth, quiet wisdom, and depth. Rooted in abundance mindset, Law of Attraction, and conscious living principles. The user has completed '+done+'/21 days. Be conversational, genuine, and concise. No bullet points.',
+        messages:chatHist
       })
     });
-    const data = await res.json();
-    const reply = data.text || 'No response received.';
-    lDiv.className='msg ai'; lDiv.textContent=reply;
+    const data=await res.json();
+    const reply=data.text||'No response received.';
+    lDiv.className='msg ai';lDiv.textContent=reply;
     chatHist.push({role:'assistant',content:reply});
-    if (chatHist.length>20) chatHist=chatHist.slice(-16);
-  } catch(e) { lDiv.className='msg ai'; lDiv.textContent='Connection error. Please try again.'; }
-  btn.disabled=false; area.scrollTop=area.scrollHeight;
+    if(chatHist.length>20)chatHist=chatHist.slice(-16);
+  }catch(e){lDiv.className='msg ai';lDiv.textContent='Connection error. Please try again.';}
+  btn.disabled=false;area.scrollTop=area.scrollHeight;
 }
-document.getElementById('chat-input').addEventListener('keydown', e => {
-  if (e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}
+document.getElementById('chat-input').addEventListener('keydown',e=>{
+  if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();sendChat();}
 });
-document.getElementById('chat-input').addEventListener('input', function() {
-  this.style.height='auto'; this.style.height=Math.min(this.scrollHeight,100)+'px';
+document.getElementById('chat-input').addEventListener('input',function(){
+  this.style.height='auto';this.style.height=Math.min(this.scrollHeight,100)+'px';
 });
- 
-function renderJournal() {
-  const sel = document.getElementById('j-select');
-  sel.innerHTML = DAYS.map(d => '<option value="'+d.day+'">Day '+d.day+' \u2014 '+d.title+'</option>').join('');
-  sel.value = Math.min(Object.keys(S.done).length+1,21)||1;
-  loadEntry(); renderPast();
+
+function renderJournal(){
+  const sel=document.getElementById('j-select');
+  sel.innerHTML=DAYS.map(d=>'<option value="'+d.day+'">Day '+d.day+' — '+d.title+'</option>').join('');
+  sel.value=Math.min(Object.keys(S.done).length+1,21)||1;
+  loadEntry();renderPast();
 }
-function loadEntry() {
-  const day = document.getElementById('j-select').value;
-  document.getElementById('j-text').value = S.journal[day]||'';
+function loadEntry(){
+  const day=document.getElementById('j-select').value;
+  document.getElementById('j-text').value=S.journal[day]||'';
 }
-function saveEntry() {
-  const day = document.getElementById('j-select').value;
-  const text = document.getElementById('j-text').value.trim();
-  if (!text) return;
-  S.journal[day]=text; save(); toast('Entry saved \u2728'); renderPast();
+function saveEntry(){
+  const day=document.getElementById('j-select').value;
+  const text=document.getElementById('j-text').value.trim();
+  if(!text)return;
+  S.journal[day]=text;save();toast('Entry saved ✨');renderPast();
 }
-function renderPast() {
-  const list = document.getElementById('entries-list');
-  const entries = Object.entries(S.journal).filter(([,v])=>v).sort(([a],[b])=>Number(a)-Number(b));
-  list.innerHTML = entries.length
-    ? entries.map(([day,text]) => '<div class="j-card"><div class="j-card-day">Day '+day+' \u2014 '+(DAYS[day-1]?.title||'')+'</div><div class="j-card-txt">'+text.slice(0,120)+(text.length>120?'\u2026':'')+'</div></div>').join('')
-    : '<div style="color:var(--muted);font-size:13px;font-weight:300;font-style:italic">No entries yet. Begin writing your story.</div>';
+function renderPast(){
+  const list=document.getElementById('entries-list');
+  const entries=Object.entries(S.journal).filter(([,v])=>v).sort(([a],[b])=>Number(a)-Number(b));
+  list.innerHTML=entries.length
+    ?entries.map(([day,text])=>'<div class="j-card"><div class="j-card-day">Day '+day+' — '+(DAYS[day-1]?.title||'')+'</div><div class="j-card-txt">'+text.slice(0,120)+(text.length>120?'…':'')+'</div></div>').join('')
+    :'<div style="color:var(--muted);font-size:13px;font-weight:300;font-style:italic">No entries yet. Begin writing your story.</div>';
 }
- 
-function renderStats() {
-  const done = Object.keys(S.done).length;
-  const jDone = Object.values(S.journal).filter(v=>v).length;
-  let streak=0; for(let i=1;i<=21;i++){if(S.done[i])streak++;else break;}
-  document.getElementById('stat-grid').innerHTML =
-    '<div class="stat-c"><div class="stat-n">'+done+'</div><div class="stat-l">Days Complete</div></div>' +
-    '<div class="stat-c"><div class="stat-n">'+Math.round((done/21)*100)+'%</div><div class="stat-l">Progress</div></div>' +
-    '<div class="stat-c"><div class="stat-n">'+streak+'</div><div class="stat-l">Day Streak</div></div>' +
+
+function renderStats(){
+  const done=Object.keys(S.done).length;
+  const jDone=Object.values(S.journal).filter(v=>v).length;
+  let streak=0;for(let i=1;i<=21;i++){if(S.done[i])streak++;else break;}
+  document.getElementById('stat-grid').innerHTML=
+    '<div class="stat-c"><div class="stat-n">'+done+'</div><div class="stat-l">Days Complete</div></div>'+
+    '<div class="stat-c"><div class="stat-n">'+Math.round((done/21)*100)+'%</div><div class="stat-l">Progress</div></div>'+
+    '<div class="stat-c"><div class="stat-n">'+streak+'</div><div class="stat-l">Day Streak</div></div>'+
     '<div class="stat-c"><div class="stat-n">'+jDone+'</div><div class="stat-l">Journal Entries</div></div>';
- 
-  document.getElementById('heat-grid').innerHTML = DAYS.map(({day}) => {
+  document.getElementById('heat-grid').innerHTML=DAYS.map(({day})=>{
     const isDone=!!S.done[day];
-    return '<div class="heat-cell'+(isDone?' done':'')+'" onclick="openModal('+day+')">'+day+'</div>';
+    return'<div class="heat-cell'+(isDone?' done':'')+'" onclick="openModal('+day+')">'+day+'</div>';
   }).join('');
 }
- 
+
 renderHome();
 </script>
- 
 </body>
 </html>
