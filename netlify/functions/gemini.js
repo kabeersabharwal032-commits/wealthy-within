@@ -10,47 +10,39 @@ exports.handler = async (event) => {
       body: ""
     };
   }
-
   try {
     const { messages, system } = JSON.parse(event.body);
-    const apiKey = process.env.GEMINI_API_KEY;
-
-    const contents = messages.map(m => ({
-      role: m.role === "assistant" ? "model" : "user",
-      parts: [{ text: m.content }]
-    }));
-
+    const apiKey = process.env.GROQ_API_KEY;
     const body = {
-      system_instruction: system ? { parts: [{ text: system }] } : undefined,
-      contents,
-      generationConfig: {
-        maxOutputTokens: 800,
-        temperature: 0.8
-      }
+      model: "llama-3.3-70b-versatile",
+      messages: [
+        ...(system ? [{ role: "system", content: system }] : []),
+        ...messages.map(m => ({ role: m.role, content: m.content }))
+      ],
+      max_tokens: 800,
+      temperature: 0.8
     };
-
     const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
+      "https://api.groq.com/openai/v1/chat/completions",
       {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${apiKey}`
+        },
         body: JSON.stringify(body)
       }
     );
-
     const data = await res.json();
-
     if (!res.ok) {
-      console.error("Gemini API error:", JSON.stringify(data));
+      console.error("Groq API error:", JSON.stringify(data));
       return {
         statusCode: res.status,
         headers: { "Access-Control-Allow-Origin": "*", "Content-Type": "application/json" },
         body: JSON.stringify({ text: data?.error?.message || "API request failed." })
       };
     }
-
-    const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "No response received.";
-
+    const text = data?.choices?.[0]?.message?.content || "No response received.";
     return {
       statusCode: 200,
       headers: {
