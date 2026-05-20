@@ -11,7 +11,7 @@
 <title>Wealthy Within</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=DM+Sans:wght@300;400;500;600&family=Inter:wght@400;500;600&family=Pinyon+Script&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet"/>
 <style>
 :root {
   --bg:#07050f;
@@ -53,7 +53,7 @@
   --radius:18px;
   --radius2:13px;
   --fd:'Cormorant Garamond',serif;
-  --fs:'Pinyon Script',cursive;
+  --fs:'DM Sans',sans-serif;
   --fb:'DM Sans',sans-serif;
   --ease:cubic-bezier(0.4,0,0.2,1);
   --ease-out:cubic-bezier(0,0,0.2,1);
@@ -186,14 +186,18 @@ nav button.active::before{
   text-transform:uppercase;margin-top:10px;font-weight:400;
 }
 
-/* BY KABEER SABHARWAL — clean minimal */
-.by-wrap{margin-top:14px;}
+/* KABEER SABHARWAL — signature script highlight */
+.by-wrap{margin-top:10px;display:inline-flex;flex-direction:column;align-items:center;gap:0;}
+.by-line{width:40px;height:1px;background:rgba(201,145,61,0.25);margin:5px auto;}
 .by{
-  font-family:'Inter',sans-serif;
-  font-size:13px;
+  font-family:var(--fb);
+  font-size:11px;
   font-weight:500;
-  letter-spacing:0.5px;
-  color:#d1d5db;
+  letter-spacing:3px;
+  text-transform:uppercase;
+  color:#f0cb6a;
+  filter:none;
+  animation:none;
 }
 
 /* PROGRESS */
@@ -584,7 +588,9 @@ nav button.active::before{
     <h1>Wealthy <em>Within</em></h1>
     <div class="tagline">21-Day Inner Wealth Journey</div>
     <div class="by-wrap">
-      <div class="by">By Kabeer Sabharwal</div>
+      <div class="by-line"></div>
+      <div class="by">Kabeer Sabharwal</div>
+      <div class="by-line"></div>
     </div>
   </div>
 
@@ -646,6 +652,7 @@ nav button.active::before{
   <div class="scroll">
     <div class="j-wrap">
       <select class="j-select" id="j-select" onchange="loadEntry()"></select>
+      <p style="font-size:11px;color:#6e6356;letter-spacing:0.5px;margin:-6px 0 10px 2px;font-weight:400;">To change the day, click on the box above.</p>
       <textarea class="j-textarea" id="j-text" placeholder="What shifted in you today? What did you feel, notice, or release?"></textarea>
       <button class="j-save" onclick="saveEntry()">Save Entry</button>
     </div>
