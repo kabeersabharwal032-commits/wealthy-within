@@ -30,7 +30,7 @@ exports.handler = async (event) => {
     };
 
     const res = await fetch(
-      https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey},
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`,
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -39,6 +39,16 @@ exports.handler = async (event) => {
     );
 
     const data = await res.json();
+
+    if (!res.ok) {
+      console.error("Gemini API error:", JSON.stringify(data));
+      return {
+        statusCode: res.status,
+        headers: { "Access-Control-Allow-Origin": "*", "Content-Type": "application/json" },
+        body: JSON.stringify({ text: data?.error?.message || "API request failed." })
+      };
+    }
+
     const text = data?.candidates?.[0]?.content?.parts?.[0]?.text || "No response received.";
 
     return {
@@ -50,9 +60,10 @@ exports.handler = async (event) => {
       body: JSON.stringify({ text })
     };
   } catch (err) {
+    console.error("Function error:", err);
     return {
       statusCode: 500,
-      headers: { "Access-Control-Allow-Origin": "*" },
+      headers: { "Access-Control-Allow-Origin": "*", "Content-Type": "application/json" },
       body: JSON.stringify({ text: "Server error. Please try again." })
     };
   }
