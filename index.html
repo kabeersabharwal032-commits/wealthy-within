@@ -742,7 +742,7 @@ async function sendChat(){
   const done=Object.keys(S.done).length;
   chatHist.push({role:'user',content:msg});
   try{
-    const res=await fetch('/.netlify/functions/gemini',{
+    const res=await fetch('/api/chat',{
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         system:'You are the AI Wealth Coach inside "Wealthy Within" \u2014 a 21-day inner wealth journey created by Kabeer Sabharwal. Speak with warmth, quiet wisdom, and depth. Rooted in abundance mindset, Law of Attraction, and conscious living principles. The user has completed '+done+'/21 days. Be conversational, genuine, and concise. No bullet points.',
