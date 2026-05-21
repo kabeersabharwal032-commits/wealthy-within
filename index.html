@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0"/>
 <meta name="theme-color" content="#07050f"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
@@ -158,6 +158,26 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
 .day-card.done{border-color:rgba(201,145,61,0.3);background:linear-gradient(145deg,rgba(40,30,16,0.9) 0%,rgba(20,14,8,0.95) 100%);box-shadow:0 4px 24px rgba(201,145,61,0.1),inset 0 1px 0 rgba(201,145,61,0.12);}
 .day-card.done::before{background:linear-gradient(135deg,rgba(201,145,61,0.12) 0%,rgba(61,168,156,0.05) 100%);opacity:1;}
 .day-card.done::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 30%,rgba(245,208,138,0.07) 50%,transparent 70%);animation:cardShimmer 4s ease-in-out infinite;}
+.day-card.locked{cursor:not-allowed;opacity:0.42;filter:grayscale(0.5);}
+.day-card.locked:hover{transform:none;border-color:rgba(255,255,255,0.05);}
+.day-card.locked:hover::before{opacity:0;}
+.day-card.locked:active{transform:none;}
+.lock-icon{position:absolute;top:10px;right:10px;z-index:1;}
+.lock-icon svg{width:13px;height:13px;stroke:var(--muted);fill:none;stroke-width:2;opacity:0.6;}
+.day-card.locked .lock-tooltip{
+  display:none;position:absolute;bottom:calc(100% + 10px);left:50%;transform:translateX(-50%);
+  background:rgba(10,8,20,0.97);border:1px solid rgba(201,145,61,0.25);border-radius:10px;
+  padding:8px 12px;white-space:nowrap;font-size:11px;color:var(--gold2);font-family:var(--fb);
+  font-weight:400;letter-spacing:0.3px;line-height:1.45;text-align:center;
+  box-shadow:0 8px 28px rgba(0,0,0,0.5);z-index:20;pointer-events:none;
+  backdrop-filter:blur(12px);
+}
+.day-card.locked .lock-tooltip::after{
+  content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);
+  border:6px solid transparent;border-top-color:rgba(201,145,61,0.25);
+}
+.day-card.locked:hover .lock-tooltip{display:block;animation:tipFade 0.18s ease both;}
+@keyframes tipFade{from{opacity:0;transform:translateX(-50%) translateY(4px);}to{opacity:1;transform:translateX(-50%) translateY(0);}}
 @keyframes cardShimmer{0%,100%{transform:translateX(-100%);}50%{transform:translateX(200%);}}
 .day-num{font-size:9px;font-weight:600;letter-spacing:2px;text-transform:uppercase;color:var(--muted);position:relative;z-index:1;}
 .day-card.done .day-num{color:var(--gold);}
@@ -275,6 +295,29 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
 .ep-input::placeholder{color:var(--muted);}
 .ep-btn{width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--gold4),var(--gold),var(--gold3));color:var(--bg);font-family:var(--fb);font-size:11px;letter-spacing:2px;font-weight:700;text-transform:uppercase;cursor:pointer;margin-bottom:10px;}
 .ep-skip{width:100%;padding:10px;border-radius:10px;border:none;background:none;color:var(--muted);font-size:12px;cursor:pointer;font-family:var(--fb);}
+
+/* ── CONGRATULATIONS POPUP ── */
+.congrats-overlay{position:fixed;inset:0;z-index:300;background:rgba(4,3,8,0.96);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.5s var(--ease);padding:24px;}
+.congrats-overlay.open{opacity:1;pointer-events:all;}
+.congrats-sheet{width:100%;max-width:420px;background:linear-gradient(160deg,#1e1530 0%,#0e0b1a 100%);border-radius:24px;border:1px solid rgba(201,145,61,0.25);padding:36px 28px 32px;text-align:center;position:relative;box-shadow:0 0 80px rgba(201,145,61,0.15),0 20px 60px rgba(0,0,0,0.6);transform:translateY(30px) scale(0.96);transition:transform 0.5s var(--ease-bounce);overflow:hidden;}
+.congrats-overlay.open .congrats-sheet{transform:translateY(0) scale(1);}
+.congrats-sheet::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 50% at 50% 0%,rgba(201,145,61,0.1) 0%,transparent 70%);pointer-events:none;}
+.congrats-stars{font-size:42px;margin-bottom:4px;animation:starPulse 2s ease-in-out infinite;}
+@keyframes starPulse{0%,100%{transform:scale(1);}50%{transform:scale(1.08);}}
+.congrats-title{font-family:var(--fd);font-size:clamp(28px,7vw,36px);font-weight:600;color:var(--gold3);line-height:1.1;margin-bottom:10px;text-shadow:0 0 30px rgba(201,145,61,0.4);}
+.congrats-sub{font-size:13px;color:var(--text2);line-height:1.85;font-weight:300;margin-bottom:6px;}
+.congrats-sig{font-family:var(--fd);font-style:italic;font-size:16px;color:var(--gold2);margin:14px 0 28px;opacity:0.85;}
+.congrats-divider{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:0 auto 24px;}
+
+/* Choice screen */
+.choice-title{font-family:var(--fd);font-size:20px;color:var(--text2);margin-bottom:20px;font-weight:400;}
+.choice-btn{width:100%;padding:16px;border-radius:14px;border:none;cursor:pointer;font-family:var(--fb);font-size:11px;letter-spacing:2px;font-weight:700;text-transform:uppercase;transition:all 0.3s var(--ease);margin-bottom:10px;position:relative;overflow:hidden;}
+.choice-btn.restart{background:linear-gradient(135deg,var(--gold4),var(--gold),var(--gold3));color:var(--bg);box-shadow:0 4px 20px rgba(201,145,61,0.3);}
+.choice-btn.restart:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(201,145,61,0.4);}
+.choice-btn.end{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:var(--muted2);}
+.choice-btn.end:hover{background:rgba(255,255,255,0.07);color:var(--text2);}
+.congrats-page{display:none;}
+.congrats-page.active{display:block;animation:fadeUp 0.4s var(--ease) both;}
 
 /* KEYFRAMES */
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
@@ -451,6 +494,37 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
 <div class="toast" id="toast"></div>
 
 <!-- EMAIL POPUP -->
+<!-- CONGRATULATIONS POPUP -->
+<div class="congrats-overlay" id="congrats-popup">
+  <canvas id="congrats-canvas" style="position:fixed;inset:0;z-index:299;pointer-events:none;"></canvas>
+  <div class="congrats-sheet">
+
+    <!-- Page 1: Congratulations message -->
+    <div class="congrats-page active" id="congrats-p1">
+      <div class="congrats-stars">✦ 🌟 ✦</div>
+      <div class="congrats-title">You Did It.</div>
+      <p class="congrats-sub">
+        21 days. 21 steps inward. You showed up — not just for a practice, but for yourself.<br><br>
+        Most people dream of change. You <em>chose</em> it, day after day, even when it wasn't easy. That takes a rare kind of courage — the kind that quietly transforms everything from the inside out.<br><br>
+        Wealth was never just about money. You know that now.
+      </p>
+      <div class="congrats-divider"></div>
+      <div class="congrats-sig">With deep gratitude & love,<br>Kabeer Sabharwal</div>
+      <button class="choice-btn restart" onclick="showCongratsChoices()">What's Next →</button>
+    </div>
+
+    <!-- Page 2: Choice screen -->
+    <div class="congrats-page" id="congrats-p2">
+      <div class="congrats-stars">🔄</div>
+      <div class="congrats-title" style="font-size:26px;margin-bottom:8px;">Begin Again?</div>
+      <p class="congrats-sub" style="margin-bottom:24px;">Every cycle reveals a deeper layer. Choose your path forward.</p>
+      <button class="choice-btn restart" onclick="restartJourney()">✦ Begin the Journey Again</button>
+      <button class="choice-btn end" onclick="closeCongratsPopup()">I'll Carry This Forward</button>
+    </div>
+
+  </div>
+</div>
+
 <div class="email-popup-overlay" id="email-popup">
   <div class="email-popup-sheet">
     <button class="ep-close" type="button" aria-label="Dismiss" onclick="skipEmail()">
@@ -641,8 +715,15 @@ function renderHome(){
     const card=document.createElement('div');
     card.className='day-card'+(isDone?' done':'');
     card.style.animationDelay=((day-1)*0.04)+'s';
-    card.innerHTML='<div><div class="day-num">Day '+day+'</div><div class="day-title">'+title+'</div></div><div class="day-mark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>';
-    card.onclick=()=>openModal(day);
+    const isLocked=day>1&&!S.done[day-1];
+    if(isLocked){
+      card.classList.add('locked');
+      card.innerHTML='<div class="lock-tooltip">Complete Day '+(day-1)+' first</div><div><div class="day-num">Day '+day+'</div><div class="day-title">'+title+'</div></div><div class="lock-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>';
+      card.onclick=(function(d){return function(){toast('Complete Day '+d+' first');};})(day-1);
+    }else{
+      card.innerHTML='<div><div class="day-num">Day '+day+'</div><div class="day-title">'+title+'</div></div><div class="day-mark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>';
+      card.onclick=(function(d){return function(){openModal(d);};})(day);
+    }
     grid.appendChild(card);
   });
 }
@@ -700,9 +781,81 @@ function toggleDone(){
   btn.style.color=isDone?'var(--muted)':'var(--bg)';
   btn.style.border=isDone?'1px solid rgba(255,255,255,0.08)':'none';
   toast(isDone?'Day '+activeDay+' complete \u2728':'Day '+activeDay+' unmarked');
-  if(isDone&&activeDay===1&&!S.emailCollected){
+  if(isDone&&Object.keys(S.done).length===21){
+    setTimeout(()=>openCongratsPopup(),900);
+  } else if(isDone&&activeDay===1&&!S.emailCollected){
     setTimeout(()=>{document.getElementById('email-popup').classList.add('open');pushNavState({popup:'email'});},800);
   }
+}
+
+/* ── CONGRATULATIONS ── */
+function openCongratsPopup(){
+  document.getElementById('congrats-p1').classList.add('active');
+  document.getElementById('congrats-p2').classList.remove('active');
+  document.getElementById('congrats-popup').classList.add('open');
+  document.body.style.overflow='hidden';
+  setTimeout(()=>runCongratsSparkle(),100);
+}
+
+function runCongratsSparkle(){
+  const canvas=document.getElementById('congrats-canvas');
+  const ctx=canvas.getContext('2d');
+  canvas.width=window.innerWidth;canvas.height=window.innerHeight;
+  let particles=[];
+  let frame;
+  const colors=['#f5d08a','#e8b86d','#c9913d','#ffffff','#a07ed6','#5ecdc0','#e8899a','#ffeaa0'];
+  function randColor(){return colors[Math.floor(Math.random()*colors.length)];}
+  function spawn(cx,cy){
+    const angle=Math.random()*Math.PI*2;
+    const speed=1.5+Math.random()*4;
+    return{x:cx,y:cy,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed-2,alpha:1,size:2+Math.random()*3,color:randColor(),shape:Math.random()>0.5?'star':'circle',decay:0.012+Math.random()*0.01,gravity:0.07};
+  }
+  function drawStar(x,y,r,color,alpha){
+    ctx.save();ctx.globalAlpha=alpha;ctx.fillStyle=color;ctx.beginPath();
+    for(let i=0;i<5;i++){
+      const a1=(i*4*Math.PI)/5-Math.PI/2;const a2=a1+(2*Math.PI)/10;
+      if(i===0)ctx.moveTo(x+r*Math.cos(a1),y+r*Math.sin(a1));
+      else ctx.lineTo(x+r*Math.cos(a1),y+r*Math.sin(a1));
+      ctx.lineTo(x+(r/2)*Math.cos(a2),y+(r/2)*Math.sin(a2));
+    }
+    ctx.closePath();ctx.fill();ctx.restore();
+  }
+  function tick(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    particles=particles.filter(p=>p.alpha>0.01);
+    for(const p of particles){
+      p.x+=p.vx;p.vy+=p.gravity;p.y+=p.vy;p.alpha-=p.decay;
+      if(p.shape==='star'){drawStar(p.x,p.y,p.size,p.color,p.alpha);}
+      else{ctx.save();ctx.globalAlpha=p.alpha;ctx.fillStyle=p.color;ctx.beginPath();ctx.arc(p.x,p.y,p.size*0.7,0,Math.PI*2);ctx.fill();ctx.restore();}
+    }
+    if(particles.length>0)frame=requestAnimationFrame(tick);
+    else{ctx.clearRect(0,0,canvas.width,canvas.height);}
+  }
+  const w=canvas.width,h=canvas.height;
+  let t=0;
+  const wave=setInterval(()=>{
+    const cx=w*0.15+Math.random()*w*0.7;
+    const cy=h*0.1+Math.random()*h*0.5;
+    for(let i=0;i<20;i++)particles.push(spawn(cx,cy));
+    t++;if(t===1)tick();
+    if(t>=6){
+      clearInterval(wave);
+      for(let i=0;i<50;i++)particles.push(spawn(w/2,h*0.45));
+    }
+  },120);
+}
+function showCongratsChoices(){
+  document.getElementById('congrats-p1').classList.remove('active');
+  document.getElementById('congrats-p2').classList.add('active');
+}
+function closeCongratsPopup(){
+  document.getElementById('congrats-popup').classList.remove('open');
+  document.body.style.overflow='';
+}
+function restartJourney(){
+  S.done={};S.journal={};S.emailCollected=false;
+  save();closeCongratsPopup();renderHome();
+  toast('New journey begins \u2728');
 }
 
 /* ── AI INSIGHT ── */
@@ -715,15 +868,16 @@ async function getInsight(){
   btn.disabled=true;btn.textContent='Receiving...';
   out.textContent='\u2728 Connecting to your inner wisdom...';
   try{
-    const res=await fetch('/api/chat',{
-      method:'POST',headers:{'Content-Type':'application/json'},
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json','anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
       body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',max_tokens:1000,
         system:'You are the inner wealth guide for "Wealthy Within" \u2014 a 21-day mindset and abundance journey created by Kabeer Sabharwal. Speak with warmth, depth, and quiet authority. Give a 3-4 sentence personal insight that deepens today\'s specific practice. Be grounding, specific, and genuine. Avoid clich\u00e9s.',
         messages:[{role:'user',content:'Day '+activeDay+' \u2014 "'+d.title+'". Practice: '+d.practice+'. The user has completed '+done+'/21 days. Give them a personal, deepening insight for today.'}]
       })
     });
     const data=await res.json();
-    out.textContent=data.text||'No response. Please try again.';
+    out.textContent=(data.content&&data.content[0]&&data.content[0].text)||'No response. Please try again.';
   }catch(e){out.textContent='Connection error. Please try again.';}
   btn.disabled=false;btn.textContent='Receive Insight';
 }
@@ -742,15 +896,16 @@ async function sendChat(){
   const done=Object.keys(S.done).length;
   chatHist.push({role:'user',content:msg});
   try{
-    const res=await fetch('/api/chat',{
-      method:'POST',headers:{'Content-Type':'application/json'},
+    const res=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',headers:{'Content-Type':'application/json','anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},
       body:JSON.stringify({
+        model:'claude-sonnet-4-20250514',max_tokens:1000,
         system:'You are the AI Wealth Coach inside "Wealthy Within" \u2014 a 21-day inner wealth journey created by Kabeer Sabharwal. Speak with warmth, quiet wisdom, and depth. Rooted in abundance mindset, Law of Attraction, and conscious living principles. The user has completed '+done+'/21 days. Be conversational, genuine, and concise. No bullet points.',
         messages:chatHist
       })
     });
     const data=await res.json();
-    const reply=data.text||'No response received.';
+    const reply=(data.content&&data.content[0]&&data.content[0].text)||'No response received.';
     lDiv.className='msg ai';lDiv.textContent=reply;
     chatHist.push({role:'assistant',content:reply});
     if(chatHist.length>40)chatHist=chatHist.slice(-36);
@@ -815,6 +970,8 @@ function renderStats(){
     '<div class="stat-c"><div class="stat-n">'+jDone+'</div><div class="stat-l">Journal Entries</div></div>';
   document.getElementById('heat-grid').innerHTML=DAYS.map(({day})=>{
     const isDone=!!S.done[day];
+    const isLk=day>1&&!S.done[day-1];
+    if(isLk)return'<div class="heat-cell" style="opacity:0.35;cursor:not-allowed">'+day+'</div>';
     return'<div class="heat-cell'+(isDone?' done':'')+'" onclick="openModal('+day+')">'+day+'</div>';
   }).join('');
 }
