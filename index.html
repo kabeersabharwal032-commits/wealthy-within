@@ -715,7 +715,7 @@ async function getInsight(){
   btn.disabled=true;btn.textContent='Receiving...';
   out.textContent='\u2728 Connecting to your inner wisdom...';
   try{
-    const res=await fetch('/.netlify/functions/gemini',{
+    const res=await fetch('/api/chat',{
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
         system:'You are the inner wealth guide for "Wealthy Within" \u2014 a 21-day mindset and abundance journey created by Kabeer Sabharwal. Speak with warmth, depth, and quiet authority. Give a 3-4 sentence personal insight that deepens today\'s specific practice. Be grounding, specific, and genuine. Avoid clich\u00e9s.',
