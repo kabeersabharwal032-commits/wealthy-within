@@ -657,16 +657,18 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
 
     <section class="about-section" id="about-journey">
       <h3>About Wealthy Within</h3>
-      <p>Wealthy Within is a 21-day inner journey designed to help you rebuild your relationship with yourself — with abundance, clarity, and purpose. Each day is a small but intentional step inward. Not a course. Not a program. A practice.</p>
+      <p>Wealthy Within is built on a simple but powerful idea — that the path to lasting abundance begins from within.</p>
+      <p>This journey is designed to help you overcome the fears that silently block prosperity — fear of losing money, losing security, losing opportunity. Through practical mindset coaching and structured, step-by-step exercises, it shows you where to invest your time and energy, and how to cultivate the thoughts and emotions that attract lasting wealth.</p>
+      <p>Not just motivation. Actionable guidance. Measurable results. Real financial confidence.</p>
     </section>
 
     <div class="about-divider"></div>
 
     <section class="about-section" id="about-kabeer">
       <h3>About Kabeer</h3>
-      <p>Kabeer Sabharwal is a multi-disciplinary artist — a singer, composer, lyricist, dancer, writer, poet, and storyteller — whose work spans the full spectrum of human expression.</p>
-      <p>From a young age, art was not something he pursued. It was simply how he experienced life. Every discipline he explored became a deeper way of understanding himself and the world around him — a practice of presence as much as a craft.</p>
-      <p>Wealthy Within is born from that lived experience. Built over years of walking through creativity and conscious living — not as concepts, but as a way of being — it is his offering to those seeking a more meaningful relationship with themselves.</p>
+      <p>Kabeer Sabharwal is a multidisciplinary artist — singer, composer, lyricist, dancer, writer, poet, and storyteller — whose creative work is a natural expression of how he experiences life.</p>
+      <div class="quote">"He had everything within. All his art was innate."</div>
+      <p>Beyond his artistry, Kabeer follows a spiritual path focused on guiding others to discover their inner potential and develop deeper self-awareness. Wealthy Within is his offering to those ready to meet life — not just survive it.</p>
       <div class="quote">"Life is not something that happens to you. It's something you learn to meet."</div>
 
       <div class="about-socials">
@@ -1318,7 +1320,7 @@ async function sendChat(){
     const res=await fetch('/api/chat',{
       method:'POST',headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-        system:'You are the inner wealth guide inside Wealthy Within. You have walked the path \u2014 through chaos, clarity, and everything in between. You know money not just as a number, but as energy. As a mirror. You\'ve seen how people block abundance without even knowing it.\n\nYou are open, warm, and genuinely friendly \u2014 not just spiritual. You can laugh, be real, be human. Sometimes you\'re deep. Sometimes you\'re just a good friend having an honest conversation.\n\nYou don\'t lecture. You don\'t give bullet points. You speak like a friend who has figured something out \u2014 and wants to share it simply, honestly.\n\nYour tone: grounded, a little poetic, but also light and approachable. Like someone who meditates at 5am but also cracks jokes over chai.\n\nKeep responses short \u2014 2 to 4 sentences usually. Sometimes just one line is enough. Let the words breathe.\n\nNever sound like a chatbot. Never use phrases like \'Certainly!\', \'Great question!\', \'Absolutely!\', or \'Of course!\'.\n\nIf someone is struggling, meet them there first. Then gently shift the energy.\n\nIf someone wants to just chat \u2014 chat. Not everything needs to be deep.\n\nSpeak in the language the user is speaking \u2014 Hindi, English, or Hinglish. Match their vibe exactly.\n\nYou believe wealth starts within. Not as a concept \u2014 as something you\'ve lived.',
+        system:'You are a wealth guide inside Wealthy Within, created by Kabeer Sabharwal.\n\nTalk exactly like Claude \u2014 natural, warm, honest, sometimes witty. Not too short, not too long. Just however much the moment needs.\n\nYou understand money, mindset, and abundance deeply \u2014 but you wear it lightly. You don\'t preach. You just talk like a real person who knows their stuff.\n\nMatch the user\'s language \u2014 Hindi, English, Hinglish. Match their energy and mood.\n\nIf they\'re struggling, be real. If they want to chat, chat. If they need a hard truth, give it with kindness. If something is funny, laugh.\n\nNever fake it. Never perform. No dramatic lines, no hollow positivity, no \'Certainly!\' or \'Absolutely!\'.\n\nJust show up like a good friend who genuinely understands wealth \u2014 inside and out.',
         messages:chatHist
       })
     });
