@@ -373,6 +373,24 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:0.01ms!important;transition-duration:0.01ms!important;}}
 @media(min-width:768px){.home-top h1{font-size:56px;}.msg{max-width:70%;}.modal-sheet{border-radius:24px;margin-bottom:20px;max-height:85vh;}}
 @media(min-width:1024px){.days-grid{max-width:920px;grid-template-columns:repeat(7,1fr);}.chat-area{max-width:700px;margin:0 auto;width:100%;}}
+
+/* iOS AUTO INSTALL PROMPT */
+.iap-overlay{position:fixed;inset:0;z-index:300;background:rgba(3,2,8,0.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.35s var(--ease);}
+.iap-overlay.open{opacity:1;pointer-events:all;}
+.iap-sheet{width:100%;max-width:480px;background:linear-gradient(180deg,#0e0b1a 0%,#07050f 100%);border-radius:24px 24px 0 0;border-top:1px solid rgba(245,200,66,0.22);border-left:1px solid rgba(245,200,66,0.06);border-right:1px solid rgba(245,200,66,0.06);transform:translateY(100%);transition:transform 0.5s cubic-bezier(0.32,0.72,0,1);box-shadow:0 -24px 80px rgba(0,0,0,0.7),0 -1px 0 rgba(245,200,66,0.15);padding:0 24px calc(28px + env(safe-area-inset-bottom));position:relative;}
+.iap-overlay.open .iap-sheet{transform:translateY(0);}
+.iap-handle{width:40px;height:4px;background:rgba(255,255,255,0.12);border-radius:2px;margin:14px auto 22px;}
+.iap-icon{width:68px;height:68px;border-radius:20px;background:linear-gradient(135deg,rgba(245,200,66,0.18),rgba(245,200,66,0.05));border:1px solid rgba(245,200,66,0.35);display:flex;align-items:center;justify-content:center;margin:0 auto 18px;color:#f5c842;font-family:var(--fd);font-size:36px;font-weight:600;letter-spacing:-1.5px;text-shadow:0 0 18px rgba(245,200,66,0.55);box-shadow:0 4px 22px rgba(245,200,66,0.18),inset 0 1px 0 rgba(255,255,255,0.06);}
+.iap-title{font-family:var(--fd);font-size:24px;font-weight:600;color:var(--text);text-align:center;margin-bottom:8px;letter-spacing:-0.2px;}
+.iap-sub{font-size:14px;color:var(--muted2);text-align:center;line-height:1.6;font-weight:300;margin-bottom:22px;padding:0 6px;}
+.iap-step{display:flex;align-items:center;gap:14px;background:rgba(20,15,35,0.7);border:1px solid rgba(245,200,66,0.12);border-radius:14px;padding:14px 16px;margin-bottom:18px;}
+.iap-share{width:38px;height:38px;border-radius:10px;background:rgba(0,122,255,0.1);border:1px solid rgba(0,122,255,0.3);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#5ea4ff;}
+.iap-share svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.iap-step-text{font-size:13px;color:var(--text2);line-height:1.55;font-weight:300;}
+.iap-step-text strong{color:#f5c842;font-weight:600;}
+.iap-btn{width:100%;padding:16px;border-radius:14px;border:none;cursor:pointer;background:linear-gradient(135deg,#f5c842 0%,#d6a830 100%);color:#07050f;font-family:var(--fb);font-size:12px;font-weight:700;letter-spacing:1.8px;text-transform:uppercase;transition:transform 0.2s,box-shadow 0.3s;box-shadow:0 4px 22px rgba(245,200,66,0.32),inset 0 1px 0 rgba(255,255,255,0.18);}
+.iap-btn:hover{transform:translateY(-1px);box-shadow:0 8px 32px rgba(245,200,66,0.42),inset 0 1px 0 rgba(255,255,255,0.18);}
+.iap-btn:active{transform:scale(0.98);}
 </style>
 </head>
 <body>
@@ -641,6 +659,23 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
     <div class="confirm-actions">
       <button class="confirm-btn cancel" onclick="closeIosInstall()">Got it</button>
     </div>
+  </div>
+</div>
+
+<!-- iOS AUTO INSTALL PROMPT (first-visit bottom sheet) -->
+<div class="iap-overlay" id="ios-auto-prompt" onclick="if(event.target===this)dismissIosAutoPrompt()">
+  <div class="iap-sheet" role="dialog" aria-modal="true" aria-labelledby="iap-title-text">
+    <div class="iap-handle"></div>
+    <div class="iap-icon" aria-hidden="true">W</div>
+    <h3 class="iap-title" id="iap-title-text">Install Wealthy Within</h3>
+    <p class="iap-sub">Add this app to your home screen for the best experience.</p>
+    <div class="iap-step">
+      <div class="iap-share" aria-hidden="true">
+        <svg viewBox="0 0 24 24"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+      </div>
+      <div class="iap-step-text">Tap the <strong>Share</strong> icon below, then select <strong>&ldquo;Add to Home Screen&rdquo;</strong>.</div>
+    </div>
+    <button class="iap-btn" type="button" onclick="dismissIosAutoPrompt()">Got it</button>
   </div>
 </div>
 
@@ -1176,6 +1211,29 @@ function closeEmailPopup(){
 function skipEmail(){
   S.emailCollected=true;save();closeEmailPopup();
 }
+
+/* ── iOS AUTO INSTALL PROMPT (first visit) ── */
+function dismissIosAutoPrompt(){
+  try{localStorage.setItem('ww_ios_prompt_seen','1');}catch(e){}
+  const el=document.getElementById('ios-auto-prompt');
+  if(el)el.classList.remove('open');
+}
+(function showIosAutoPromptIfNeeded(){
+  try{
+    const ua=navigator.userAgent||'';
+    const isIosDevice=/iPad|iPhone|iPod/.test(ua)&&!window.MSStream;
+    /* Only Safari (exclude Chrome/Firefox/Edge/Opera/in-app browsers on iOS) */
+    const isSafari=/Safari\//.test(ua)&&!/CriOS|FxiOS|EdgiOS|OPiOS|GSA\//.test(ua);
+    const inStandalone=window.navigator.standalone===true;
+    let alreadySeen=false;
+    try{alreadySeen=localStorage.getItem('ww_ios_prompt_seen')==='1';}catch(e){}
+    if(!isIosDevice||!isSafari||inStandalone||alreadySeen)return;
+    setTimeout(function(){
+      const el=document.getElementById('ios-auto-prompt');
+      if(el)el.classList.add('open');
+    },800);
+  }catch(e){}
+})();
 
 /* ── INIT ── */
 renderHome();
