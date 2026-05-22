@@ -461,17 +461,23 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
 .about-thanks-text{font-family:var(--fd);font-size:21px;color:#f5c842;line-height:1.45;font-weight:500;}
 
 /* ── DONATION BLOCK ── */
-.donate-origin{font-family:var(--fd);font-style:italic;font-size:15px;color:var(--muted2);line-height:1.8;margin-bottom:28px;padding:16px 20px;border-left:2px solid rgba(245,200,66,0.2);font-weight:300;}
-.donate-body{font-size:15px;line-height:1.85;color:var(--text2);font-weight:300;margin-bottom:24px;}
-.donate-amounts{display:flex;gap:10px;margin-bottom:24px;}
-.donate-chip{flex:1;padding:12px 8px;border-radius:12px;border:1px solid rgba(245,200,66,0.2);background:rgba(14,11,26,0.7);color:var(--gold2);font-family:var(--fb);font-size:15px;font-weight:500;text-align:center;cursor:default;transition:border-color 0.25s var(--ease),background 0.25s var(--ease),transform 0.2s var(--ease-bounce);}
-.donate-chip:hover{border-color:rgba(245,200,66,0.45);background:rgba(245,200,66,0.07);transform:translateY(-2px);}
-.donate-chip-label{display:block;font-size:9px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted);margin-top:3px;}
-.donate-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:17px 20px;border-radius:14px;border:none;cursor:pointer;background:linear-gradient(135deg,rgba(245,200,66,0.12) 0%,rgba(201,145,61,0.08) 100%);border:1px solid rgba(245,200,66,0.3);color:#f5c842;font-family:var(--fb);font-size:13px;letter-spacing:1px;font-weight:600;transition:transform 0.25s var(--ease),box-shadow 0.3s,background 0.25s var(--ease),border-color 0.25s;box-shadow:0 4px 22px rgba(245,200,66,0.1),inset 0 1px 0 rgba(255,255,255,0.06);text-decoration:none;margin-bottom:18px;}
-.donate-btn:hover{transform:translateY(-2px);background:linear-gradient(135deg,rgba(245,200,66,0.18) 0%,rgba(201,145,61,0.12) 100%);border-color:rgba(245,200,66,0.55);box-shadow:0 8px 32px rgba(245,200,66,0.2),inset 0 1px 0 rgba(255,255,255,0.08);}
+.donate-wrap{padding:0 18px 24px;}
+@media(min-width:768px){.donate-wrap{max-width:500px;margin:0 auto;}}
+.donate-card{background:linear-gradient(145deg,rgba(30,24,48,0.7) 0%,rgba(14,11,26,0.85) 100%);border:1px solid rgba(201,145,61,0.18);border-radius:var(--radius);padding:22px 20px 20px;box-shadow:0 4px 24px rgba(0,0,0,0.3),inset 0 1px 0 rgba(201,145,61,0.06);}
+.donate-origin{font-family:var(--fd);font-style:italic;font-size:14px;color:var(--muted2);line-height:1.75;margin-bottom:14px;padding-left:12px;border-left:2px solid rgba(245,200,66,0.18);font-weight:300;}
+.donate-body{font-size:13.5px;line-height:1.8;color:var(--text2);font-weight:300;margin-bottom:18px;}
+.donate-amounts{display:flex;gap:9px;margin-bottom:16px;}
+.donate-chip{flex:1;padding:11px 6px;border-radius:11px;border:1px solid rgba(245,200,66,0.18);background:rgba(14,11,26,0.7);color:var(--muted2);font-family:var(--fb);font-size:15px;font-weight:500;text-align:center;cursor:pointer;transition:border-color 0.25s var(--ease),background 0.25s var(--ease),color 0.25s var(--ease),transform 0.2s var(--ease-bounce),box-shadow 0.25s;}
+.donate-chip:hover{border-color:rgba(245,200,66,0.38);background:rgba(245,200,66,0.05);color:var(--gold2);transform:translateY(-2px);}
+.donate-chip:active{transform:scale(0.96);}
+.donate-chip.active{border-color:rgba(245,200,66,0.65);background:linear-gradient(135deg,rgba(245,200,66,0.14),rgba(201,145,61,0.08));color:#f5c842;box-shadow:0 0 0 2px rgba(245,200,66,0.18),0 4px 16px rgba(245,200,66,0.12);}
+.donate-chip-label{display:block;font-size:9px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted);margin-top:3px;transition:color 0.25s;}
+.donate-chip.active .donate-chip-label{color:rgba(245,200,66,0.7);}
+.donate-btn{display:flex;align-items:center;justify-content:center;gap:9px;width:100%;padding:15px 20px;border-radius:12px;border:1px solid rgba(245,200,66,0.3);cursor:pointer;background:linear-gradient(135deg,rgba(245,200,66,0.1) 0%,rgba(201,145,61,0.07) 100%);color:#f5c842;font-family:var(--fb);font-size:13px;letter-spacing:0.8px;font-weight:600;transition:transform 0.25s var(--ease),box-shadow 0.3s,background 0.25s var(--ease),border-color 0.25s;box-shadow:0 4px 18px rgba(245,200,66,0.08),inset 0 1px 0 rgba(255,255,255,0.05);margin-bottom:14px;}
+.donate-btn:hover{transform:translateY(-2px);background:linear-gradient(135deg,rgba(245,200,66,0.16) 0%,rgba(201,145,61,0.11) 100%);border-color:rgba(245,200,66,0.5);box-shadow:0 7px 28px rgba(245,200,66,0.18),inset 0 1px 0 rgba(255,255,255,0.07);}
 .donate-btn:active{transform:scale(0.98);}
-.donate-btn-icon{width:20px;height:20px;flex-shrink:0;opacity:0.9;}
-.donate-thanks{text-align:center;font-size:13px;color:var(--muted2);font-weight:300;line-height:1.6;}
+.donate-btn-icon{width:18px;height:18px;flex-shrink:0;opacity:0.85;}
+.donate-thanks{text-align:center;font-size:12px;color:var(--muted);font-weight:300;line-height:1.6;}
 </style>
 </head>
 <body>
@@ -654,13 +660,55 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
             <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
           </div>
         </div>
+      </div><!-- end settings-card -->
+    </div><!-- end settings-wrap -->
+
+    <!-- SUPPORT THIS JOURNEY -->
+    <div class="donate-wrap">
+      <div class="sec-label" style="margin-bottom:12px">Support This Journey</div>
+      <div class="donate-card">
+        <p class="donate-origin">This app was built by one person — not a developer, not a team. Just someone who believed this journey needed to exist, and figured out the rest along the way.</p>
+        <p class="donate-body">Built with love, freely given. If it brought value to your life, give back in whatever way feels right.</p>
+
+        <div class="donate-amounts" id="donate-amounts">
+          <button class="donate-chip" data-amount="51" onclick="selectAmount(this)">₹51<span class="donate-chip-label">a seed</span></button>
+          <button class="donate-chip" data-amount="101" onclick="selectAmount(this)">₹101<span class="donate-chip-label">a step</span></button>
+          <button class="donate-chip" data-amount="251" onclick="selectAmount(this)">₹251<span class="donate-chip-label">a shift</span></button>
+        </div>
+
+        <button class="donate-btn" id="donate-btn" onclick="openDonate()">
+          <svg class="donate-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="5" width="20" height="14" rx="3"/>
+            <path d="M2 10h20"/>
+            <path d="M7 15h2M12 15h3"/>
+          </svg>
+          <span id="donate-btn-label">Donate via UPI</span>
+        </button>
+
+        <p class="donate-thanks">Every contribution keeps this journey alive. Thank you 🙏</p>
+      </div>
+    </div>
+
+    <div class="settings-wrap">
+      <div class="sec-label" style="margin-bottom:12px">Danger Zone</div>
+      <div class="settings-card">
+        <div class="settings-row danger" onclick="askResetJourney()">
+          <div class="settings-icon">
+            <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+          </div>
+          <div class="settings-text">
+            <div class="settings-title">Reset Journey</div>
+            <div class="settings-sub">Clear all progress and start over</div>
+          </div>
+          <div class="settings-chevron">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </div>
       </div>
     </div>
     <div style="height:80px"></div>
   </div>
 </div>
-
-<!-- NAV -->
 <nav>
   <button class="active" id="nav-home" onclick="go('home')">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
@@ -814,29 +862,6 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
       </div>
     </section>
 
-    <div class="about-divider"></div>
-
-    <section class="about-section" id="about-donate">
-      <p class="donate-origin">This app was built by one person — not a developer, not a team. Just someone who believed this journey needed to exist, and figured out the rest along the way.</p>
-      <h3>Support This Journey 🌱</h3>
-      <p class="donate-body">This app was built with love, freely given. If it brought value to your life, you're welcome to give back — in whatever way feels right.</p>
-
-      <div class="donate-amounts">
-        <div class="donate-chip">₹51<span class="donate-chip-label">a seed</span></div>
-        <div class="donate-chip">₹101<span class="donate-chip-label">a step</span></div>
-        <div class="donate-chip">₹251<span class="donate-chip-label">a shift</span></div>
-      </div>
-
-      <a class="donate-btn" href="upi://pay?pa=rcoddy1180-1@okicici&pn=Kabeer%20Sabharwal&cu=INR" role="button">
-        <svg class="donate-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-          <rect x="2" y="5" width="20" height="14" rx="3"/>
-          <path d="M2 10h20"/>
-          <path d="M7 15h2M12 15h3"/>
-        </svg>
-        Donate via UPI
-      </a>
-
-      <p class="donate-thanks">Every contribution keeps this journey alive. Thank you 🙏</p>
     </section>
   </div>
 </div>
@@ -1571,6 +1596,26 @@ function dismissIosAutoPrompt(){
     },800);
   }catch(e){}
 })();
+
+/* ── DONATION ── */
+let selectedDonationAmount=null;
+function selectAmount(el){
+  document.querySelectorAll('.donate-chip').forEach(c=>c.classList.remove('active'));
+  if(selectedDonationAmount===el.dataset.amount){
+    // tap same chip again → deselect
+    selectedDonationAmount=null;
+    document.getElementById('donate-btn-label').textContent='Donate via UPI';
+  }else{
+    el.classList.add('active');
+    selectedDonationAmount=el.dataset.amount;
+    document.getElementById('donate-btn-label').textContent='Donate ₹'+selectedDonationAmount+' via UPI';
+  }
+}
+function openDonate(){
+  let url='upi://pay?pa=rcoddy1180-1@okicici&pn=Kabeer%20Sabharwal&cu=INR';
+  if(selectedDonationAmount) url+='&am='+selectedDonationAmount;
+  window.location.href=url;
+}
 
 /* ── INIT ── */
 renderHome();
