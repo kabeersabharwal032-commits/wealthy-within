@@ -277,6 +277,52 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
 .heat-cell.done{border-color:rgba(201,145,61,0.45);background:linear-gradient(135deg,rgba(201,145,61,0.15),rgba(61,168,156,0.07));color:var(--gold3);box-shadow:0 2px 12px rgba(201,145,61,0.15);}
 .heat-cell:not(.done){border-color:rgba(255,255,255,0.06);background:rgba(14,11,26,0.7);color:var(--muted);}
 
+/* SETTINGS CARD (Stats) */
+.settings-wrap{padding:0 18px 24px;}
+@media(min-width:768px){.settings-wrap{max-width:500px;margin:0 auto;}}
+.settings-card{background:var(--grad-card);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;box-shadow:0 4px 20px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.04);}
+.settings-row{display:flex;align-items:center;gap:14px;padding:16px 18px;cursor:pointer;transition:background 0.25s var(--ease);border-bottom:1px solid rgba(255,255,255,0.04);}
+.settings-row:last-child{border-bottom:none;}
+.settings-row:hover{background:rgba(201,145,61,0.05);}
+.settings-row:active{background:rgba(201,145,61,0.08);}
+.settings-row.danger:hover{background:rgba(196,104,122,0.07);}
+.settings-icon{width:38px;height:38px;border-radius:11px;background:rgba(201,145,61,0.08);border:1px solid rgba(201,145,61,0.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--gold2);}
+.settings-row.danger .settings-icon{background:rgba(196,104,122,0.08);border-color:rgba(196,104,122,0.22);color:var(--rose2);}
+.settings-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.settings-text{flex:1;min-width:0;}
+.settings-title{font-size:14px;color:var(--text);font-weight:500;margin-bottom:3px;letter-spacing:0.2px;}
+.settings-row.danger .settings-title{color:var(--rose2);}
+.settings-sub{font-size:11.5px;color:var(--muted2);font-weight:300;line-height:1.45;}
+.settings-chevron{color:var(--muted);flex-shrink:0;}
+.settings-chevron svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+/* CONFIRM / INSTALL MODALS */
+.confirm-overlay{position:fixed;inset:0;z-index:250;background:rgba(4,3,8,0.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity 0.3s var(--ease);}
+.confirm-overlay.open{opacity:1;pointer-events:all;}
+.confirm-sheet{width:100%;max-width:380px;background:linear-gradient(160deg,#1a1230 0%,#0e0b1a 100%);border-radius:22px;border:1px solid var(--border2);padding:30px 26px 22px;text-align:center;transform:translateY(20px) scale(0.96);transition:transform 0.4s var(--ease-bounce);box-shadow:0 20px 60px rgba(0,0,0,0.6),0 0 0 1px rgba(201,145,61,0.06);}
+.confirm-overlay.open .confirm-sheet{transform:translateY(0) scale(1);}
+.confirm-icon{width:56px;height:56px;border-radius:50%;margin:0 auto 16px;display:flex;align-items:center;justify-content:center;background:rgba(196,104,122,0.1);border:1px solid rgba(196,104,122,0.25);color:var(--rose2);}
+.confirm-icon.gold{background:rgba(201,145,61,0.1);border-color:rgba(201,145,61,0.3);color:var(--gold2);}
+.confirm-icon svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.confirm-title{font-family:var(--fd);font-size:24px;font-weight:600;color:var(--text);margin-bottom:8px;line-height:1.15;}
+.confirm-sub{font-size:13px;color:var(--muted2);line-height:1.7;margin-bottom:22px;font-weight:300;}
+.confirm-actions{display:flex;flex-direction:column;gap:8px;}
+.confirm-btn{width:100%;padding:14px;border-radius:12px;border:none;cursor:pointer;font-family:var(--fb);font-size:11px;letter-spacing:1.8px;font-weight:700;text-transform:uppercase;transition:all 0.25s var(--ease);}
+.confirm-btn.danger{background:linear-gradient(135deg,rgba(196,104,122,0.95),rgba(140,60,80,0.95));color:#fff;box-shadow:0 4px 16px rgba(196,104,122,0.25);}
+.confirm-btn.danger:hover{transform:translateY(-1px);box-shadow:0 6px 22px rgba(196,104,122,0.4);}
+.confirm-btn.gold{background:linear-gradient(135deg,var(--gold4),var(--gold),var(--gold3));color:var(--bg);box-shadow:0 4px 18px rgba(201,145,61,0.3);}
+.confirm-btn.gold:hover{transform:translateY(-1px);box-shadow:0 6px 24px rgba(201,145,61,0.4);}
+.confirm-btn.cancel{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);color:var(--muted2);}
+.confirm-btn.cancel:hover{background:rgba(255,255,255,0.07);color:var(--text2);}
+
+/* iOS INSTALL STEPS */
+.ios-steps{margin-bottom:20px;text-align:left;}
+.ios-step{display:flex;align-items:flex-start;gap:12px;padding:9px 2px;}
+.ios-step-num{width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,var(--gold4),var(--gold));color:var(--bg);font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-family:var(--fb);}
+.ios-step-txt{font-size:13px;color:var(--text2);line-height:1.55;font-weight:300;padding-top:1px;}
+.ios-step-txt strong{color:var(--gold2);font-weight:500;}
+.ios-share{display:inline-block;vertical-align:-3px;width:14px;height:14px;margin:0 2px;}
+
 /* TOAST */
 .toast{position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(16px);background:rgba(7,5,15,0.97);border:1px solid var(--border2);backdrop-filter:blur(32px);color:var(--gold3);padding:12px 28px;border-radius:28px;font-size:13px;opacity:0;pointer-events:none;transition:all 0.4s var(--ease-bounce);z-index:300;white-space:nowrap;font-weight:500;}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
@@ -440,6 +486,35 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
       <div class="sec-label" style="margin-bottom:12px">21-Day Map</div>
       <div class="heat-grid" id="heat-grid"></div>
     </div>
+    <div class="settings-wrap">
+      <div class="sec-label" style="margin-bottom:12px">Settings</div>
+      <div class="settings-card">
+        <div class="settings-row" id="install-row" onclick="onInstallClick()" style="display:none">
+          <div class="settings-icon">
+            <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          </div>
+          <div class="settings-text">
+            <div class="settings-title">Install App</div>
+            <div class="settings-sub" id="install-sub">Add Wealthy Within to your home screen</div>
+          </div>
+          <div class="settings-chevron">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </div>
+        <div class="settings-row danger" onclick="askResetJourney()">
+          <div class="settings-icon">
+            <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+          </div>
+          <div class="settings-text">
+            <div class="settings-title">Reset Journey</div>
+            <div class="settings-sub">Clear all progress and start over</div>
+          </div>
+          <div class="settings-chevron">
+            <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
+          </div>
+        </div>
+      </div>
+    </div>
     <div style="height:80px"></div>
   </div>
 </div>
@@ -523,6 +598,49 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
       <button class="choice-btn end" onclick="closeCongratsPopup()">I'll Carry This Forward</button>
     </div>
 
+  </div>
+</div>
+
+<!-- CONFIRM RESET MODAL -->
+<div class="confirm-overlay" id="confirm-reset" onclick="if(event.target===this)closeResetConfirm()">
+  <div class="confirm-sheet">
+    <div class="confirm-icon">
+      <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
+    </div>
+    <div class="confirm-title">Reset Journey?</div>
+    <p class="confirm-sub">This will clear all completed days and journal entries. Your chat history with the Coach will remain. This cannot be undone.</p>
+    <div class="confirm-actions">
+      <button class="confirm-btn danger" onclick="restartJourney(true)">Yes, Reset Everything</button>
+      <button class="confirm-btn cancel" onclick="closeResetConfirm()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- iOS INSTALL INSTRUCTIONS -->
+<div class="confirm-overlay" id="ios-install" onclick="if(event.target===this)closeIosInstall()">
+  <div class="confirm-sheet" style="max-width:400px">
+    <div class="confirm-icon gold">
+      <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    </div>
+    <div class="confirm-title">Install on iPhone</div>
+    <p class="confirm-sub">In a few taps, add Wealthy Within to your home screen for instant access &mdash; just like a native app.</p>
+    <div class="ios-steps">
+      <div class="ios-step">
+        <div class="ios-step-num">1</div>
+        <div class="ios-step-txt">Tap the <strong>Share</strong> icon <svg class="ios-share" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg> at the bottom of Safari.</div>
+      </div>
+      <div class="ios-step">
+        <div class="ios-step-num">2</div>
+        <div class="ios-step-txt">Scroll down and tap <strong>Add to Home Screen</strong>.</div>
+      </div>
+      <div class="ios-step">
+        <div class="ios-step-num">3</div>
+        <div class="ios-step-txt">Tap <strong>Add</strong> in the top right. Done &mdash; the app is now on your home screen.</div>
+      </div>
+    </div>
+    <div class="confirm-actions">
+      <button class="confirm-btn cancel" onclick="closeIosInstall()">Got it</button>
+    </div>
   </div>
 </div>
 
@@ -668,18 +786,69 @@ try{
   }
 }catch(e){}
 
-/* ── INSTALL ── */
+/* ── INSTALL (cross-platform) ── */
+function isStandalone(){
+  return (window.matchMedia&&window.matchMedia('(display-mode: standalone)').matches)||window.navigator.standalone===true;
+}
+function isIos(){
+  return /iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream;
+}
+function updateInstallRow(){
+  const row=document.getElementById('install-row');
+  if(!row)return;
+  if(isStandalone()){row.style.display='none';return;}
+  if(deferredPrompt||isIos()){
+    row.style.display='flex';
+    const sub=document.getElementById('install-sub');
+    if(sub)sub.textContent=isIos()?'Tap to see how to add to your iPhone':'Add Wealthy Within to your home screen';
+  }else{
+    row.style.display='none';
+  }
+}
 window.addEventListener('beforeinstallprompt',e=>{
   e.preventDefault();deferredPrompt=e;
   document.getElementById('install-bar').style.display='flex';
+  updateInstallRow();
+});
+window.addEventListener('appinstalled',()=>{
+  deferredPrompt=null;
+  document.getElementById('install-bar').style.display='none';
+  const row=document.getElementById('install-row');if(row)row.style.display='none';
+  toast('App installed \u2728');
 });
 document.getElementById('install-btn').onclick=async()=>{
   if(!deferredPrompt)return;
   deferredPrompt.prompt();
   const{outcome}=await deferredPrompt.userChoice;
-  if(outcome==='accepted')document.getElementById('install-bar').style.display='none';
+  if(outcome==='accepted'){document.getElementById('install-bar').style.display='none';const row=document.getElementById('install-row');if(row)row.style.display='none';}
   deferredPrompt=null;
 };
+async function onInstallClick(){
+  if(isIos()&&!isStandalone()){
+    document.getElementById('ios-install').classList.add('open');
+    return;
+  }
+  if(deferredPrompt){
+    deferredPrompt.prompt();
+    const{outcome}=await deferredPrompt.userChoice;
+    if(outcome==='accepted'){
+      document.getElementById('install-row').style.display='none';
+      document.getElementById('install-bar').style.display='none';
+    }
+    deferredPrompt=null;
+  }
+}
+function closeIosInstall(){
+  document.getElementById('ios-install').classList.remove('open');
+}
+
+/* ── RESET CONFIRM ── */
+function askResetJourney(){
+  document.getElementById('confirm-reset').classList.add('open');
+}
+function closeResetConfirm(){
+  document.getElementById('confirm-reset').classList.remove('open');
+}
 
 /* ── TOAST ── */
 function toast(msg){
@@ -694,7 +863,7 @@ function go(name,fromHistory){
   document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
   document.getElementById('screen-'+name).classList.add('active');
   document.getElementById('nav-'+name).classList.add('active');
-  if(name==='stats')renderStats();
+  if(name==='stats'){renderStats();updateInstallRow();}
   if(name==='journal')renderJournal();
   if(name==='home')renderHome();
   if(name==='ai')renderChatHistory();
@@ -853,9 +1022,11 @@ function closeCongratsPopup(){
   document.getElementById('congrats-popup').classList.remove('open');
   document.body.style.overflow='';
 }
-function restartJourney(){
+function restartJourney(fromStats){
   S.done={};S.journal={};S.emailCollected=false;
-  save();closeCongratsPopup();renderHome();
+  save();closeCongratsPopup();closeResetConfirm();
+  renderHome();
+  if(fromStats){renderStats();go('home');}
   toast('New journey begins \u2728');
 }
 
@@ -927,6 +1098,10 @@ document.addEventListener('keydown',e=>{
   if(e.key!=='Escape')return;
   const modalEl=document.getElementById('modal');
   const popupEl=document.getElementById('email-popup');
+  const resetEl=document.getElementById('confirm-reset');
+  const iosEl=document.getElementById('ios-install');
+  if(resetEl&&resetEl.classList.contains('open')){closeResetConfirm();return;}
+  if(iosEl&&iosEl.classList.contains('open')){closeIosInstall();return;}
   if(modalEl.classList.contains('open')){closeModal();return;}
   if(popupEl.classList.contains('open')){closeEmailPopup();return;}
   if(currentScreen!=='home'){goBack();}
