@@ -338,10 +338,32 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
 .ep-icon{text-align:center;font-size:24px;color:var(--gold);margin-bottom:10px;}
 .ep-title{font-family:var(--fd);font-size:24px;font-weight:600;color:var(--text);text-align:center;margin-bottom:6px;}
 .ep-sub{font-size:13px;color:var(--muted2);text-align:center;line-height:1.7;margin-bottom:20px;font-weight:300;}
-.ep-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(201,145,61,0.15);border-radius:10px;padding:12px 14px;color:var(--text);font-family:var(--fb);font-size:14px;outline:none;margin-bottom:10px;}
+/* WhatsApp CTA */
+.ep-wa-btn{
+  display:flex;align-items:center;justify-content:center;gap:10px;
+  width:100%;padding:16px 20px;border-radius:14px;border:none;cursor:pointer;
+  background:linear-gradient(135deg,#1DAF57 0%,#128C3F 100%);
+  color:#fff;font-family:var(--fb);font-size:13px;letter-spacing:0.8px;font-weight:700;
+  transition:transform 0.25s var(--ease),box-shadow 0.3s;
+  box-shadow:0 4px 22px rgba(29,175,87,0.35),inset 0 1px 0 rgba(255,255,255,0.15);
+  margin-bottom:18px;text-decoration:none;
+}
+.ep-wa-btn:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(29,175,87,0.45),inset 0 1px 0 rgba(255,255,255,0.15);}
+.ep-wa-btn:active{transform:scale(0.98);}
+.ep-wa-icon{width:22px;height:22px;fill:#fff;flex-shrink:0;}
+/* Email divider */
+.ep-divider{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.ep-divider-line{flex:1;height:1px;background:rgba(255,255,255,0.07);}
+.ep-divider-label{font-size:10px;color:var(--muted);letter-spacing:1.5px;text-transform:uppercase;font-weight:500;white-space:nowrap;}
+/* Email section label */
+.ep-email-label{font-size:11px;color:var(--muted2);font-weight:400;margin-bottom:8px;display:block;letter-spacing:0.3px;}
+.ep-input{width:100%;background:rgba(255,255,255,0.04);border:1px solid rgba(201,145,61,0.15);border-radius:10px;padding:12px 14px;color:var(--text);font-family:var(--fb);font-size:14px;outline:none;margin-bottom:10px;transition:border-color 0.25s,box-shadow 0.25s;}
+.ep-input:focus{border-color:rgba(201,145,61,0.35);box-shadow:0 0 0 3px rgba(201,145,61,0.06);}
 .ep-input::placeholder{color:var(--muted);}
-.ep-btn{width:100%;padding:14px;border-radius:12px;border:none;background:linear-gradient(135deg,var(--gold4),var(--gold),var(--gold3));color:var(--bg);font-family:var(--fb);font-size:11px;letter-spacing:2px;font-weight:700;text-transform:uppercase;cursor:pointer;margin-bottom:10px;}
-.ep-skip{width:100%;padding:10px;border-radius:10px;border:none;background:none;color:var(--muted);font-size:12px;cursor:pointer;font-family:var(--fb);}
+.ep-btn{width:100%;padding:13px;border-radius:12px;border:1px solid rgba(201,145,61,0.25);background:linear-gradient(135deg,rgba(201,145,61,0.1),rgba(124,92,191,0.06));color:var(--gold2);font-family:var(--fb);font-size:11px;letter-spacing:2px;font-weight:700;text-transform:uppercase;cursor:pointer;margin-bottom:8px;transition:all 0.25s var(--ease);}
+.ep-btn:hover{background:linear-gradient(135deg,rgba(201,145,61,0.18),rgba(124,92,191,0.1));border-color:rgba(201,145,61,0.4);}
+.ep-skip{width:100%;padding:10px;border-radius:10px;border:none;background:none;color:var(--muted);font-size:12px;cursor:pointer;font-family:var(--fb);transition:color 0.2s;}
+.ep-skip:hover{color:var(--muted2);}
 
 /* ── CONGRATULATIONS POPUP ── */
 .congrats-overlay{position:fixed;inset:0;z-index:300;background:rgba(4,3,8,0.96);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.5s var(--ease);padding:24px;}
@@ -883,19 +905,35 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
     <div class="ep-handle"></div>
     <div class="ep-inner">
       <div class="ep-icon">✦</div>
-      <h3 class="ep-title">You completed Day 1!</h3>
-      <p class="ep-sub">Save your progress and stay on the journey. Enter your email to receive updates and reminders.</p>
+      <h3 class="ep-title">Day 1 Complete</h3>
+      <p class="ep-sub">Join a community of people on the same journey — stay inspired, share your shifts, and keep the momentum going.</p>
       <div id="ep-form">
+        <!-- Primary CTA: WhatsApp -->
+        <a class="ep-wa-btn" href="https://chat.whatsapp.com/DUnJautcEU87pYflgO9Pp9" target="_blank" rel="noopener" onclick="markCommunityJoined()">
+          <svg class="ep-wa-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Join the Community
+        </a>
+
+        <!-- Divider -->
+        <div class="ep-divider">
+          <div class="ep-divider-line"></div>
+          <div class="ep-divider-label">or get reminders via email</div>
+          <div class="ep-divider-line"></div>
+        </div>
+
+        <!-- Optional email section -->
+        <label class="ep-email-label" for="ep-email">Email address <span style="color:var(--muted);font-size:10px;">(optional)</span></label>
         <input class="ep-input" id="ep-name" type="text" placeholder="Your name (optional)"/>
-        <input class="ep-input" id="ep-email" type="email" placeholder="Your email address"/>
+        <input class="ep-input" id="ep-email" type="email" placeholder="your@email.com"/>
         <div id="ep-error" style="color:#c4687a;font-size:11px;margin:-6px 0 8px;min-height:14px;"></div>
-        <button class="ep-btn" id="ep-btn" onclick="submitEmail()">Join the Journey</button>
+        <button class="ep-btn" id="ep-btn" onclick="submitEmail()">Get Email Reminders</button>
+
         <button class="ep-skip" onclick="skipEmail()">Maybe later</button>
       </div>
       <div id="ep-success" style="display:none;text-align:center;padding:10px 0;">
         <div style="font-size:28px;margin-bottom:8px;">🌟</div>
-        <div style="color:var(--gold2);font-size:15px;font-weight:500;">Welcome to the journey!</div>
-        <div style="color:var(--muted2);font-size:12px;margin-top:4px;">See you tomorrow for Day 2.</div>
+        <div style="color:var(--gold2);font-size:15px;font-weight:500;">You're in! See you tomorrow.</div>
+        <div style="color:var(--muted2);font-size:12px;margin-top:4px;">Keep showing up — Day 2 awaits.</div>
       </div>
     </div>
   </div>
@@ -1432,22 +1470,36 @@ function renderStats(){
   }).join('');
 }
 
-/* ── EMAIL ── */
+/* ── EMAIL / COMMUNITY ── */
+function markCommunityJoined(){
+  // Called when the WhatsApp button is tapped — mark as collected so popup won't show again
+  S.emailCollected=true;save();
+  // Close the popup after a short delay so the link still opens
+  setTimeout(closeEmailPopup,400);
+}
+
 function submitEmail(){
   const name=document.getElementById('ep-name').value.trim();
   const email=document.getElementById('ep-email').value.trim();
-  if(!email||!email.includes('@')){document.getElementById('ep-error').textContent='Please enter a valid email.';return;}
+  // Email is optional — if provided it must be valid
+  if(email&&!email.includes('@')){document.getElementById('ep-error').textContent='Please enter a valid email address.';return;}
+  document.getElementById('ep-error').textContent='';
   const btn=document.getElementById('ep-btn');
   btn.textContent='Saving...';btn.disabled=true;
-  fetch('https://script.google.com/macros/s/AKfycbyMmw0E6xcZOhufjxg84u12OuR_fJhxZaiP96TB8ZLoJxFbKgzNsEX2G8bQ3k1ISL_l/exec',{
-    method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({name:name||'Anonymous',email:email})
-  }).finally(()=>{
+  const sendData=()=>{
     S.emailCollected=true;save();
     document.getElementById('ep-success').style.display='block';
     document.getElementById('ep-form').style.display='none';
     setTimeout(closeEmailPopup,2000);
-  });
+  };
+  if(email){
+    fetch('https://script.google.com/macros/s/AKfycbyMmw0E6xcZOhufjxg84u12OuR_fJhxZaiP96TB8ZLoJxFbKgzNsEX2G8bQ3k1ISL_l/exec',{
+      method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({name:name||'Anonymous',email:email})
+    }).finally(sendData);
+  }else{
+    sendData();
+  }
 }
 
 function closeEmailPopup(){
