@@ -117,7 +117,7 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
 .orb-halo{position:absolute;inset:-18px;border-radius:50%;background:conic-gradient(from 0deg,transparent 0%,rgba(201,145,61,0.15) 25%,rgba(124,92,191,0.1) 50%,rgba(196,104,122,0.12) 75%,transparent 100%);animation:orbSpin 12s linear infinite;filter:blur(6px);}
 .orb-halo2{position:absolute;inset:-8px;border-radius:50%;border:1px dashed rgba(201,145,61,0.2);animation:orbSpin 20s linear infinite reverse;}
 .logo-ring{width:96px;height:96px;border-radius:50%;border:1px solid rgba(201,145,61,0.35);display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 38% 38%,rgba(201,145,61,0.18) 0%,rgba(124,92,191,0.1) 50%,rgba(7,5,15,0.9) 100%);position:relative;z-index:1;box-shadow:0 0 50px rgba(201,145,61,0.2),0 0 100px rgba(124,92,191,0.1),inset 0 0 40px rgba(201,145,61,0.08);animation:logoFloat 6s ease-in-out infinite;}
-.logo-ring svg{width:34px;height:34px;stroke:var(--gold2);fill:none;stroke-width:1.1;filter:drop-shadow(0 0 8px rgba(201,145,61,0.5));}
+.logo-ring svg{width:44px;height:44px;filter:drop-shadow(0 0 8px rgba(201,145,61,0.5));}
 @keyframes orbSpin{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
 @keyframes logoFloat{0%,100%{transform:translateY(0) rotateX(0deg);}50%{transform:translateY(-7px) rotateX(4deg);}}
 .home-top h1{font-family:var(--fd);font-size:clamp(40px,11vw,58px);font-weight:600;line-height:1.0;color:var(--text);letter-spacing:-0.5px;text-shadow:0 4px 30px rgba(0,0,0,0.6);}
@@ -449,7 +449,37 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
       <div class="orb-halo"></div>
       <div class="orb-halo2"></div>
       <div class="logo-ring">
-        <svg viewBox="0 0 24 24"><path d="M12 2L9 9H2l5.5 4-2 7L12 16l6.5 4-2-7L22 9h-7z"/></svg>
+        <svg viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="gV" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#ffe97a"/>
+              <stop offset="60%" stop-color="#c9973a"/>
+              <stop offset="100%" stop-color="#8a5e0a"/>
+            </linearGradient>
+            <linearGradient id="gH" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" stop-color="#8a5e0a"/>
+              <stop offset="40%" stop-color="#ffe97a"/>
+              <stop offset="100%" stop-color="#8a5e0a"/>
+            </linearGradient>
+          </defs>
+          <!-- Crown -->
+          <line x1="18" y1="26" x2="18" y2="10" stroke="url(#gV)" stroke-width="2.2" stroke-linecap="round"/>
+          <line x1="18" y1="10" x2="25" y2="26" stroke="url(#gV)" stroke-width="2.2" stroke-linecap="round"/>
+          <line x1="25" y1="26" x2="30" y2="10" stroke="url(#gV)" stroke-width="2.2" stroke-linecap="round"/>
+          <line x1="30" y1="10" x2="35" y2="26" stroke="url(#gV)" stroke-width="2.2" stroke-linecap="round"/>
+          <line x1="35" y1="26" x2="42" y2="10" stroke="url(#gV)" stroke-width="2.2" stroke-linecap="round"/>
+          <line x1="42" y1="10" x2="42" y2="26" stroke="url(#gV)" stroke-width="2.2" stroke-linecap="round"/>
+          <line x1="16" y1="28" x2="44" y2="28" stroke="url(#gH)" stroke-width="2.5" stroke-linecap="round"/>
+          <rect x="16" y="29.5" width="28" height="5" rx="2.5" fill="url(#gV)" opacity="0.9"/>
+          <!-- Crown gems -->
+          <circle cx="18" cy="9" r="2.2" fill="#ffe97a"/>
+          <circle cx="30" cy="9" r="2.8" fill="#ffe97a"/>
+          <circle cx="42" cy="9" r="2.2" fill="#ffe97a"/>
+          <!-- Infinity -->
+          <ellipse cx="23" cy="46" rx="9" ry="5.5" fill="none" stroke="url(#gH)" stroke-width="1.8" stroke-linecap="round"/>
+          <ellipse cx="37" cy="46" rx="9" ry="5.5" fill="none" stroke="url(#gH)" stroke-width="1.8" stroke-linecap="round"/>
+          <circle cx="30" cy="46" r="2" fill="#ffe97a"/>
+        </svg>
       </div>
     </div>
     <h1>Wealthy <em>Within</em></h1>
