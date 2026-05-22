@@ -459,6 +459,19 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
 .about-thanks.show{display:block;animation:fadeUp 0.5s var(--ease) both;}
 .about-thanks-mark{font-size:34px;margin-bottom:10px;color:#f5c842;text-shadow:0 0 24px rgba(245,200,66,0.5);}
 .about-thanks-text{font-family:var(--fd);font-size:21px;color:#f5c842;line-height:1.45;font-weight:500;}
+
+/* ── DONATION BLOCK ── */
+.donate-origin{font-family:var(--fd);font-style:italic;font-size:15px;color:var(--muted2);line-height:1.8;margin-bottom:28px;padding:16px 20px;border-left:2px solid rgba(245,200,66,0.2);font-weight:300;}
+.donate-body{font-size:15px;line-height:1.85;color:var(--text2);font-weight:300;margin-bottom:24px;}
+.donate-amounts{display:flex;gap:10px;margin-bottom:24px;}
+.donate-chip{flex:1;padding:12px 8px;border-radius:12px;border:1px solid rgba(245,200,66,0.2);background:rgba(14,11,26,0.7);color:var(--gold2);font-family:var(--fb);font-size:15px;font-weight:500;text-align:center;cursor:default;transition:border-color 0.25s var(--ease),background 0.25s var(--ease),transform 0.2s var(--ease-bounce);}
+.donate-chip:hover{border-color:rgba(245,200,66,0.45);background:rgba(245,200,66,0.07);transform:translateY(-2px);}
+.donate-chip-label{display:block;font-size:9px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted);margin-top:3px;}
+.donate-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:17px 20px;border-radius:14px;border:none;cursor:pointer;background:linear-gradient(135deg,rgba(245,200,66,0.12) 0%,rgba(201,145,61,0.08) 100%);border:1px solid rgba(245,200,66,0.3);color:#f5c842;font-family:var(--fb);font-size:13px;letter-spacing:1px;font-weight:600;transition:transform 0.25s var(--ease),box-shadow 0.3s,background 0.25s var(--ease),border-color 0.25s;box-shadow:0 4px 22px rgba(245,200,66,0.1),inset 0 1px 0 rgba(255,255,255,0.06);text-decoration:none;margin-bottom:18px;}
+.donate-btn:hover{transform:translateY(-2px);background:linear-gradient(135deg,rgba(245,200,66,0.18) 0%,rgba(201,145,61,0.12) 100%);border-color:rgba(245,200,66,0.55);box-shadow:0 8px 32px rgba(245,200,66,0.2),inset 0 1px 0 rgba(255,255,255,0.08);}
+.donate-btn:active{transform:scale(0.98);}
+.donate-btn-icon{width:20px;height:20px;flex-shrink:0;opacity:0.9;}
+.donate-thanks{text-align:center;font-size:13px;color:var(--muted2);font-weight:300;line-height:1.6;}
 </style>
 </head>
 <body>
@@ -799,6 +812,31 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
         <div class="about-thanks-mark">✦</div>
         <div class="about-thanks-text">Thank you. Your words mean a lot. 🙏</div>
       </div>
+    </section>
+
+    <div class="about-divider"></div>
+
+    <section class="about-section" id="about-donate">
+      <p class="donate-origin">This app was built by one person — not a developer, not a team. Just someone who believed this journey needed to exist, and figured out the rest along the way.</p>
+      <h3>Support This Journey 🌱</h3>
+      <p class="donate-body">This app was built with love, freely given. If it brought value to your life, you're welcome to give back — in whatever way feels right.</p>
+
+      <div class="donate-amounts">
+        <div class="donate-chip">₹51<span class="donate-chip-label">a seed</span></div>
+        <div class="donate-chip">₹101<span class="donate-chip-label">a step</span></div>
+        <div class="donate-chip">₹251<span class="donate-chip-label">a shift</span></div>
+      </div>
+
+      <a class="donate-btn" href="upi://pay?pa=rcoddy1180-1@okicici&pn=Kabeer%20Sabharwal&cu=INR" role="button">
+        <svg class="donate-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="5" width="20" height="14" rx="3"/>
+          <path d="M2 10h20"/>
+          <path d="M7 15h2M12 15h3"/>
+        </svg>
+        Donate via UPI
+      </a>
+
+      <p class="donate-thanks">Every contribution keeps this journey alive. Thank you 🙏</p>
     </section>
   </div>
 </div>
