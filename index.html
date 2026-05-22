@@ -732,13 +732,15 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
     <section class="about-section" id="about-feedback">
       <h3>Share Your Thoughts</h3>
       <p class="about-feedback-sub">Your experience matters. Tell us how this journey has been for you.</p>
-      <div id="about-feedback-form" class="about-feedback-form">
-        <input class="about-input" id="fb-name" type="text" placeholder="Your name" autocomplete="name"/>
-        <input class="about-input" id="fb-email" type="email" placeholder="Your email" autocomplete="email"/>
-        <textarea class="about-textarea" id="fb-message" placeholder="Your message..."></textarea>
+      <form id="about-feedback-form" class="about-feedback-form" action="https://api.web3forms.com/submit" method="POST" onsubmit="return submitFeedback(event)">
+        <input type="hidden" name="access_key" value="bc5a54f4-4473-4f4b-ba46-1dcd356e27c0"/>
+        <input type="hidden" name="subject" value="Wealthy Within — Feedback"/>
+        <input class="about-input" id="fb-name" name="name" type="text" placeholder="Your name" autocomplete="name"/>
+        <input class="about-input" id="fb-email" name="email" type="email" placeholder="Your email" autocomplete="email"/>
+        <textarea class="about-textarea" id="fb-message" name="message" placeholder="Your message..."></textarea>
         <div class="about-error" id="fb-error"></div>
-        <button class="about-submit" id="fb-submit" type="button" onclick="submitFeedback()">Send Feedback</button>
-      </div>
+        <button class="about-submit" id="fb-submit" type="submit">Send Feedback</button>
+      </form>
       <div class="about-thanks" id="about-thanks">
         <div class="about-thanks-mark">✦</div>
         <div class="about-thanks-text">Thank you. Your words mean a lot. 🙏</div>
@@ -1058,13 +1060,14 @@ function closeAbout(){
     document.body.style.overflow='';
   }
 }
-function submitFeedback(){
+function submitFeedback(ev){
+  if(ev&&ev.preventDefault)ev.preventDefault();
   const name=document.getElementById('fb-name').value.trim();
   const email=document.getElementById('fb-email').value.trim();
   const message=document.getElementById('fb-message').value.trim();
   const err=document.getElementById('fb-error');
-  if(!message){err.textContent='Please write a message before sending.';return;}
-  if(email&&!email.includes('@')){err.textContent='Please enter a valid email or leave it blank.';return;}
+  if(!message){err.textContent='Please write a message before sending.';return false;}
+  if(email&&!email.includes('@')){err.textContent='Please enter a valid email or leave it blank.';return false;}
   err.textContent='';
   const btn=document.getElementById('fb-submit');
   btn.textContent='Sending...';btn.disabled=true;
@@ -1074,14 +1077,18 @@ function submitFeedback(){
     existing.push({name:name||'Anonymous',email:email||'',message:message,at:new Date().toISOString()});
     localStorage.setItem('ww_feedback',JSON.stringify(existing));
   }catch(e){}
-  // Best-effort send to existing Apps Script (no-cors); script can be extended to handle type:'feedback'
-  fetch('https://script.google.com/macros/s/AKfycbyMmw0E6xcZOhufjxg84u12OuR_fJhxZaiP96TB8ZLoJxFbKgzNsEX2G8bQ3k1ISL_l/exec',{
-    method:'POST',mode:'no-cors',headers:{'Content-Type':'application/json'},
-    body:JSON.stringify({type:'feedback',name:name||'Anonymous',email:email||'',message:message})
+  // Submit to Web3Forms using the form's fields (includes hidden access_key & subject)
+  const form=document.getElementById('about-feedback-form');
+  const data=new FormData(form);
+  fetch('https://api.web3forms.com/submit',{
+    method:'POST',
+    headers:{'Accept':'application/json'},
+    body:data
   }).finally(()=>{
-    document.getElementById('about-feedback-form').style.display='none';
+    form.style.display='none';
     document.getElementById('about-thanks').classList.add('show');
   });
+  return false;
 }
 
 /* ── RESET CONFIRM ── */
