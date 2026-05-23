@@ -721,8 +721,8 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
             <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="11"/><circle cx="12" cy="8" r="0.6" fill="currentColor" stroke="none"/></svg>
           </div>
           <div class="settings-text">
-            <div class="settings-title">About</div>
-            <div class="settings-sub">The journey, the artist, share your thoughts</div>
+            <div class="settings-title" id="settings-about-title">About</div>
+            <div class="settings-sub" id="settings-about-sub">The journey, the artist, share your thoughts</div>
           </div>
           <div class="settings-chevron">
             <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
@@ -733,8 +733,8 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
             <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
           </div>
           <div class="settings-text">
-            <div class="settings-title">Reset Journey</div>
-            <div class="settings-sub">Clear all progress and start over</div>
+            <div class="settings-title" id="settings-reset-title">Reset Journey</div>
+            <div class="settings-sub" id="settings-reset-sub">Clear all progress and start over</div>
           </div>
           <div class="settings-chevron">
             <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg>
@@ -943,11 +943,11 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
     <div class="confirm-icon">
       <svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 102.13-9.36L1 10"/></svg>
     </div>
-    <div class="confirm-title">Reset Journey?</div>
-    <p class="confirm-sub">This will clear all completed days and journal entries. Your chat history with the Coach will remain. This cannot be undone.</p>
+    <div class="confirm-title" id="confirm-reset-title">Reset Journey?</div>
+    <p class="confirm-sub" id="confirm-reset-sub">This will clear all completed days and journal entries. Your chat history with the Coach will remain. This cannot be undone.</p>
     <div class="confirm-actions">
-      <button class="confirm-btn danger" onclick="restartJourney(true)">Yes, Reset Everything</button>
-      <button class="confirm-btn cancel" onclick="closeResetConfirm()">Cancel</button>
+      <button class="confirm-btn danger" id="confirm-reset-yes" onclick="restartJourney(true)">Yes, Reset Everything</button>
+      <button class="confirm-btn cancel" id="confirm-reset-cancel" onclick="closeResetConfirm()">Cancel</button>
     </div>
   </div>
 </div>
