@@ -61,6 +61,49 @@ const LANGS = {
     stat_streak: 'Day Streak', stat_journal: 'Journal Entries',
     heat_label: '21-Day Map',
     settings_label: 'Settings',
+
+    /* ── SETTINGS ROWS ── */
+    settings_install_title: 'Install App',
+    settings_install_sub: 'Add Wealthy Within to your home screen',
+    settings_about_title: 'About',
+    settings_about_sub: 'The journey, the artist, share your thoughts',
+    settings_reset_title: 'Reset Journey',
+    settings_reset_sub: 'Clear all progress and start over',
+
+    /* ── ABOUT MODAL ── */
+    about_hero_title: 'About',
+    about_hero_sub: 'The Journey · The Artist · Your Voice',
+    about_ww_h3: 'About Wealthy Within',
+    about_ww_p1: 'Wealthy Within is built on a simple but powerful idea — that the path to lasting abundance begins from within.',
+    about_ww_p2: 'This journey is designed to help you overcome the fears that silently block prosperity — fear of losing money, losing security, losing opportunity. Through practical mindset coaching and structured, step-by-step exercises, it shows you where to invest your time and energy, and how to cultivate the thoughts and emotions that attract lasting wealth.',
+    about_ww_p3: 'Not just motivation. Actionable guidance. Measurable results. Real financial confidence.',
+    about_kabeer_h3: 'About Kabeer',
+    about_kabeer_p1: 'Kabeer Sabharwal is a multidisciplinary artist — singer, composer, lyricist, dancer, writer, poet, and storyteller — whose creative work is a natural expression of how he experiences life.',
+    about_kabeer_q1: '"He had everything within. All his art was innate."',
+    about_kabeer_p2: 'Beyond his artistry, Kabeer follows a spiritual path focused on guiding others to discover their inner potential and develop deeper self-awareness. Wealthy Within is his offering to those ready to meet life — not just survive it.',
+    about_kabeer_q2: '"Life is not something that happens to you. It\'s something you learn to meet."',
+    about_feedback_h3: 'Share Your Thoughts',
+    about_feedback_sub: 'Your experience matters. Tell us how this journey has been for you.',
+    about_fb_name: 'Your name',
+    about_fb_email: 'Your email',
+    about_fb_message: 'Your message...',
+    about_fb_submit: 'Send Feedback',
+    about_thanks_text: 'Thank you. Your words mean a lot. 🙏',
+
+    /* ── DONATE SECTION ── */
+    donate_origin: 'This app was built by one person — not a company, not a team. Just someone who felt this journey deserved to exist, and kept building it one step at a time.',
+    donate_title: 'Support This Journey 🌱',
+    donate_sub: 'Built with care, freely given. If this app has brought value to your life, you\'re welcome to support its journey in whatever way feels right.',
+    donate_seed: 'a seed', donate_step: 'a step', donate_shift: 'a shift',
+    donate_custom_placeholder: 'Choose your amount',
+    donate_upi_btn: 'Support via UPI',
+    donate_thanks: 'Every contribution keeps this journey alive. Thank you 🙏',
+
+    /* ── CONFIRM RESET ── */
+    confirm_reset_title: 'Reset Journey?',
+    confirm_reset_sub: 'This will clear all completed days and journal entries. Your chat history with the Coach will remain. This cannot be undone.',
+    confirm_reset_yes: 'Yes, Reset Everything',
+    confirm_reset_cancel: 'Cancel',
   },
 
   hi: {
@@ -123,6 +166,49 @@ const LANGS = {
     stat_streak: 'दिन की लकीर', stat_journal: 'जर्नल एंट्रीज़',
     heat_label: '21-दिन का नक्शा',
     settings_label: 'सेटिंग्स',
+
+    /* ── SETTINGS ROWS ── */
+    settings_install_title: 'ऐप इंस्टॉल करें',
+    settings_install_sub: 'Wealthy Within को होम स्क्रीन पर जोड़ें',
+    settings_about_title: 'परिचय',
+    settings_about_sub: 'यह यात्रा, कलाकार, और तुम्हारे विचार',
+    settings_reset_title: 'यात्रा रीसेट करें',
+    settings_reset_sub: 'सारी प्रगति हटाकर नए सिरे से शुरू करो',
+
+    /* ── ABOUT MODAL ── */
+    about_hero_title: 'परिचय',
+    about_hero_sub: 'यात्रा · कलाकार · तुम्हारी आवाज़',
+    about_ww_h3: 'Wealthy Within के बारे में',
+    about_ww_p1: 'Wealthy Within एक सीधे लेकिन शक्तिशाली विचार पर बना है — कि टिकाऊ समृद्धि की राह भीतर से शुरू होती है।',
+    about_ww_p2: 'यह यात्रा तुम्हें उन डरों से मुक्त करने के लिए बनाई गई है जो चुपचाप समृद्धि को रोकते हैं — पैसे खोने का डर, सुरक्षा खोने का डर, मौका खोने का डर। व्यावहारिक mindset कोचिंग और चरण-दर-चरण अभ्यासों के ज़रिए यह दिखाती है कि अपना समय और ऊर्जा कहां लगाएं, और उन विचारों व भावनाओं को कैसे पैदा करें जो स्थायी दौलत को आकर्षित करते हैं।',
+    about_ww_p3: 'सिर्फ प्रेरणा नहीं। ठोस मार्गदर्शन। मापने योग्य नतीजे। असली आर्थिक आत्मविश्वास।',
+    about_kabeer_h3: 'Kabeer के बारे में',
+    about_kabeer_p1: 'Kabeer Sabharwal एक बहुआयामी कलाकार हैं — गायक, संगीतकार, गीतकार, नर्तक, लेखक, कवि, और कहानीकार — जिनकी रचनात्मक कृतियां जीवन को जीने के उनके तरीके की स्वाभाविक अभिव्यक्ति हैं।',
+    about_kabeer_q1: '"सब कुछ उनके भीतर था। उनकी हर कला सहज थी।"',
+    about_kabeer_p2: 'कला के परे, Kabeer एक आध्यात्मिक मार्ग पर चलते हैं जो दूसरों को उनकी भीतरी क्षमता खोजने और गहरी आत्म-जागरूकता विकसित करने में मदद करता है। Wealthy Within उनकी भेंट है उन लोगों के लिए जो ज़िंदगी से सिर्फ बचने नहीं, बल्कि उसे सचमुच जीने के लिए तैयार हैं।',
+    about_kabeer_q2: '"ज़िंदगी वो नहीं जो तुम पर होती है। यह वो है जिसे तुम जीना सीखते हो।"',
+    about_feedback_h3: 'अपने विचार साझा करो',
+    about_feedback_sub: 'तुम्हारा अनुभव मायने रखता है। बताओ यह यात्रा कैसी रही।',
+    about_fb_name: 'तुम्हारा नाम',
+    about_fb_email: 'तुम्हारा ईमेल',
+    about_fb_message: 'तुम्हारा संदेश...',
+    about_fb_submit: 'फ़ीडबैक भेजें',
+    about_thanks_text: 'शुक्रिया। तुम्हारे शब्द बहुत मायने रखते हैं। 🙏',
+
+    /* ── DONATE SECTION ── */
+    donate_origin: 'यह ऐप एक इंसान ने बनाया है — कोई कंपनी नहीं, कोई टीम नहीं। बस कोई जिसे लगा कि यह यात्रा दुनिया में होनी चाहिए, और एक-एक कदम चलकर इसे बनाता रहा।',
+    donate_title: 'इस यात्रा को सहारा दो 🌱',
+    donate_sub: 'प्यार से बनाया, मुफ्त दिया। अगर इस ऐप ने तुम्हारी ज़िंदगी में कुछ जोड़ा है, तो जो सही लगे उस तरह इसकी यात्रा को आगे बढ़ाओ।',
+    donate_seed: 'एक बीज', donate_step: 'एक कदम', donate_shift: 'एक बदलाव',
+    donate_custom_placeholder: 'अपनी राशि चुनो',
+    donate_upi_btn: 'UPI से सहयोग करो',
+    donate_thanks: 'हर योगदान इस यात्रा को ज़िंदा रखता है। शुक्रिया 🙏',
+
+    /* ── CONFIRM RESET ── */
+    confirm_reset_title: 'यात्रा रीसेट करें?',
+    confirm_reset_sub: 'इससे सभी पूरे किए हुए दिन और जर्नल एंट्रीज़ हट जाएंगी। कोच के साथ चैट हिस्ट्री बनी रहेगी। यह वापस नहीं होगा।',
+    confirm_reset_yes: 'हां, सब रीसेट करो',
+    confirm_reset_cancel: 'रद्द करो',
   }
 };
 
@@ -240,6 +326,97 @@ function applyLang() {
   /* Tagline */
   const tagline = document.querySelector('.tagline');
   if(tagline) tagline.textContent = t('tagline');
+
+  /* Settings rows */
+  const installTitle = document.querySelector('#install-row .settings-title');
+  const installSub   = document.getElementById('install-sub');
+  if(installTitle) installTitle.textContent = t('settings_install_title');
+  if(installSub)   installSub.textContent   = t('settings_install_sub');
+
+  const aboutSettingsTitle = document.getElementById('settings-about-title');
+  const aboutSettingsSub   = document.getElementById('settings-about-sub');
+  if(aboutSettingsTitle) aboutSettingsTitle.textContent = t('settings_about_title');
+  if(aboutSettingsSub)   aboutSettingsSub.textContent   = t('settings_about_sub');
+
+  const resetTitle = document.getElementById('settings-reset-title');
+  const resetSub   = document.getElementById('settings-reset-sub');
+  if(resetTitle) resetTitle.textContent = t('settings_reset_title');
+  if(resetSub)   resetSub.textContent   = t('settings_reset_sub');
+
+  /* About modal */
+  const aHeroTitle = document.getElementById('about-hero-title');
+  const aHeroSub   = document.querySelector('.about-hero-sub');
+  if(aHeroTitle) aHeroTitle.textContent = t('about_hero_title');
+  if(aHeroSub)   aHeroSub.textContent   = t('about_hero_sub');
+
+  const aWwH3 = document.querySelector('#about-journey h3');
+  const aWwPs = document.querySelectorAll('#about-journey > p');
+  if(aWwH3) aWwH3.textContent = t('about_ww_h3');
+  if(aWwPs[0]) aWwPs[0].textContent = t('about_ww_p1');
+  if(aWwPs[1]) aWwPs[1].textContent = t('about_ww_p2');
+  if(aWwPs[2]) aWwPs[2].textContent = t('about_ww_p3');
+
+  const aKabeerH3 = document.querySelector('#about-kabeer h3');
+  const aKabeerPs = document.querySelectorAll('#about-kabeer > p');
+  const aKabeerQs = document.querySelectorAll('#about-kabeer .quote');
+  if(aKabeerH3) aKabeerH3.textContent = t('about_kabeer_h3');
+  if(aKabeerPs[0]) aKabeerPs[0].textContent = t('about_kabeer_p1');
+  if(aKabeerQs[0]) aKabeerQs[0].textContent = t('about_kabeer_q1');
+  if(aKabeerPs[1]) aKabeerPs[1].textContent = t('about_kabeer_p2');
+  if(aKabeerQs[1]) aKabeerQs[1].textContent = t('about_kabeer_q2');
+
+  const aFbH3  = document.querySelector('#about-feedback h3');
+  const aFbSub = document.querySelector('#about-feedback .about-feedback-sub');
+  const aFbName    = document.getElementById('fb-name');
+  const aFbEmail   = document.getElementById('fb-email');
+  const aFbMessage = document.getElementById('fb-message');
+  const aFbSubmit  = document.getElementById('fb-submit');
+  const aThanksText = document.querySelector('.about-thanks-text');
+  if(aFbH3)  aFbH3.textContent  = t('about_feedback_h3');
+  if(aFbSub) aFbSub.textContent = t('about_feedback_sub');
+  if(aFbName)    aFbName.placeholder    = t('about_fb_name');
+  if(aFbEmail)   aFbEmail.placeholder   = t('about_fb_email');
+  if(aFbMessage) aFbMessage.placeholder = t('about_fb_message');
+  if(aFbSubmit)  aFbSubmit.textContent  = t('about_fb_submit');
+  if(aThanksText) aThanksText.textContent = t('about_thanks_text');
+
+  /* Donate section */
+  const dOrigin = document.querySelector('.progress-donate-origin');
+  const dTitle  = document.querySelector('.progress-donate-title');
+  const dSub    = document.querySelector('.progress-donate-sub');
+  if(dOrigin) dOrigin.textContent = t('donate_origin');
+  if(dTitle)  dTitle.textContent  = t('donate_title');
+  if(dSub)    dSub.textContent    = t('donate_sub');
+
+  const dChips = document.querySelectorAll('.donate-chip');
+  const chipLabelKeys = ['donate_seed','donate_step','donate_shift'];
+  dChips.forEach((chip, i) => {
+    const lbl = chip.querySelector('.donate-chip-label');
+    if(lbl && chipLabelKeys[i]) lbl.textContent = t(chipLabelKeys[i]);
+  });
+
+  const dCustom = document.querySelector('.donate-custom-input');
+  if(dCustom) dCustom.placeholder = t('donate_custom_placeholder');
+
+  const dUpiBtn = document.getElementById('donate-upi-btn');
+  if(dUpiBtn) {
+    const icon = dUpiBtn.querySelector('svg');
+    dUpiBtn.textContent = t('donate_upi_btn');
+    if(icon) dUpiBtn.insertAdjacentElement('afterbegin', icon);
+  }
+
+  const dThanks = document.querySelector('.donate-thanks');
+  if(dThanks) dThanks.textContent = t('donate_thanks');
+
+  /* Confirm reset modal */
+  const confirmTitle = document.getElementById('confirm-reset-title');
+  const confirmSub   = document.getElementById('confirm-reset-sub');
+  const confirmYes   = document.getElementById('confirm-reset-yes');
+  const confirmCancel= document.getElementById('confirm-reset-cancel');
+  if(confirmTitle)  confirmTitle.textContent  = t('confirm_reset_title');
+  if(confirmSub)    confirmSub.textContent    = t('confirm_reset_sub');
+  if(confirmYes)    confirmYes.textContent    = t('confirm_reset_yes');
+  if(confirmCancel) confirmCancel.textContent = t('confirm_reset_cancel');
 
   /* Re-render dynamic screens if active */
   if(typeof renderHome === 'function') renderHome();
