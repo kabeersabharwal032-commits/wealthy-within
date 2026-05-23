@@ -34,11 +34,12 @@ export async function onRequestPost({ request, env }) {
     );
   }
 
-  let messages, system;
+  let messages, system, lang;
   try {
     const body = await request.json();
     messages = body.messages;
     system = body.system;
+    lang = body.lang;
     if (!messages || !Array.isArray(messages)) {
       return new Response(
         JSON.stringify({ text: "Invalid request." }),
@@ -52,10 +53,15 @@ export async function onRequestPost({ request, env }) {
     );
   }
 
+  // If Hindi mode, prepend a hard Hindi-only instruction to the system prompt
+  const finalSystem = lang === 'hi' && system
+    ? `तुम्हें केवल हिंदी में जवाब देना है। अंग्रेज़ी का एक भी शब्द मत लिखो। हर वाक्य देवनागरी लिपि में हो।\n\n${system}`
+    : system;
+
   const groqBody = {
     model: "llama-3.3-70b-versatile",
     messages: [
-      ...(system ? [{ role: "system", content: system }] : []),
+      ...(finalSystem ? [{ role: "system", content: finalSystem }] : []),
       ...messages.map((m) => ({ role: m.role, content: m.content })),
     ],
     max_tokens: 800,
