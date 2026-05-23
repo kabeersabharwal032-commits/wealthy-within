@@ -1525,7 +1525,7 @@ async function getInsight(){
       :'Day '+activeDay+' \u2014 "'+d.title+'". Practice: '+d.practice+'. The user has completed '+done+'/21 days. Give them a personal, deepening insight for today.';
     const res=await fetch('/api/chat',{
       method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({system:systemPrompt,messages:[{role:'user',content:userMsg}]})
+      body:JSON.stringify({system:systemPrompt,messages:[{role:'user',content:userMsg}],lang:isHindi?'hi':'en'})
     });
     const data=await res.json();
     out.textContent=data.text||(isHindi?'जवाब नहीं मिला। दोबारा कोशिश करो।':'No response. Please try again.');

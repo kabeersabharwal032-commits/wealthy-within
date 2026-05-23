@@ -3,7 +3,12 @@ export async function onRequestPost(context) {
   
   try {
     const body = await request.json();
-    const { system, messages } = body;
+    const { system, messages, lang } = body;
+
+    // If lang is 'hi', prepend a hard Hindi-only override to the system prompt
+    const finalSystem = lang === 'hi'
+      ? `तुम्हें केवल हिंदी में जवाब देना है। अंग्रेज़ी का एक भी शब्द मत लिखो। हर वाक्य देवनागरी लिपि में हो।\n\n${system}`
+      : system;
 
     const keys = [
       env.GROQ_API_KEY,
@@ -28,7 +33,7 @@ export async function onRequestPost(context) {
       body: JSON.stringify({
         model: 'llama-3.3-70b-versatile',
         messages: [
-          { role: 'system', content: system },
+          { role: 'system', content: finalSystem },
           ...messages
         ],
         max_tokens: 500,
