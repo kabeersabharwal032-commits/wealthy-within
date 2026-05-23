@@ -1507,24 +1507,33 @@ function restartJourney(fromStats){
 /* ── AI INSIGHT ── */
 async function getInsight(){
   if(!activeDay)return;
-  const d=DAYS[activeDay-1];
+  const days=getDays()||DAYS;
+  const d=days[activeDay-1];
   const done=Object.keys(S.done).length;
   const btn=document.getElementById('m-ai-btn');
   const out=document.getElementById('m-ai-out');
-  btn.disabled=true;btn.textContent='Receiving...';
-  out.textContent='\u2728 Connecting to your inner wisdom...';
+  btn.disabled=true;
+  btn.textContent=currentLang==='hi'?'मिल रही है...':'Receiving...';
+  out.textContent=currentLang==='hi'?'\u2728 तुम्हारी भीतरी बुद्धि से जुड़ रहे हैं...':'\u2728 Connecting to your inner wisdom...';
   try{
+    const isHindi=currentLang==='hi';
+    const systemPrompt=isHindi
+      ?'तुम "Wealthy Within" के भीतरी समृद्धि मार्गदर्शक हो — Kabeer Sabharwal द्वारा बनाई गई 21-दिन की mindset और abundance यात्रा। गर्मजोशी, गहराई और शांत अधिकार के साथ बोलो। आज के अभ्यास को गहरा करने वाली 3-4 वाक्यों की निजी अंतर्दृष्टि दो। ठोस, सच्ची और grounding रहो। Hindi में जवाब दो।'
+      :'You are the inner wealth guide for "Wealthy Within" \u2014 a 21-day mindset and abundance journey created by Kabeer Sabharwal. Speak with warmth, depth, and quiet authority. Give a 3-4 sentence personal insight that deepens today\'s specific practice. Be grounding, specific, and genuine. Avoid clich\u00e9s.';
+    const userMsg=isHindi
+      ?'दिन '+activeDay+' \u2014 "'+d.title+'". अभ्यास: '+d.practice+'. इस यात्री ने '+done+'/21 दिन पूरे किए हैं। आज के लिए उन्हें एक निजी, गहरी अंतर्दृष्टि दो। पूरा जवाब हिंदी में दो।'
+      :'Day '+activeDay+' \u2014 "'+d.title+'". Practice: '+d.practice+'. The user has completed '+done+'/21 days. Give them a personal, deepening insight for today.';
     const res=await fetch('/api/chat',{
       method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({
-        system:'You are the inner wealth guide for "Wealthy Within" \u2014 a 21-day mindset and abundance journey created by Kabeer Sabharwal. Speak with warmth, depth, and quiet authority. Give a 3-4 sentence personal insight that deepens today\'s specific practice. Be grounding, specific, and genuine. Avoid clich\u00e9s.',
-        messages:[{role:'user',content:'Day '+activeDay+' \u2014 "'+d.title+'". Practice: '+d.practice+'. The user has completed '+done+'/21 days. Give them a personal, deepening insight for today.'}]
-      })
+      body:JSON.stringify({system:systemPrompt,messages:[{role:'user',content:userMsg}]})
     });
     const data=await res.json();
-    out.textContent=data.text||'No response. Please try again.';
-  }catch(e){out.textContent='Connection error. Please try again.';}
-  btn.disabled=false;btn.textContent='Receive Insight';
+    out.textContent=data.text||(isHindi?'जवाब नहीं मिला। दोबारा कोशिश करो।':'No response. Please try again.');
+  }catch(e){
+    out.textContent=currentLang==='hi'?'Connection error. दोबारा कोशिश करो।':'Connection error. Please try again.';
+  }
+  btn.disabled=false;
+  btn.textContent=t('insight_btn');
 }
 
 /* ── CHAT ── */
