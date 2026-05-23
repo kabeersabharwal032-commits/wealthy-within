@@ -5,9 +5,9 @@ export async function onRequestPost(context) {
     const body = await request.json();
     const { system, messages, lang } = body;
 
-    // If lang is 'hi', prepend a hard Hindi-only override to the system prompt
+    // If lang is 'hi', force Hindi response at system level
     const finalSystem = lang === 'hi'
-      ? `तुम्हें केवल हिंदी में जवाब देना है। अंग्रेज़ी का एक भी शब्द मत लिखो। हर वाक्य देवनागरी लिपि में हो।\n\n${system}`
+      ? `You MUST respond in Hindi (Devanagari script) ONLY. No English words at all. Every single sentence must be in Hindi.\n\nतुम्हें केवल हिंदी में जवाब देना है। अंग्रेज़ी का एक भी शब्द नहीं। पूरा जवाब हिंदी में होगा।\n\n${system}`
       : system;
 
     const keys = [
@@ -34,10 +34,11 @@ export async function onRequestPost(context) {
         model: 'llama-3.3-70b-versatile',
         messages: [
           { role: 'system', content: finalSystem },
-          ...messages
+          ...messages,
+          ...(lang === 'hi' ? [{ role: 'user', content: '(Respond only in Hindi - Devanagari script. No English.)' }] : [])
         ],
         max_tokens: 500,
-        temperature: 0.8,
+        temperature: 0.7,
       }),
     });
 

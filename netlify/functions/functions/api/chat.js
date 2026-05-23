@@ -55,7 +55,7 @@ export async function onRequestPost({ request, env }) {
 
   // If Hindi mode, prepend a hard Hindi-only instruction to the system prompt
   const finalSystem = lang === 'hi' && system
-    ? `तुम्हें केवल हिंदी में जवाब देना है। अंग्रेज़ी का एक भी शब्द मत लिखो। हर वाक्य देवनागरी लिपि में हो।\n\n${system}`
+    ? `You MUST respond in Hindi (Devanagari script) ONLY. No English words at all.\n\nतुम्हें केवल हिंदी में जवाब देना है। अंग्रेज़ी का एक भी शब्द नहीं। पूरा जवाब हिंदी में होगा।\n\n${system}`
     : system;
 
   const groqBody = {
@@ -63,9 +63,10 @@ export async function onRequestPost({ request, env }) {
     messages: [
       ...(finalSystem ? [{ role: "system", content: finalSystem }] : []),
       ...messages.map((m) => ({ role: m.role, content: m.content })),
+      ...(lang === 'hi' ? [{ role: 'user', content: '(Respond only in Hindi - Devanagari script. No English.)' }] : []),
     ],
     max_tokens: 800,
-    temperature: 0.8,
+    temperature: 0.7,
   };
 
   try {
