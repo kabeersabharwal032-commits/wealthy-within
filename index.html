@@ -9,6 +9,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
 <meta name="apple-mobile-web-app-title" content="Wealthy Within"/>
 <meta name="description" content="Wealthy Within - 21-Day Inner Wealth Journey by Kabeer Sabharwal"/>
+<link rel="apple-touch-icon" href="/icons/icon-192.png"/>
 <title>Wealthy Within</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
@@ -1705,6 +1706,16 @@ function dismissIosAutoPrompt(){
 renderHome();
 renderChatHistory();
 applyLang();
+</script>
+
+<script>
+if('serviceWorker' in navigator){
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(r => console.log('SW registered'))
+      .catch(e => console.log('SW error', e));
+  });
+}
 </script>
 
 </body>
