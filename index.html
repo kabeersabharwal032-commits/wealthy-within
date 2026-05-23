@@ -142,8 +142,8 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
 .wl-dot{width:5px;height:5px;border-radius:50%;box-shadow:0 0 6px currentColor;}
 
 /* INSTALL */
-.install-bar{margin:0 18px 14px;padding:13px 17px;background:linear-gradient(135deg,rgba(201,145,61,0.07),rgba(124,92,191,0.04));border:1px solid var(--border);border-radius:var(--radius2);display:flex;align-items:center;gap:14px;backdrop-filter:blur(10px);}
-.install-bar p{font-size:12px;color:var(--muted2);flex:1;line-height:1.5;font-weight:300;}
+.install-bar{margin:0 18px 14px;padding:13px 17px;background:linear-gradient(135deg,rgba(201,145,61,0.14) 0%,rgba(124,92,191,0.10) 60%,rgba(201,145,61,0.07) 100%);border:1px solid rgba(201,145,61,0.28);border-radius:var(--radius2);display:flex;align-items:center;gap:14px;backdrop-filter:blur(16px);box-shadow:0 2px 18px rgba(201,145,61,0.1),inset 0 1px 0 rgba(255,255,255,0.06);}
+.install-bar p{font-size:12px;color:var(--text2);flex:1;line-height:1.5;font-weight:300;}
 .install-bar button{background:var(--grad-gold);border:none;border-radius:8px;color:var(--bg);padding:8px 16px;font-size:11px;cursor:pointer;font-family:var(--fb);font-weight:600;letter-spacing:0.8px;white-space:nowrap;transition:transform 0.2s,box-shadow 0.2s;}
 .install-bar button:hover{transform:translateY(-1px);box-shadow:var(--shadow-gold);}
 
@@ -286,7 +286,7 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
 .settings-row:hover{background:rgba(201,145,61,0.05);}
 .settings-row:active{background:rgba(201,145,61,0.08);}
 .settings-row.danger:hover{background:rgba(196,104,122,0.07);}
-.settings-icon{width:38px;height:38px;border-radius:11px;background:rgba(201,145,61,0.08);border:1px solid rgba(201,145,61,0.18);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--gold2);}
+.settings-icon{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,rgba(201,145,61,0.22) 0%,rgba(245,208,138,0.14) 60%,rgba(124,92,191,0.10) 100%);border:1px solid rgba(201,145,61,0.38);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--gold2);box-shadow:0 2px 10px rgba(201,145,61,0.12),inset 0 1px 0 rgba(255,255,255,0.08);}
 .settings-row.danger .settings-icon{background:rgba(196,104,122,0.08);border-color:rgba(196,104,122,0.22);color:var(--rose2);}
 .settings-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
 .settings-text{flex:1;min-width:0;}
@@ -1223,11 +1223,38 @@ function selectDonateAmount(el){
   }
 }
 function openDonateUPI(){
-  const base = 'upi://pay?pa=rcoddy1180-1@okicici&pn=Kabeer%20Sabharwal';
-  const url = selectedDonateAmount
-    ? base + '&am=' + selectedDonateAmount + '&cu=INR'
-    : base + '&cu=INR';
-  window.location.href = url;
+  const pa  = 'rcoddy1180-1@okicici';
+  const pn  = 'Kabeer%20Sabharwal';
+  const am  = selectedDonateAmount ? '&am=' + selectedDonateAmount : '';
+  const params = 'pa=' + pa + '&pn=' + pn + am + '&cu=INR';
+
+  /* Priority order: GPay → PhonePe → Paytm → generic upi://
+     Each app registers its own URI scheme on Android.
+     On iOS all fall back to upi:// (handled by whichever UPI app is default).
+     We try GPay first via a hidden <a> click, then fall back after 300 ms. */
+  const schemes = [
+    'gpay://upi/pay?'    + params,   // Google Pay
+    'phonepe://pay?'     + params,   // PhonePe
+    'paytmmp://pay?'     + params,   // Paytm
+    'upi://pay?'         + params,   // generic fallback (system chooser / default app)
+  ];
+
+  let tried = 0;
+  function tryNext() {
+    if (tried >= schemes.length) return;
+    const a = document.createElement('a');
+    a.href = schemes[tried++];
+    a.style.display = 'none';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    /* If the app didn't open within 300 ms the scheme wasn't handled — try next */
+    setTimeout(function() {
+      /* Only continue if page is still visible (app didn't take over) */
+      if (!document.hidden) tryNext();
+    }, 350);
+  }
+  tryNext();
 }
 
 /* ── RESET CONFIRM ── */
