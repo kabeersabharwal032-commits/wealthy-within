@@ -396,6 +396,12 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
 @media(min-width:768px){.home-top h1{font-size:56px;}.msg{max-width:70%;}.modal-sheet{border-radius:24px;margin-bottom:20px;max-height:85vh;}}
 @media(min-width:1024px){.days-grid{max-width:920px;grid-template-columns:repeat(7,1fr);}.chat-area{max-width:700px;margin:0 auto;width:100%;}}
 
+/* ── LANGUAGE TOGGLE ── */
+.lang-toggle{position:absolute;top:16px;right:16px;z-index:10;display:flex;align-items:center;gap:6px;background:rgba(14,11,26,0.6);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(201,145,61,0.2);border-radius:28px;padding:4px;box-shadow:0 4px 16px rgba(0,0,0,0.35);margin-top:env(safe-area-inset-top);}
+.lang-btn{padding:7px 14px;border-radius:22px;border:none;font-family:var(--fb);font-size:12px;font-weight:600;letter-spacing:0.5px;cursor:pointer;transition:all 0.28s var(--ease);background:none;color:var(--muted2);}
+.lang-btn.active{background:linear-gradient(135deg,var(--gold4),var(--gold),var(--gold3));color:var(--bg);box-shadow:0 2px 10px rgba(201,145,61,0.35);}
+.lang-btn:not(.active):hover{color:var(--gold2);}
+
 /* iOS AUTO INSTALL PROMPT */
 .iap-overlay{position:fixed;inset:0;z-index:300;background:rgba(3,2,8,0.7);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity 0.35s var(--ease);}
 .iap-overlay.open{opacity:1;pointer-events:all;}
@@ -515,6 +521,10 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
 
 <!-- HOME -->
 <div class="screen active" id="screen-home">
+  <div class="lang-toggle" id="lang-toggle">
+    <button class="lang-btn active" id="lang-en" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" id="lang-hi" onclick="setLang('hi')">हि</button>
+  </div>
   <div class="home-top">
     <div class="orb-wrap">
       <div class="orb-halo"></div>
@@ -1326,12 +1336,16 @@ function go(name,fromHistory){
 function renderHome(){
   const done=Object.keys(S.done).length;
   const pct=Math.round((done/21)*100);
-  document.getElementById('prog-label').textContent=done+' of 21 days';
+  const isHi=(typeof currentLang!=='undefined'&&currentLang==='hi');
+  const daysData=(isHi&&typeof DAYS_HI!=='undefined')?DAYS_HI:DAYS;
+  const dayWord=isHi?'दिन':'Day';
+  const progSuffix=isHi?(' में से 21 दिन'):(' of 21 days');
+  document.getElementById('prog-label').textContent=done+progSuffix;
   document.getElementById('prog-pct').textContent=pct+'%';
   document.getElementById('prog-fill').style.width=pct+'%';
   const grid=document.getElementById('days-grid');
   grid.innerHTML='';
-  DAYS.forEach(({day,title})=>{
+  daysData.forEach(({day,title})=>{
     const isDone=!!S.done[day];
     const card=document.createElement('div');
     card.className='day-card'+(isDone?' done':'');
@@ -1339,10 +1353,11 @@ function renderHome(){
     const isLocked=day>1&&!S.done[day-1];
     if(isLocked){
       card.classList.add('locked');
-      card.innerHTML='<div class="lock-tooltip">Complete Day '+(day-1)+' first</div><div><div class="day-num">Day '+day+'</div><div class="day-title">'+title+'</div></div><div class="lock-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>';
-      card.onclick=(function(d){return function(){toast('Complete Day '+d+' first');};})(day-1);
+      const lockMsg=isHi?('पहले दिन '+(day-1)+' पूरा करें'):('Complete Day '+(day-1)+' first');
+      card.innerHTML='<div class="lock-tooltip">'+lockMsg+'</div><div><div class="day-num">'+dayWord+' '+day+'</div><div class="day-title">'+title+'</div></div><div class="lock-icon"><svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div>';
+      card.onclick=(function(d){return function(){toast(isHi?('पहले दिन '+d+' पूरा करें'):('Complete Day '+d+' first'));};})(day-1);
     }else{
-      card.innerHTML='<div><div class="day-num">Day '+day+'</div><div class="day-title">'+title+'</div></div><div class="day-mark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>';
+      card.innerHTML='<div><div class="day-num">'+dayWord+' '+day+'</div><div class="day-title">'+title+'</div></div><div class="day-mark"><svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg></div>';
       card.onclick=(function(d){return function(){openModal(d);};})(day);
     }
     grid.appendChild(card);
@@ -1354,15 +1369,20 @@ function openModal(day,fromHistory){
   const d=DAYS[day-1];activeDay=day;
   const w=day<=7?1:day<=14?2:3;
   const isDone=!!S.done[day];
-  document.getElementById('m-meta').textContent='Day '+day+'  \u00b7  Week '+w;
-  document.getElementById('m-title').textContent=d.title;
-  document.getElementById('m-practice').textContent=d.practice;
-  document.getElementById('m-aff').textContent='\u201c'+d.affirmation+'\u201d';
-  document.getElementById('m-ai-out').textContent='Tap below to receive your personal insight for today.';
+  // Hindi support: use translated data if lang is hi
+  const isHi = (typeof currentLang !== 'undefined' && currentLang === 'hi');
+  const display = (isHi && typeof DAYS_HI !== 'undefined' && DAYS_HI[day-1]) ? DAYS_HI[day-1] : d;
+  const dayWord = isHi ? 'दिन' : 'Day';
+  const weekWord = isHi ? 'हफ्ता' : 'Week';
+  document.getElementById('m-meta').textContent=dayWord+' '+day+'  \u00b7  '+weekWord+' '+w;
+  document.getElementById('m-title').textContent=display.title;
+  document.getElementById('m-practice').textContent=display.practice;
+  document.getElementById('m-aff').textContent='\u201c'+display.affirmation+'\u201d';
+  document.getElementById('m-ai-out').textContent=isHi?'आज की निजी सीख पाने के लिए नीचे टैप करें।':'Tap below to receive your personal insight for today.';
   document.getElementById('m-ai-btn').disabled=false;
-  document.getElementById('m-ai-btn').textContent='Receive Insight';
+  document.getElementById('m-ai-btn').textContent=isHi?'अंतर्दृष्टि पाएं':'Receive Insight';
   const btn=document.getElementById('m-btn');
-  btn.textContent=isDone?'Mark as Incomplete':"Complete Today's Practice";
+  btn.textContent=isDone?(isHi?'अधूरा मार्क करें':'Mark as Incomplete'):(isHi?'आज की प्रैक्टिस पूरी की':"Complete Today's Practice");
   btn.style.background=isDone?'rgba(255,255,255,0.04)':'linear-gradient(135deg,var(--gold4),var(--gold),var(--gold3))';
   btn.style.color=isDone?'var(--muted)':'var(--bg)';
   btn.style.border=isDone?'1px solid rgba(255,255,255,0.08)':'none';
@@ -1563,7 +1583,10 @@ document.addEventListener('keydown',e=>{
 /* ── JOURNAL ── */
 function renderJournal(){
   const sel=document.getElementById('j-select');
-  sel.innerHTML=DAYS.map(d=>'<option value="'+d.day+'">Day '+d.day+' \u2014 '+d.title+'</option>').join('');
+  const isHi=(typeof currentLang!=='undefined'&&currentLang==='hi');
+  const daysData=(isHi&&typeof DAYS_HI!=='undefined')?DAYS_HI:DAYS;
+  const dayWord=isHi?'दिन':'Day';
+  sel.innerHTML=daysData.map(d=>'<option value="'+d.day+'">'+dayWord+' '+d.day+' \u2014 '+d.title+'</option>').join('');
   sel.value=Math.min(Object.keys(S.done).length+1,21)||1;
   loadEntry();renderPast();
 }
@@ -1580,9 +1603,13 @@ function saveEntry(){
 function renderPast(){
   const list=document.getElementById('entries-list');
   const entries=Object.entries(S.journal).filter(([,v])=>v).sort(([a],[b])=>Number(a)-Number(b));
+  const isHi=(typeof currentLang!=='undefined'&&currentLang==='hi');
+  const daysData=(isHi&&typeof DAYS_HI!=='undefined')?DAYS_HI:DAYS;
+  const dayWord=isHi?'दिन':'Day';
+  const emptyMsg=isHi?'अभी तक कुछ नहीं लिखा। शुरू कीजिए।':'No entries yet. Begin writing your story.';
   list.innerHTML=entries.length
-    ?entries.map(([day,text])=>'<div class="j-card"><div class="j-card-day">Day '+day+' \u2014 '+(DAYS[day-1]?.title||'')+'</div><div class="j-card-txt">'+text.slice(0,120)+(text.length>120?'\u2026':'')+'</div></div>').join('')
-    :'<div style="color:var(--muted);font-size:13px;font-weight:300;font-style:italic">No entries yet. Begin writing your story.</div>';
+    ?entries.map(([day,text])=>'<div class="j-card"><div class="j-card-day">'+dayWord+' '+day+' \u2014 '+(daysData[day-1]?.title||'')+'</div><div class="j-card-txt">'+text.slice(0,120)+(text.length>120?'\u2026':'')+'</div></div>').join('')
+    :'<div style="color:var(--muted);font-size:13px;font-weight:300;font-style:italic">'+emptyMsg+'</div>';
 }
 
 /* ── STATS ── */
@@ -1671,5 +1698,6 @@ function dismissIosAutoPrompt(){
 renderHome();
 renderChatHistory();
 </script>
+<script src="lang.js"></script>
 </body>
 </html>
