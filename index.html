@@ -466,10 +466,7 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
 /* ── DONATION BLOCK ── */
 .donate-origin{font-family:var(--fd);font-style:italic;font-size:15px;color:var(--muted2);line-height:1.8;margin-bottom:28px;padding:16px 20px;border-left:2px solid rgba(245,200,66,0.2);font-weight:300;}
 .donate-body{font-size:15px;line-height:1.85;color:var(--text2);font-weight:300;margin-bottom:24px;}
-.donate-amounts{display:flex;gap:10px;margin-bottom:16px;}
-.donate-chip{flex:1;padding:12px 8px;border-radius:12px;border:1px solid rgba(245,200,66,0.2);background:rgba(14,11,26,0.7);color:var(--gold2);font-family:var(--fb);font-size:15px;font-weight:500;text-align:center;cursor:default;transition:border-color 0.25s var(--ease),background 0.25s var(--ease),transform 0.2s var(--ease-bounce);}
-.donate-chip:hover{border-color:rgba(245,200,66,0.45);background:rgba(245,200,66,0.07);transform:translateY(-2px);}
-.donate-chip-label{display:block;font-size:9px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;color:var(--muted);margin-top:3px;}
+
 .donate-btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;padding:17px 20px;border-radius:14px;border:none;cursor:pointer;background:linear-gradient(135deg,rgba(245,200,66,0.12) 0%,rgba(201,145,61,0.08) 100%);border:1px solid rgba(245,200,66,0.3);color:#f5c842;font-family:var(--fb);font-size:13px;letter-spacing:1px;font-weight:600;transition:transform 0.25s var(--ease),box-shadow 0.3s,background 0.25s var(--ease),border-color 0.25s;box-shadow:0 4px 22px rgba(245,200,66,0.1),inset 0 1px 0 rgba(255,255,255,0.06);text-decoration:none;margin-bottom:18px;}
 .donate-btn:hover{transform:translateY(-2px);background:linear-gradient(135deg,rgba(245,200,66,0.18) 0%,rgba(201,145,61,0.12) 100%);border-color:rgba(245,200,66,0.55);box-shadow:0 8px 32px rgba(245,200,66,0.2),inset 0 1px 0 rgba(255,255,255,0.08);}
 .donate-btn:active{transform:scale(0.98);}
@@ -489,21 +486,7 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
 .progress-donate-origin{font-size:12px;line-height:1.7;color:var(--muted2);font-weight:300;font-style:italic;margin-bottom:16px;padding-bottom:14px;border-bottom:1px solid rgba(245,200,66,0.1);}
 .progress-donate-title{font-family:var(--fd);font-size:20px;font-weight:600;color:var(--gold3);margin-bottom:6px;letter-spacing:-0.2px;text-shadow:0 0 20px rgba(245,208,138,0.25);}
 .progress-donate-sub{font-size:13px;line-height:1.75;color:var(--muted2);font-weight:300;margin-bottom:16px;}
-/* small preset chips */
-.donate-amounts{display:flex;gap:8px;margin-bottom:10px;}
-.donate-chip{flex:1;padding:8px 4px;border-radius:10px;border:1px solid rgba(245,200,66,0.2);background:rgba(14,11,26,0.7);color:var(--gold2);font-family:var(--fb);font-size:13px;font-weight:500;text-align:center;cursor:pointer;transition:border-color 0.25s var(--ease),background 0.25s var(--ease),transform 0.2s var(--ease-bounce),box-shadow 0.25s;}
-.donate-chip:hover{border-color:rgba(245,200,66,0.45);background:rgba(245,200,66,0.07);transform:translateY(-1px);}
-.donate-chip:active{transform:scale(0.96);}
-.donate-chip.selected{border-color:rgba(245,200,66,0.75);background:linear-gradient(135deg,rgba(245,200,66,0.16),rgba(201,145,61,0.1));color:#f5c842;box-shadow:0 0 0 1px rgba(245,200,66,0.3),0 4px 12px rgba(245,200,66,0.15);transform:translateY(-1px);}
-.donate-chip-label{display:block;font-size:8px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);margin-top:2px;}
-/* or divider */
-.donate-or{display:flex;align-items:center;gap:10px;margin:10px 0;}
-.donate-or-line{flex:1;height:1px;background:rgba(255,255,255,0.07);}
-.donate-or-label{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;font-weight:500;}
-/* custom amount input */
-.donate-custom-wrap{display:flex;align-items:center;background:rgba(14,11,26,0.8);border:1px solid rgba(245,200,66,0.2);border-radius:12px;padding:0 14px;margin-bottom:14px;transition:border-color 0.25s,box-shadow 0.25s;}
-.donate-custom-wrap:focus-within{border-color:rgba(245,200,66,0.5);box-shadow:0 0 0 3px rgba(245,200,66,0.07);}
-.donate-custom-prefix{font-size:15px;color:var(--gold2);font-weight:500;padding-right:6px;}
+
 .donate-custom-input{flex:1;background:none;border:none;outline:none;padding:12px 0;font-size:15px;color:var(--text);font-family:var(--fb);font-weight:400;}
 .donate-custom-input::placeholder{color:var(--muted);}
 /* support button */
@@ -724,25 +707,11 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
         <p class="progress-donate-origin">This app was built by one person — not a company, not a team. Just someone who felt this journey deserved to exist, and kept building it one step at a time.</p>
         <div class="progress-donate-title">Support This Journey 🌱</div>
         <p class="progress-donate-sub">Built with care, freely given. If this app has brought value to your life, you're welcome to support its journey in whatever way feels right.</p>
-        <div class="donate-amounts">
-          <button class="donate-chip" data-amount="51" onclick="selectDonateAmount(this)">₹51<span class="donate-chip-label">a seed</span></button>
-          <button class="donate-chip" data-amount="101" onclick="selectDonateAmount(this)">₹101<span class="donate-chip-label">a step</span></button>
-          <button class="donate-chip" data-amount="251" onclick="selectDonateAmount(this)">₹251<span class="donate-chip-label">a shift</span></button>
-        </div>
-        <div class="donate-or">
-          <div class="donate-or-line"></div>
-          <span class="donate-or-label">or</span>
-          <div class="donate-or-line"></div>
-        </div>
-        <div class="donate-custom-wrap">
-          <span class="donate-custom-prefix">₹</span>
-          <input class="donate-custom-input" id="donate-custom-input" type="number" min="1" placeholder="Choose your amount" oninput="selectCustomAmount(this.value)"/>
-        </div>
         <!-- UPI ID copy box -->
         <div class="upi-copy-wrap" id="upi-copy-wrap">
           <div class="upi-copy-label">Pay via any UPI app</div>
           <div class="upi-copy-row">
-            <span class="upi-copy-id">7015400792@hdfcbank</span>
+            <span class="upi-copy-id">rcoddy1180-2@okicici</span>
             <button class="upi-copy-btn" onclick="copyUPIId()" id="upi-copy-btn">Copy</button>
           </div>
           <div class="upi-copy-hint">Copy this ID → open GPay / PhonePe / Paytm → paste & pay</div>
@@ -1341,60 +1310,9 @@ function submitFeedback(e){
 }
 
 /* ── DONATION / SUPPORT ── */
-let selectedDonateAmount = null;
-function selectDonateAmount(el){
-  document.querySelectorAll('.donate-chip').forEach(c=>c.classList.remove('selected'));
-  const inp = document.getElementById('donate-custom-input');
-  if(selectedDonateAmount === el.dataset.amount){
-    selectedDonateAmount = null;
-    if(inp) inp.value = '';
-  } else {
-    el.classList.add('selected');
-    selectedDonateAmount = el.dataset.amount;
-    if(inp) inp.value = '';
-  }
-}
-function selectCustomAmount(val){
-  document.querySelectorAll('.donate-chip').forEach(c=>c.classList.remove('selected'));
-  selectedDonateAmount = val && Number(val) > 0 ? String(Math.floor(Number(val))) : null;
-}
-function openUPIChooser(){
-  const amt = selectedDonateAmount ? '₹' + selectedDonateAmount : 'any amount';
-  const lbl = document.getElementById('upi-amount-label');
-  if(lbl) lbl.textContent = selectedDonateAmount ? 'Paying ₹' + selectedDonateAmount + ' — choose your app' : 'Choose your preferred app';
-  document.getElementById('upi-chooser').classList.add('open');
-}
-function closeUPIChooser(){
-  document.getElementById('upi-chooser').classList.remove('open');
-}
-function payViaApp(app){
-  const pa = '7015400792@hdfcbank';
-  const pn = encodeURIComponent('Kabeer Sabharwal');
-  const am = selectedDonateAmount ? '&am=' + selectedDonateAmount : '';
-  const tn = encodeURIComponent('Wealthy Within Support');
-  const params = 'pa=' + pa + '&pn=' + pn + am + '&tn=' + tn + '&cu=INR';
-
-  const schemes = {
-    gpay:    'gpay://upi/pay?'  + params,
-    phonepe: 'phonepe://pay?'   + params,
-    paytm:   'paytmmp://pay?'   + params,
-    upi:     'upi://pay?'       + params,
-  };
-
-  const a = document.createElement('a');
-  a.href = schemes[app] || schemes.upi;
-  a.style.display = 'none';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  closeUPIChooser();
-}
-function openDonateUPI(){
-  openUPIChooser();
-}
 
 function copyUPIId(){
-  const id = '7015400792@hdfcbank';
+  const id = 'rcoddy1180-2@okicici';
   navigator.clipboard.writeText(id).then(()=>{
     const btn = document.getElementById('upi-copy-btn');
     if(btn){ btn.textContent='Copied!'; btn.classList.add('copied'); }
