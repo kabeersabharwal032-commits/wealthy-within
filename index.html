@@ -1281,38 +1281,26 @@ function selectCustomAmount(val){
   selectedDonateAmount = val && Number(val) > 0 ? String(Math.floor(Number(val))) : null;
 }
 function openDonateUPI(){
-  const pa  = 'rcoddy1180-1@okicici';
-  const pn  = 'Kabeer%20Sabharwal';
-  const am  = selectedDonateAmount ? '&am=' + selectedDonateAmount : '';
-  const params = 'pa=' + pa + '&pn=' + pn + am + '&cu=INR';
-
-  /* Priority order: GPay → PhonePe → Paytm → generic upi://
-     Each app registers its own URI scheme on Android.
-     On iOS all fall back to upi:// (handled by whichever UPI app is default).
-     We try GPay first via a hidden <a> click, then fall back after 300 ms. */
-  const schemes = [
-    'gpay://upi/pay?'    + params,   // Google Pay
-    'phonepe://pay?'     + params,   // PhonePe
-    'paytmmp://pay?'     + params,   // Paytm
-    'upi://pay?'         + params,   // generic fallback (system chooser / default app)
-  ];
-
-  let tried = 0;
-  function tryNext() {
-    if (tried >= schemes.length) return;
-    const a = document.createElement('a');
-    a.href = schemes[tried++];
-    a.style.display = 'none';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    /* If the app didn't open within 300 ms the scheme wasn't handled — try next */
-    setTimeout(function() {
-      /* Only continue if page is still visible (app didn't take over) */
-      if (!document.hidden) tryNext();
-    }, 350);
+  const amount = selectedDonateAmount || '';
+  if(!amount){
+    toast('Please select or enter an amount first');
+    return;
   }
-  tryNext();
+
+  const pa = 'rcoddy1180-1@okicici';
+  const pn = 'Kabeer Sabharwal';
+  const tn = 'Donation - Wealthy Within';
+
+  // Standard upi:// deep link — Android system chooser picks the right app
+  // This works with GPay, PhonePe, Paytm, BHIM, etc.
+  const upiUrl = 'upi://pay?pa=' + encodeURIComponent(pa)
+    + '&pn=' + encodeURIComponent(pn)
+    + '&am=' + encodeURIComponent(amount)
+    + '&cu=INR'
+    + '&tn=' + encodeURIComponent(tn);
+
+  // Use window.location for reliable deep link trigger
+  window.location.href = upiUrl;
 }
 
 /* ── RESET CONFIRM ── */
