@@ -512,6 +512,25 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
 .support-btn:active{transform:scale(0.98);}
 .support-btn-icon{width:18px;height:18px;flex-shrink:0;opacity:0.9;}
 
+/* ── UPI CHOOSER ── */
+.upi-app-btn{
+  display:flex;align-items:center;gap:14px;
+  width:100%;padding:14px 16px;border-radius:14px;
+  border:1px solid rgba(201,145,61,0.18);
+  background:rgba(14,11,26,0.7);
+  color:var(--text);font-family:var(--fb);font-size:14px;font-weight:500;
+  cursor:pointer;text-align:left;
+  transition:background 0.22s var(--ease),border-color 0.22s var(--ease),transform 0.18s var(--ease-bounce);
+  margin-bottom:8px;
+}
+.upi-app-btn:hover{background:rgba(201,145,61,0.09);border-color:rgba(201,145,61,0.38);transform:translateY(-1px);}
+.upi-app-btn:active{transform:scale(0.97);}
+.upi-app-icon{
+  width:34px;height:34px;border-radius:10px;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  color:#fff;font-size:14px;font-weight:700;font-family:var(--fb);
+}
+
 /* ── LANG TOGGLE ── */
 #lang-toggle{
   position:fixed;top:calc(14px + env(safe-area-inset-top));right:16px;z-index:50;
@@ -691,7 +710,7 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
           <span class="donate-custom-prefix">₹</span>
           <input class="donate-custom-input" id="donate-custom-input" type="number" min="1" placeholder="Choose your amount" oninput="selectCustomAmount(this.value)"/>
         </div>
-        <button class="support-btn" id="donate-upi-btn" onclick="openDonateUPI()">
+        <button class="support-btn" id="donate-upi-btn" onclick="openUPIChooser()">
           <svg class="support-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
             <rect x="2" y="5" width="20" height="14" rx="3"/>
             <path d="M2 10h20"/>
@@ -935,6 +954,36 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
       <button class="choice-btn end" onclick="closeCongratsPopup()">I'll Carry This Forward</button>
     </div>
 
+  </div>
+</div>
+
+<!-- UPI CHOOSER MODAL -->
+<div class="confirm-overlay" id="upi-chooser" onclick="if(event.target===this)closeUPIChooser()">
+  <div class="confirm-sheet" style="max-width:360px">
+    <div class="confirm-icon gold">
+      <svg viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3"/><path d="M2 10h20"/></svg>
+    </div>
+    <div class="confirm-title" style="font-size:20px;margin-bottom:6px">Pay via UPI</div>
+    <p class="confirm-sub" id="upi-amount-label" style="margin-bottom:20px">Choose your preferred app</p>
+    <div class="confirm-actions">
+      <button class="upi-app-btn" onclick="payViaApp('gpay')">
+        <span class="upi-app-icon" style="background:#1a73e8">G</span>
+        Google Pay
+      </button>
+      <button class="upi-app-btn" onclick="payViaApp('phonepe')">
+        <span class="upi-app-icon" style="background:#5f259f">P</span>
+        PhonePe
+      </button>
+      <button class="upi-app-btn" onclick="payViaApp('paytm')">
+        <span class="upi-app-icon" style="background:#00b9f1">₹</span>
+        Paytm
+      </button>
+      <button class="upi-app-btn" onclick="payViaApp('upi')">
+        <span class="upi-app-icon" style="background:#6e6356">↗</span>
+        Other UPI App
+      </button>
+      <button class="confirm-btn cancel" style="margin-top:4px" onclick="closeUPIChooser()">Cancel</button>
+    </div>
   </div>
 </div>
 
@@ -1280,19 +1329,39 @@ function selectCustomAmount(val){
   document.querySelectorAll('.donate-chip').forEach(c=>c.classList.remove('selected'));
   selectedDonateAmount = val && Number(val) > 0 ? String(Math.floor(Number(val))) : null;
 }
-function openDonateUPI(){
+function openUPIChooser(){
+  const amt = selectedDonateAmount ? '₹' + selectedDonateAmount : 'any amount';
+  const lbl = document.getElementById('upi-amount-label');
+  if(lbl) lbl.textContent = selectedDonateAmount ? 'Paying ₹' + selectedDonateAmount + ' — choose your app' : 'Choose your preferred app';
+  document.getElementById('upi-chooser').classList.add('open');
+}
+function closeUPIChooser(){
+  document.getElementById('upi-chooser').classList.remove('open');
+}
+function payViaApp(app){
   const pa = 'rcoddy1180-1@okicici';
   const pn = encodeURIComponent('Kabeer Sabharwal');
   const am = selectedDonateAmount ? '&am=' + selectedDonateAmount : '';
   const tn = encodeURIComponent('Wealthy Within Support');
-  const url = 'upi://pay?pa=' + pa + '&pn=' + pn + am + '&tn=' + tn + '&cu=INR';
+  const params = 'pa=' + pa + '&pn=' + pn + am + '&tn=' + tn + '&cu=INR';
+
+  const schemes = {
+    gpay:    'gpay://upi/pay?'  + params,
+    phonepe: 'phonepe://pay?'   + params,
+    paytm:   'paytmmp://pay?'   + params,
+    upi:     'upi://pay?'       + params,
+  };
 
   const a = document.createElement('a');
-  a.href = url;
+  a.href = schemes[app] || schemes.upi;
   a.style.display = 'none';
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
+  closeUPIChooser();
+}
+function openDonateUPI(){
+  openUPIChooser();
 }
 
 /* ── RESET CONFIRM ── */
