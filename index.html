@@ -692,28 +692,17 @@ nav button.active::before{content:'';position:absolute;top:0;left:50%;transform:
         <p class="progress-donate-origin">This app was built by one person — not a company, not a team. Just someone who felt this journey deserved to exist, and kept building it one step at a time.</p>
         <div class="progress-donate-title">Support This Journey 🌱</div>
         <p class="progress-donate-sub">Built with care, freely given. If this app has brought value to your life, you're welcome to support its journey in whatever way feels right.</p>
-        <div class="donate-amounts">
-          <button class="donate-chip" data-amount="51" onclick="selectDonateAmount(this)">₹51<span class="donate-chip-label">a seed</span></button>
-          <button class="donate-chip" data-amount="101" onclick="selectDonateAmount(this)">₹101<span class="donate-chip-label">a step</span></button>
-          <button class="donate-chip" data-amount="251" onclick="selectDonateAmount(this)">₹251<span class="donate-chip-label">a shift</span></button>
+        <!-- QR Code -->
+        <div style="background:#f5f5f5;border-radius:16px;padding:12px;margin:0 auto 14px;width:200px;height:200px;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(201,145,61,0.15);">
+          <img src="/icons/qr-upi.png" alt="UPI QR Code" style="width:176px;height:176px;display:block;border-radius:4px;"/>
         </div>
-        <div class="donate-or">
-          <div class="donate-or-line"></div>
-          <span class="donate-or-label">or</span>
-          <div class="donate-or-line"></div>
+        <p style="font-size:11px;color:var(--muted2);text-align:center;margin-bottom:12px;font-weight:300;line-height:1.5;">📱 Kisi bhi UPI app se scan karein<br>GPay · PhonePe · Paytm · BHIM</p>
+        <!-- UPI ID Copy -->
+        <div style="display:flex;align-items:center;gap:10px;background:rgba(14,11,26,0.8);border:1px solid rgba(245,200,66,0.25);border-radius:12px;padding:12px 16px;margin-bottom:14px;">
+          <span style="flex:1;font-size:13px;color:var(--gold2);font-weight:500;letter-spacing:0.3px;" id="upi-id-text">rcoddy1180-1@okicici</span>
+          <button onclick="copyUPIId()" id="copy-upi-btn" style="background:linear-gradient(135deg,rgba(245,200,66,0.15),rgba(201,145,61,0.1));border:1px solid rgba(245,200,66,0.35);border-radius:8px;color:#f5c842;font-family:var(--fb);font-size:11px;font-weight:600;padding:6px 12px;cursor:pointer;letter-spacing:0.5px;white-space:nowrap;transition:all 0.2s;">Copy ID</button>
         </div>
-        <div class="donate-custom-wrap">
-          <span class="donate-custom-prefix">₹</span>
-          <input class="donate-custom-input" id="donate-custom-input" type="number" min="1" placeholder="Choose your amount" oninput="selectCustomAmount(this.value)"/>
-        </div>
-        <button class="support-btn" id="donate-upi-btn" onclick="openDonateUPI()">
-          <svg class="support-btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-            <rect x="2" y="5" width="20" height="14" rx="3"/>
-            <path d="M2 10h20"/>
-            <path d="M7 15h2M12 15h3"/>
-          </svg>
-          Support via UPI
-        </button>
+        <p style="font-size:11px;color:var(--muted);text-align:center;line-height:1.6;margin-bottom:14px;">UPI ID copy karke apni app mein paste karein</p>
         <p class="donate-thanks">Every contribution keeps this journey alive. Thank you 🙏</p>
       </div>
     </div>
@@ -1313,13 +1302,26 @@ function selectCustomAmount(val){
   document.querySelectorAll('.donate-chip').forEach(c=>c.classList.remove('selected'));
   selectedDonateAmount = val && Number(val) > 0 ? String(Math.floor(Number(val))) : null;
 }
-function openDonateUPI(){
-  document.getElementById('qr-popup').classList.add('open');
-  document.body.style.overflow='hidden';
-}
-function closeQRPopup(){
-  document.getElementById('qr-popup').classList.remove('open');
-  document.body.style.overflow='';
+function copyUPIId(){
+  const upiId='rcoddy1180-1@okicici';
+  const btn=document.getElementById('copy-upi-btn');
+  if(navigator.clipboard&&navigator.clipboard.writeText){
+    navigator.clipboard.writeText(upiId).then(()=>{
+      btn.textContent='Copied ✓';btn.style.color='#5ecdc0';
+      setTimeout(()=>{btn.textContent='Copy ID';btn.style.color='#f5c842';},2000);
+    });
+  }else{
+    /* fallback for older browsers */
+    const el=document.createElement('textarea');
+    el.value=upiId;el.style.position='fixed';el.style.opacity='0';
+    document.body.appendChild(el);el.select();
+    try{document.execCommand('copy');
+      btn.textContent='Copied ✓';btn.style.color='#5ecdc0';
+      setTimeout(()=>{btn.textContent='Copy ID';btn.style.color='#f5c842';},2000);
+    }catch(e){}
+    document.body.removeChild(el);
+  }
+  toast('UPI ID copied! Apni UPI app mein paste karein 🙏');
 }
 
 /* ── RESET CONFIRM ── */
