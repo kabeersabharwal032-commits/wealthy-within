@@ -53,9 +53,9 @@ export async function onRequestPost({ request, env }) {
   }
 
   const groqKeys = [
-    env.GROQ_KEY_1,
-    env.GROQ_KEY_2,
-    env.GROQ_KEY_3,
+    env.GROQ_API_KEY,
+    env.GROQ_API_KEY2,
+    env.GROQ_API_KEY3,
   ].filter(Boolean);
 
   const groqBody = {
@@ -96,7 +96,7 @@ export async function onRequestPost({ request, env }) {
   }
 
   // ── 2. All Groq keys failed → fallback to Gemini 1.5 Flash ──────────────────
-  const geminiKey = env.GEMINI_KEY;
+  const geminiKey = env["Gemini API Key"];
   if (geminiKey) {
     try {
       const contents = messages.map((m) => ({
